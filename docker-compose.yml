@@ -1,14 +1,12 @@
 version: '3'
 
 services:
-### PHP-FPM ##############################################
   php-fpm:
     container_name: php-fpm
     image: tamurayk/php-fpm:7.3.9
     volumes:
       - ./docker/php-fpm/index.php:/var/www/html/index.php
 
-### NGINX Server #########################################
   nginx:
     container_name: nginx
     image: nginx:alpine
