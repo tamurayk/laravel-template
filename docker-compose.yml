@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  mysql:
-    container_name: mysql
+  database:
+    container_name: database
     image: mysql:5.7 #https://laravel.com/docs/7.x/database
     environment:
       MYSQL_DATABASE: webapp
@@ -14,13 +14,14 @@ services:
     volumes:
       - laravel-template-database-data:/var/lib/mysql
 
-  php-fpm:
-    container_name: php-fpm
+  app:
+    container_name: app
     image: tamurayk/php-fpm:7.3.9
     volumes:
-      - ./docker/php-fpm/index.php:/var/www/html/index.php
+      - ./src:/srv
+    working_dir: /srv
     depends_on:
-      - mysql
+      - database
 
   nginx:
     container_name: nginx
@@ -31,7 +32,7 @@ services:
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
       - ./docker/nginx/index.html:/var/www/html/index.html
     depends_on:
-      - php-fpm
+      - app
 
 volumes:
   laravel-template-database-data:
