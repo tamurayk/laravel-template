@@ -7,8 +7,8 @@
 
 ### 初期設計パターン
 
-- シンプルな設計パターン
-- CQRS パターン
+- シンプルな設計パターン (フレームワークの機能をそのまま使う)
+- Clean Architecture 的なパターン (CQRS など)
 
 ## 構成
 
@@ -42,9 +42,25 @@
 └── README.md
 ```
 
-## 開発環境
 
-- `docker-compose up -d`
+## 構築方法
+
+### 前準備 (初回のみ)
+
+```
+// データベースのデータ保存用ボリュームを作成
+$ docker volume create --name laravel-template-database-data
+```
+
+### コンテナの起動
+
+```
+// リポジトリのclone
+$ git clone git@github.com:tamurayk/laravel-template.git
+$ cd laravel-template
+// 開発環境の起動
+$ docker-compose up -d
+```
 
 ## スコープ外
 
