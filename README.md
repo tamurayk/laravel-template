@@ -50,6 +50,9 @@
 ```
 // データベースのデータ保存用ボリュームを作成
 $ docker volume create --name laravel-template-database-data
+
+/// php-fpmイメージのビルド
+$ docker-compose build php-fpm
 ```
 
 ### コンテナの起動
@@ -57,9 +60,23 @@ $ docker volume create --name laravel-template-database-data
 ```
 // リポジトリのclone
 $ git clone git@github.com:tamurayk/laravel-template.git
-$ cd laravel-template
+
 // 開発環境の起動
+$ cd laravel-template
 $ docker-compose up -d
+```
+
+### `Application Key` の作成
+
+```
+$ cp .env.example .env
+$ docker exec php-fpm php artisan key:generate
+```
+
+### migration
+
+```
+$ docker exec php-fpm php artisan migrate
 ```
 
 ## スコープ外
