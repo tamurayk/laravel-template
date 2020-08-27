@@ -51,8 +51,8 @@
 // データベースのデータ保存用ボリュームを作成
 $ docker volume create --name laravel-template-database-data
 
-/// php-fpmイメージのビルド
-$ docker-compose build php-fpm
+/// イメージのビルド
+$ docker-compose build
 ```
 
 ### コンテナの起動
