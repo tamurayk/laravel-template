@@ -54,9 +54,14 @@
 // データベースのデータ保存用ボリュームを作成
 $ docker volume create --name laravel-template-database-data
 
-/// イメージのビルド
+// イメージのビルド
 $ docker-compose build
+
+// (Dockerfile を変更した場合は再ビルド)
+$ docker-compose build --no-cache
 ```
+
+- http://localhost:8080/
 
 ### コンテナの起動
 
@@ -67,7 +72,12 @@ $ git clone git@github.com:tamurayk/laravel-template.git
 // 開発環境の起動
 $ cd laravel-template
 $ docker-compose up -d
+
+// (php-fpm コンテナに入る)
+$ docker exec -it php-fpm /bin/ash
 ```
+
+- http://localhost:8000/ で Laravel の Web アプリにアクセスできます
 
 ### `Application Key` の作成
 
