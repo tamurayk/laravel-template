@@ -79,6 +79,14 @@ $ docker exec php-fpm php artisan key:generate
 $ docker exec php-fpm php artisan migrate
 ```
 
+### 開発時に phpMyAdmin を利用する
+
+下記のように開発環境を起動すると http://localhost:8080/ で phpMyAdmin にアクセスできます
+
+```
+$ docker-compose -f docker-compose.yml -f docker-compose.local.yml up -d
+```
+
 ## スコープ外
 
 - サンプルアプリ
