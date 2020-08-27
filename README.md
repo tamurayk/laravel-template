@@ -27,13 +27,16 @@
 ```
 .
 ├── docker => 各コンテナの設定ファイル
-│   ├── mysql
-│   │   └── my.cnf
 │   ├── nginx
-│   │   └── default.conf
+│   │   ├── Dockerfile
+│   │   └── config
+│   │       └── default.conf
 │   └── php-fpm
 │       ├── Dockerfile
-│       └── php.ini
+│       └── config
+│           └── php.ini
+├── docker-compose.local.yml
+├── docker-compose.yml
 ├── logs => 各種ログファイル
 ├── src => Laravelプロジェクトをインストールするディレクトリ
 ├── .env
