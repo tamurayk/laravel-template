@@ -106,6 +106,16 @@ $ docker-compose -f docker-compose.yml -f docker-compose.local.yml up -d
 ## note
 
 ```
-// Laravel インストール
-composer create-project --prefer-dist laravel/laravel <ProjectName>
+// Laravel 再インストール
+$ docker exec -it php-fpm /bin/ash
+# rm -rf /srv/* /srv/.*
+# composer create-project --prefer-dist laravel/laravel .
+
+$ docker volume rm laravel-template-database-data
+$ docker volume create --name laravel-template-database-data
+
+$ cp examples/laravel-basic-task-list/.env.example src/.env.example
+$ cp src/.env.example src/.env
+$ docker exec php-fpm php artisan key:generate
+$ docker exec php-fpm php artisan migrate
 ```
