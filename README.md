@@ -61,8 +61,6 @@ $ docker-compose build
 $ docker-compose build --no-cache
 ```
 
-- http://localhost:8080/
-
 ### コンテナの起動
 
 ```
@@ -104,3 +102,10 @@ $ docker-compose -f docker-compose.yml -f docker-compose.local.yml up -d
 
 - サンプルアプリ
 - CD/CI
+
+## note
+
+```
+// Laravel インストール
+composer create-project --prefer-dist laravel/laravel <ProjectName>
+```

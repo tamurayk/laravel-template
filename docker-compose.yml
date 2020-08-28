@@ -21,7 +21,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./src:/srv
-    working_dir: /srv/app
+    working_dir: /srv
     depends_on:
       - database
 
