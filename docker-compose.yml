@@ -20,7 +20,8 @@ services:
       context: ./docker/php-fpm
       dockerfile: Dockerfile
     volumes:
-      - ./src:/srv
+      #- ./src:/srv
+      - ./examples/laravel-basic-task-list-intermediate:/srv
     working_dir: /srv
     depends_on:
       - database
@@ -32,6 +33,9 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:80"
+    volumes:
+      #- ./src:/srv
+      - ./examples/laravel-basic-task-list-intermediate:/srv
     depends_on:
       - php-fpm
 
