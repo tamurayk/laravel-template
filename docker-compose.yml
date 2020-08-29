@@ -34,8 +34,8 @@ services:
     ports:
       - "8000:80"
     volumes:
-      #- ./src:/srv
-      - ./examples/laravel-basic-task-list-intermediate:/srv
+      #- ./src/app/public:/srv/app/public
+      - ./examples/laravel-basic-task-list-intermediate/public:/srv/public
     depends_on:
       - php-fpm
 
