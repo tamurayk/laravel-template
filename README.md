@@ -105,6 +105,8 @@ $ docker-compose -f docker-compose.yml -f docker-compose.local.yml up -d
 
 ## note
 
+### Laravel 再インストール
+
 ```
 // Laravel 再インストール
 $ docker exec -it php-fpm /bin/ash
@@ -119,3 +121,23 @@ $ cp src/.env.example src/.env
 $ docker exec php-fpm php artisan key:generate
 $ docker exec php-fpm php artisan migrate
 ```
+
+### model
+
+- Laravel のデフォルトでは意図的に `models` ディレクトリが用意されない
+  - Eloquent モデルの格納場所は、開発者自身で選択する、という思想
+  - デフォルトでは `app` ディレクトリ下へ設置される
+- ドキュメント
+  - https://readouble.com/laravel/7.x/en/structure.html#introduction
+
+
+### `public/js/app.js`
+
+```
+// js ファイルを更新したら、下記のコマンドにて `public/js/app.js` を再生
+// See: https://laravel.com/docs/7.x/frontend#writing-css
+$ yarn yun dev
+```
+
+- note
+    - `docker-compose.yml` にて、ホストOS側の `src/app/public` を nginx コンテナの `/srv/app/public` にコピーしている
