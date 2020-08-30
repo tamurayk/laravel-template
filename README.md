@@ -141,3 +141,8 @@ $ yarn yun dev
 
 - note
     - `docker-compose.yml` にて、ホストOS側の `src/app/public` を nginx コンテナの `/srv/app/public` にコピーしている
+
+
+css が 404 になる問題を解消する為に、
+ホストOS側の `src/app/public` を nginx コンテナの `/srv/app/public` にコピーするようにした。
+

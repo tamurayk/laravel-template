@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  php-fpm:
+    volumes:
+      - ./examples/laravel-basic-task-list-intermediate:/srv
+
+  nginx:
+    volumes:
+      - ./examples/laravel-basic-task-list-intermediate/public:/srv/public
