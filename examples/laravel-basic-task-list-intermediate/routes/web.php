@@ -21,6 +21,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/tasks', 'TaskController@index')->name('task.index');
-Route::post('/task', 'TaskController@store')->name('task.store');
-Route::post('/task/{task}', 'TaskController@destroy')->name('task.destroy');
+Route::get('/tasks', 'TaskController@index')->name('task.index')->middleware('auth');
+Route::post('/task', 'TaskController@store')->name('task.store')->middleware('auth');
+Route::post('/task/{task}', 'TaskController@destroy')->name('task.destroy')->middleware('auth');
