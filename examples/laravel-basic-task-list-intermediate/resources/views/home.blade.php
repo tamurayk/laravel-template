@@ -16,6 +16,9 @@
 
                     {{ __('You are logged in!') }}
                 </div>
+                <div>
+                    <a href="{{ route('task.index') }}">Your task list</a>
+                </div>
             </div>
         </div>
     </div>
