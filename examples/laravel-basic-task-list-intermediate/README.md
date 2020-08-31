@@ -1,6 +1,6 @@
 ## about
 
-- [Laravel 5.2 Intermediate Task List](https://readouble.com/laravel/5.2/en/quickstart-intermediate.html#) を `Laravel 7.x` で実装
+- [Laravel 5.2 > Tutorials > Intermediate Task List](https://laravel.com/docs/5.2/quickstart-intermediate) を `Laravel 7.x` で実装
 
 ## usage
 

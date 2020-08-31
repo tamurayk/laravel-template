@@ -19,8 +19,8 @@
 
 ## 技術要素
 
-- Laravel 7.x
-    - https://readouble.com/laravel/7.x/ja/installation.html
+- Laravel 6.x
+    - LTS の 6.x を選定
 
 ## ディレクトリ構成
 
@@ -45,6 +45,109 @@
 └── README.md
 ```
 
+### ディレクトリ構成 (Laravel)
+
+```
+./src/
+├── app => アプリケーションのコアコード ※別途記載
+├── bootstrap
+    ├── app.php => フレームワークの初期処理
+    └── cache => ルートやサービスのキャッシュファイル
+├── config
+    ├── app.php
+    ├── auth.php
+    ├── broadcasting.php
+    ├── cache.php
+    ├── cors.php
+    ├── database.php
+    ├── filesystems.php
+    ├── hashing.php
+    ├── logging.php
+    ├── mail.php
+    ├── queue.php
+    ├── services.php
+    ├── session.php
+    └── view.php
+├── database
+    ├── factories
+    ├── migrations
+    └── seeds
+├── public
+    ├── index.php => 全リクエストの入り口。オートローディングを設定。
+    ├── css => assets
+    ├── img => assets
+    └── js => assets
+├── resources
+    ├── views => Blade ファイル群
+    ├── js => assets の元ファイル
+    ├── lang => assets の元ファイル
+    └── sass => assets の元ファイル
+├── routes
+    ├── api.php => REST API(ステートレス) 用の Route群(RouteServiceProvider の api ミドルウェアグループに属するルート)。トークン認証。
+    ├── channels.php
+    ├── console.php
+    └── web.php => RouteServiceProvider の web ミドルウェアグループに属するルート。ステートフル。セッションで認証。
+├── storage
+    ├── app => アプリケーションにより生成されるファイルを保存
+    ├── framework => フレームワークが生成するファイルやキャッシュ
+    └── logs
+├── tests => PHPUnit
+├── vendor => Composerによる依存パッケージ群
+├── server.php
+├── artisan
+├── composer.json
+└── package.json
+```
+
+```
+./src/app/
+    ├── Console => カスタム Artisan コマンド群
+    ├── Entities
+        ├── Constants
+        ├── Contracts
+        └── Eloquents => Eloquent モデル群
+    ├── Exceptions
+    ├── Http
+        ├── Controllers
+            ├── Api => for API
+            ├── TaskController.php => for Web
+            └── Controller.php
+        ├── Kernel.php
+        ├── Middleware
+        ├── Requests => formRequest 群
+            ├── Contracts => interface
+            │   ├── FormRequest.php
+            │   └── Task
+            │       └── TaskStoreRequest.php
+            └── Task
+                └── TaskStoreRequest.php => `php artisan make:request` で作成
+        ├── UseCases => ビジネスロジック群
+            ├── contract => Interface 群
+            ├── Task
+                ├── CreateTaskUseCase.php
+                └── DeleteTaskUseCase.php
+    ├── Helpers
+    ├── Policies => 認可ポリシー群。 `php artisan make:policy` で作成
+    ├── Providers => サービスプロバイダー群
+    └── Rules => カスタムバリデーションルール群
+
+// 下記は必要に応じて追加
+./src/app/
+    ├── Event => イベント群。`php artisan make:event` で作成
+    ├── Listeners => イベントリスナ群。`php artisan make:listener` で作成
+    ├── Jobs => Queue 投入可能な Job 群。`php artisan make:job` で作成
+    ├── Mail => `php artisan make:mail` で作成
+    ├── Notifications => `php artisan make:notification` で作成
+    └── Broadcasting => WebSocket接続経由でのイベントの Broadcast(=サーバサイド/クライアントサイドのJavaScriptで同じ名前のイベントを共有) `php artisan make:channel` で作成
+
+// シンプルなパターンでは使用しない
+./src/app/
+    ├── Repositories => リポジトリパターン採用時に使用
+    ├── Services
+        ├── XxxService => 各種サービスレイヤ実装時に使用
+        ├── Commands => CQRS パターン採用時に使用
+        └── Queries => CQRS パターン採用時に使用
+```
 
 ## 構築方法
 
@@ -111,7 +214,8 @@ $ docker-compose -f docker-compose.yml -f docker-compose.local.yml up -d
 // Laravel 再インストール
 $ docker exec -it php-fpm /bin/ash
 # rm -rf /srv/* /srv/.*
-# composer create-project --prefer-dist laravel/laravel .
+// 6.x の最新版をインストール
+# composer create-project laravel/laravel /srv --prefer-dist "^6.0"
 
 $ docker volume rm laravel-template-database-data
 $ docker volume create --name laravel-template-database-data
