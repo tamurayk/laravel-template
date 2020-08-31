@@ -4,15 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Entities\Contracts\Task as TaskInterface;
 use App\Entities\Eloquents\Task as TaskEloquent;
+use App\Http\Requests\Contracts\Task\TaskStoreRequest as TaskStoreRequestInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 
 
 class TaskController extends Controller
 {
-    /**
-     * @var TaskEloquent
-     */
+    /** @var TaskEloquent */
     private $taskEloquent;
 
     public function __construct(TaskInterface $task)
@@ -38,17 +37,11 @@ class TaskController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param TaskStoreRequestInterface $request
      * @return RedirectResponse
-     * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(TaskStoreRequestInterface $request): RedirectResponse
     {
-        // TODO: Use formRequest
-        $this->validate($request, [
-            'name' => 'required|max:10',
-        ]);
-
         // TODO: Use UseCase
         $request->user()->tasks()->create([
             'name' => $request->name,

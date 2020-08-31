@@ -177,6 +177,9 @@ return [
 
         // EntitiesServiceProvider
         App\Providers\EntitiesServiceProvider::class,
+
+        // RequestsServiceProvider
+        App\Providers\RequestsServiceProvider::class,
     ],
 
     /*
