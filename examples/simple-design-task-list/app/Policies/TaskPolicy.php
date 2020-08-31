@@ -21,8 +21,8 @@ class TaskPolicy
     }
 
     /**
-     * @param User $user
-     * @param Task $task
+     * @param UserEloquent $user
+     * @param TaskEloquent $task
      * @return bool
      */
     public function destroy(UserEloquent $user, TaskEloquent $task)

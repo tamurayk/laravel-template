@@ -2,9 +2,10 @@
 
 namespace App\Entities\Eloquents;
 
-use App\Entities\Contracts\Task as TaskInterface;
+use App\Entities\Contracts\User as UserInterface;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class User extends EloquentAuthenticatableBase implements TaskInterface
+class User extends EloquentAuthenticatableBase implements UserInterface
 {
     /**
      * The attributes that are mass assignable.
@@ -36,7 +37,7 @@ class User extends EloquentAuthenticatableBase implements TaskInterface
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function tasks()
+    public function tasks(): HasMany
     {
         return $this->hasMany(Task::class);
     }

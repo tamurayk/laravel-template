@@ -3,6 +3,7 @@
 namespace App\Entities\Eloquents;
 
 use App\Entities\Contracts\Task as TaskInterface;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Task extends EloquentBase implements TaskInterface
 {
@@ -14,7 +15,7 @@ class Task extends EloquentBase implements TaskInterface
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
