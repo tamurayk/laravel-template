@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use App\Entities\Contracts\Task as TaskInterface;
 use App\Entities\Eloquents\Task;
 use App\Http\Requests\Contracts\Task\TaskStoreRequest as TaskStoreRequestInterface;
-use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-
+use Illuminate\Contracts\Auth\Guard;
 
 class TaskController extends Controller
 {
@@ -20,12 +19,12 @@ class TaskController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param Guard $guard
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(Request $request) //TODO: Use Guard
+    public function index(Guard $guard)
     {
-        $userId = 1;
+        $userId = $guard->user()->id;
 
         // TODO: use UseCase
         $query = $this->task->newQuery();
