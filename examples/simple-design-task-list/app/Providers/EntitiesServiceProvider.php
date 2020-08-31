@@ -15,6 +15,11 @@ final class EntitiesServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
+            \App\Entities\Contracts\User::class,
+            \App\Entities\Eloquents\User::class
+        );
+
+        $this->app->bind(
             \App\Entities\Contracts\Task::class,
             \App\Entities\Eloquents\Task::class
         );

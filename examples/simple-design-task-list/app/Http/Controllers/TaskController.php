@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Entities\Contracts\Task as TaskInterface;
-use App\Entities\Eloquents\Task as TaskEloquent;
+use App\Entities\Eloquents\Task;
 use App\Http\Requests\Contracts\Task\TaskStoreRequest as TaskStoreRequestInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -11,12 +11,12 @@ use Illuminate\Http\RedirectResponse;
 
 class TaskController extends Controller
 {
-    /** @var TaskEloquent */
-    private $taskEloquent;
+    /** @var Task */
+    private $task;
 
     public function __construct(TaskInterface $task)
     {
-        $this->taskEloquent = $task;
+        $this->task = $task;
     }
 
     /**
@@ -28,7 +28,7 @@ class TaskController extends Controller
         $userId = 1;
 
         // TODO: use UseCase
-        $query = $this->taskEloquent->newQuery();
+        $query = $this->task->newQuery();
         $tasks = $query->where('user_id', $userId)->get();
 
         return view('tasks.index', [
@@ -51,13 +51,14 @@ class TaskController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param TaskEloquent $task
+     * @param int $taskId
      * @return RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function destroy(Request $request, TaskEloquent $task): RedirectResponse
+    public function destroy(int $taskId): RedirectResponse
     {
+        $task = $this->task->newQuery()->find($taskId);
+
         // note: 1st arg of authorize() is Policy name that is related Task Model.
         $this->authorize('destroy', $task);
 
