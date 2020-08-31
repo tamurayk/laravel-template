@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,3 +21,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/tasks', 'TaskController@index')->name('task.index')->middleware('auth');
+Route::post('/task', 'TaskController@store')->name('task.store')->middleware('auth');
+Route::delete('/task/{task}', 'TaskController@destroy')->name('task.destroy')->middleware('auth');
