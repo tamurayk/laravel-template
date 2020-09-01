@@ -22,7 +22,9 @@
 - Laravel 6.x
     - LTS の 6.x を選定
 
-## ディレクトリ構成
+## 設計 (シンプルなパターン)
+
+### ディレクトリ構成
 
 ```
 .
@@ -99,18 +101,27 @@
 └── package.json
 ```
 
+### ディレクトリ構成 (Laravel app以下)
+
 ```
 ./src/app/
-    ├── Console => カスタム Artisan コマンド群
+    ├── Console => カスタム Artisan コマンド(=コンソールアプリ) 群
     ├── Entities
-        ├── Constants
-        ├── Contracts
-        └── Eloquents => Eloquent モデル群
+        ├── Constants => 定数
+        ├── Contracts => Interface
+        │   ├── EloquentBase.php
+        │   ├── Task.php
+        │   └── User.php
+        └── Eloquents
+            ├── EloquentAuthenticatableBase.php
+            ├── EloquentBase.php
+            ├── Task.php => Task Eloquent
+            └── User.php => User Eloquent
     ├── Exceptions
     ├── Http
-        ├── Controllers
+        ├── Controllers => ADR パターン採用時には、Actions としたほうが ADR パターンである事を明示できそう
             ├── Api => for API
-            ├── TaskController.php => for Web
+            ├── TaskController.php => for Web (ADRの場合: TaskIndexAction.php class TaskIndexAction extends Controller)
             └── Controller.php
         ├── Kernel.php
         ├── Middleware
@@ -147,6 +158,34 @@
         ├── XxxService => 各種サービスレイヤ実装時に使用
         ├── Commands => CQRS パターン採用時に使用
         └── Queries => CQRS パターン採用時に使用
+```
+
+### DI の流れ
+
+```
+// シンプルなパターン
+
+Eloquent => Active Record タイプの ORM
+↓
+UseCase => ビジネスロジック
+↓
+Controller //ADR の場合は、Action
+```
+
+```
+// Clean Architecture 的なパターンの場合
+
+Eloquent => Active Record タイプの ORM
+↓
+Query / Command => 分離する事で、レコード数の増大やクエリの複雑化に伴う応答速度の低下を解消
+↓
+Repository => データアクセス処理を切り出し、データストアの参照先の変更に対応
+↓
+Service => DBから値を取得する処理など
+↓
+UseCase => ビジネスロジックをカプセル化, 実行時の振る舞いの仕様
+↓
+Controller
 ```
 
 ## 構築方法
