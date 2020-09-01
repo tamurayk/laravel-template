@@ -24,6 +24,20 @@
 
 ## 設計 (シンプルなパターン)
 
+### MVC2 vs ADR
+
+下記の理由で `MVC2` を採用した
+
+- `C` を `Single Action Controller` にすれば、実質的に `ADR` と大差がない
+    - メソッドを1つのみにする事で「特定のメソッドでのみ必要な依存クラス」の注入が発生しなくなる、というメリットに変わりはない
+- `ADR`
+    - デメリット
+        - Laravel のデフォルトのディレクトリ構成を変える必要があるので、素の Laravel からは離れていく
+- `MVC2`
+    - メリット
+        - 初期学習コストが低そう (公式ドキュメントと親和性高い、情報多い)
+
+
 ### ディレクトリ構成
 
 ```
@@ -119,9 +133,9 @@
             └── User.php => User Eloquent
     ├── Exceptions
     ├── Http
-        ├── Controllers => ADR パターン採用時には、Actions としたほうが ADR パターンである事を明示できそう
+        ├── Controllers
             ├── Api => for API
-            ├── TaskController.php => for Web (ADRの場合: TaskIndexAction.php class TaskIndexAction extends Controller)
+            ├── TaskController.php => for Web
             └── Controller.php
         ├── Kernel.php
         ├── Middleware
@@ -169,11 +183,11 @@ Eloquent => Active Record タイプの ORM
 ↓
 UseCase => ビジネスロジック
 ↓
-Controller //ADR の場合は、Action
+Controller
 ```
 
 ```
-// Clean Architecture 的なパターンの場合
+// (参考) Clean Architecture 的なパターンの場合
 
 Eloquent => Active Record タイプの ORM
 ↓
@@ -242,7 +256,6 @@ $ docker-compose -f docker-compose.yml -f docker-compose.local.yml up -d
 
 ## スコープ外
 
-- サンプルアプリ
 - CD/CI
 
 ## note
