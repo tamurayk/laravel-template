@@ -86,3 +86,9 @@ $ cp -R ../laravel-basic-task-list-intermediate/resources/views/* resources/view
 ```
 # php artisan make:request TaskStoreRequest
 ```
+
+1. Laravel Debugbar
+
+```
+# composer require barryvdh/laravel-debugbar --dev
+```
