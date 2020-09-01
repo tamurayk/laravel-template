@@ -135,7 +135,10 @@
     ├── Http
         ├── Controllers
             ├── Api => for API
-            ├── TaskController.php => for Web
+            ├── Task => Single Action Controller にする
+                ├── TaskIndexController.php
+                ├── TaskDestroyController.php => クラス名の命名は https://laravel.com/docs/6.x/controllers#resource-controllers を参考に
+                └── TaskStoreController.php
             └── Controller.php
         ├── Kernel.php
         ├── Middleware
