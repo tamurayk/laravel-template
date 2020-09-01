@@ -176,7 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         // EntitiesServiceProvider
-        App\Providers\EntitiesServiceProvider::class,
+        App\Providers\ModelsServiceProvider::class,
 
         // RequestsServiceProvider
         App\Providers\RequestsServiceProvider::class,

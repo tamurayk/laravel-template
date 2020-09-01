@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Entities\Eloquents;
+namespace App\Models\Eloquents;
 
-use App\Entities\Contracts\Task as TaskInterface;
+use App\Models\Entities\TaskInterface;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Task extends EloquentBase implements TaskInterface

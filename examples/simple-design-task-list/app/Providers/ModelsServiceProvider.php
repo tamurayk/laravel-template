@@ -5,7 +5,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-final class EntitiesServiceProvider extends ServiceProvider
+final class ModelsServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -15,13 +15,13 @@ final class EntitiesServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            \App\Entities\Contracts\User::class,
-            \App\Entities\Eloquents\User::class
+            \App\Models\Entities\UserInterface::class,
+            \App\Models\Eloquents\User::class
         );
 
         $this->app->bind(
-            \App\Entities\Contracts\Task::class,
-            \App\Entities\Eloquents\Task::class
+            \App\Models\Entities\TaskInterface::class,
+            \App\Models\Eloquents\Task::class
         );
     }
 

@@ -120,17 +120,17 @@
 ```
 ./src/app/
     ├── Console => カスタム Artisan コマンド(=コンソールアプリ) 群
-    ├── Entities
+    ├── Models
         ├── Constants => 定数
-        ├── Contracts => Interface
-        │   ├── EloquentBase.php
-        │   ├── Task.php
-        │   └── User.php
-        └── Eloquents
+        ├── Entities => Interface
+        │   ├── InterfaceBase.php
+        │   ├── TaskInterface.php
+        │   └── UserInterface.php
+        └── Eloquents => Eloquent Model
             ├── EloquentAuthenticatableBase.php
             ├── EloquentBase.php
-            ├── Task.php => Task Eloquent
-            └── User.php => User Eloquent
+            ├── Task.php => Task Eloquent Model
+            └── User.php => User Eloquent Model
     ├── Exceptions
     ├── Http
         ├── Controllers
@@ -150,8 +150,10 @@
             └── Task
                 └── TaskStoreRequest.php => `php artisan make:request` で作成
         ├── UseCases => ビジネスロジック群
-            ├── contract => Interface 群
             ├── Task
+                ├── contract => Interface 群
+                    ├── CreateTaskUseCaseInterface.php
+                    └── DeleteTaskUseCaseInterface.php
                 ├── CreateTaskUseCase.php
                 └── DeleteTaskUseCase.php
     ├── Helpers
@@ -182,7 +184,7 @@
 ```
 // シンプルなパターン
 
-Eloquent => Active Record タイプの ORM
+Eloquent => ORM / クエリビルダ
 ↓
 UseCase => ビジネスロジック
 ↓
@@ -192,7 +194,7 @@ Controller
 ```
 // (参考) Clean Architecture 的なパターンの場合
 
-Eloquent => Active Record タイプの ORM
+Eloquent => ORM / クエリビルダ
 ↓
 Query / Command => 分離する事で、レコード数の増大やクエリの複雑化に伴う応答速度の低下を解消
 ↓

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Entities\Eloquents;
+namespace App\Models\Eloquents;
 
-use App\Entities\Contracts\User as UserInterface;
+use App\Models\Entities\UserInterface;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class User extends EloquentAuthenticatableBase implements UserInterface
+class User extends AuthenticatableBase implements UserInterface
 {
     /**
      * The attributes that are mass assignable.

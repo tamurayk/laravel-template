@@ -9,8 +9,6 @@ services:
       MYSQL_USER: webapp
       MYSQL_PASSWORD: Passw0rd
       MYSQL_ROOT_PASSWORD: Passw0rd
-    ports:
-      - "3306:3306"
     volumes:
       - laravel-template-database-data:/var/lib/mysql
 

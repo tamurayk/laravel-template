@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Entities\Contracts\Task as TaskInterface;
-use App\Entities\Eloquents\Task;
 use App\Http\Requests\Contracts\Task\TaskStoreRequest as TaskStoreRequestInterface;
+use App\Models\Eloquents\Task;
+use App\Models\Entities\TaskInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\Auth\Guard;
 
