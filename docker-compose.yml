@@ -10,7 +10,7 @@ services:
       MYSQL_PASSWORD: Passw0rd
       MYSQL_ROOT_PASSWORD: Passw0rd
     volumes:
-      - laravel-template-database-data:/var/lib/mysql
+      - laravel-template-database-data:/var/lib/mysql:cached
 
   php-fpm:
     container_name: php-fpm
@@ -18,7 +18,7 @@ services:
       context: ./docker/php-fpm
       dockerfile: Dockerfile
     volumes:
-      - ./src:/srv
+      - ./src:/srv:cached
     working_dir: /srv
     depends_on:
       - database
@@ -31,7 +31,7 @@ services:
     ports:
       - "8000:80"
     volumes:
-      - ./src/app/public:/srv/app/public
+      - ./src/app/public:/srv/app/public:cached
     depends_on:
       - php-fpm
 

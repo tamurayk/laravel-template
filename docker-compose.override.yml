@@ -3,10 +3,10 @@ version: '3'
 services:
   php-fpm:
     volumes:
-      #- ./examples/laravel-basic-task-list-intermediate:/srv
-      - ./examples/simple-design-task-list:/srv
+      #- ./examples/laravel-basic-task-list-intermediate:/srv:cached
+      - ./examples/simple-design-task-list:/srv:cached
 
   nginx:
     volumes:
-      #- ./examples/laravel-basic-task-list-intermediate/public:/srv/public
-      - ./examples/simple-design-task-list/public:/srv/public
+      #- ./examples/laravel-basic-task-list-intermediate/public:/srv/public:cached
+      - ./examples/simple-design-task-list/public:/srv/public:cached

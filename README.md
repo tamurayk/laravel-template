@@ -184,7 +184,7 @@
 ```
 // シンプルなパターン
 
-Eloquent => ORM / クエリビルダ
+Eloquent => ORM
 ↓
 UseCase => ビジネスロジック
 ↓
@@ -194,7 +194,7 @@ Controller
 ```
 // (参考) Clean Architecture 的なパターンの場合
 
-Eloquent => ORM / クエリビルダ
+Eloquent => ORM
 ↓
 Query / Command => 分離する事で、レコード数の増大やクエリの複雑化に伴う応答速度の低下を解消
 ↓
