@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Task;
 
+use App\Http\Requests\Task\Contracts\TaskStoreRequestInterface;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Http\Requests\Contracts\Task\TaskStoreRequest as TaskStoreRequestInterface;
 
 class TaskStoreRequest extends FormRequest implements TaskStoreRequestInterface
 {
