@@ -3,31 +3,21 @@
 namespace App\Http\Controllers\Task;
 
 use App\Http\Controllers\Controller;
-use App\Models\Eloquents\Task;
-use App\Models\Entities\TaskInterface;
+use App\Http\UseCases\Task\Contracts\TaskIndexUseCaseInterface;
 use Illuminate\Contracts\Auth\Guard;
 
 class TaskIndexController extends Controller
 {
-    /** @var Task */
-    private $task;
-
-    public function __construct(TaskInterface $task)
-    {
-        $this->task = $task;
-    }
-
     /**
      * @param Guard $guard
+     * @param TaskIndexUseCaseInterface $useCase
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function __invoke(Guard $guard)
+    public function __invoke(Guard $guard, TaskIndexUseCaseInterface $useCase)
     {
         $userId = $guard->user()->id;
 
-        // TODO: use UseCase
-        $query = $this->task->newQuery();
-        $tasks = $query->where('user_id', $userId)->get();
+        $tasks = $useCase($userId);
 
         return view('tasks.index', [
             'tasks' => $tasks,

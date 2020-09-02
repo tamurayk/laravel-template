@@ -10,7 +10,10 @@ class Task extends EloquentBase implements TaskInterface
     /**
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = [
+        'user_id',
+        'name',
+    ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
