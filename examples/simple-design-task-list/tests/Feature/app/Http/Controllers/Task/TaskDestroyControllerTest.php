@@ -71,7 +71,6 @@ class TaskDestroyControllerTest extends TestCaseBase
 
     /**
      * @test
-     * @group hoge
      */
     public function index_他人のタスクを削除しようとした場合は403エラーになる事()
     {
@@ -99,7 +98,6 @@ class TaskDestroyControllerTest extends TestCaseBase
 
     /**
      * @test
-     * @group hoge
      */
     public function index_存在しないtask_idを指定した場合は404エラーになる事()
     {
