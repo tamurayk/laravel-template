@@ -24,8 +24,8 @@ class TestCaseBase extends TestCase
      */
     public function tearDown(): void
     {
-        // RefreshDatabase で migration が行われるのはテスト開始時に一度だけの為、
-        // テスト毎に migration:refresh して、各テスト毎のテストデータの独立性を保つようにしている
+        // RefreshDatabase トレイトで migration が行われるのはテスト開始時に一度だけの為、
+        // 各テスト毎に migration:refresh して、各テスト毎のテストデータの独立性を保つようにしている
         Artisan::call('migrate:refresh');
         parent::tearDown();
     }
