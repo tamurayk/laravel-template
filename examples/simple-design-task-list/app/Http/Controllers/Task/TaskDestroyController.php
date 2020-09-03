@@ -20,7 +20,7 @@ class TaskDestroyController extends Controller
      */
     public function __invoke(
         Guard $guard,
-        Task $task, // TaskEloquentModel Passed by Implicit Binding.
+        Task $task, // TaskEloquentModel Passed by Implicit Binding. See: https://laravel.com/docs/6.x/routing#implicit-binding
         TaskDestroyUseCaseInterface $useCase
     ): RedirectResponse {
         // note: 1st arg of authorize() is Policy name that is related Task Model.

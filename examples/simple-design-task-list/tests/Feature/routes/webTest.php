@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\routes;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Task\TaskDestroyController;
@@ -9,7 +9,7 @@ use App\Http\Controllers\Task\TaskStoreController;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Route;
 
-final class RouterTest extends TestCase
+final class webTest extends TestCase
 {
     public function RouteActionNameDataProvider()
     {
