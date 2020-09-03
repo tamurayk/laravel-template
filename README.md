@@ -242,6 +242,11 @@ mysql> show grants for 'webapp'@'%';
 +------------------------------------------------------------+
 ```
 
+```
+// test用の Application Key の作成
+# php artisan key:generate --env=testing
+```
+
 ### コンテナの起動
 
 ```
