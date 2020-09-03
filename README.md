@@ -222,6 +222,26 @@ $ docker-compose build
 $ docker-compose build --no-cache
 ```
 
+```
+// test 用DBの作成
+$ docker exec -it database /bin/bash
+# mysql -u webapp -D webapp -p
+mysql> CREATE DATABASE `webapp_testing`;
+
+// 権限付与
+mysql> GRANT ALL ON webapp_testing.* TO webapp;
+
+// (権限確認)
+mysql> show grants for 'webapp'@'%';
++------------------------------------------------------------+
+| Grants for webapp@%                                        |
++------------------------------------------------------------+
+| GRANT USAGE ON *.* TO 'webapp'@'%'                         |
+| GRANT ALL PRIVILEGES ON `webapp`.* TO 'webapp'@'%'         |
+| GRANT ALL PRIVILEGES ON `webapp_testing`.* TO 'webapp'@'%' |
++------------------------------------------------------------+
+```
+
 ### コンテナの起動
 
 ```
