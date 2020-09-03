@@ -18,4 +18,15 @@ class TestCaseBase extends TestCase
         // Clear config cache before run test.
         Artisan::call('config:clear');
     }
+
+    /**
+     * @throws \Throwable
+     */
+    public function tearDown(): void
+    {
+        // RefreshDatabase で migration が行われるのはテスト開始時に一度だけの為、
+        // テスト毎に migration:refresh して、各テスト毎のテストデータの独立性を保つようにしている
+        Artisan::call('migrate:refresh');
+        parent::tearDown();
+    }
 }
