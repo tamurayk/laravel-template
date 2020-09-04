@@ -62,14 +62,17 @@ class TaskIndexControllerTest extends TestCaseBase
         factory(Task::class, 1)->create([
             'id' => 1,
             'user_id' => 1,
+            'name' => 'user 1 task 1'
         ]);
         factory(Task::class, 1)->create([
             'id' => 2,
             'user_id' => 2,
+            'name' => 'user 2 task 1'
         ]);
         factory(Task::class, 1)->create([
             'id' => 3,
             'user_id' => 1,
+            'name' => 'user 1 task 2'
         ]);
 
         // Check not authenticate.
@@ -102,6 +105,10 @@ class TaskIndexControllerTest extends TestCaseBase
         ]);
         $response->assertViewHas('tasks', $expected);
 
+        // Assert HTML
+        $this->assertNotFalse(strpos($response->content(), '<td class="table-text"><div>user 1 task 1</div></td>'));
+        $this->assertNotFalse(strpos($response->content(), '<td class="table-text"><div>user 1 task 2</div></td>'));
+
         /**
          * user_id = 2
          */
@@ -124,5 +131,7 @@ class TaskIndexControllerTest extends TestCaseBase
         ]);
         $response->assertViewHas('tasks', $expected);
 
+        // Assert HTML
+        $this->assertNotFalse(strpos($response->content(), '<td class="table-text"><div>user 2 task 1</div></td>'));
     }
 }
