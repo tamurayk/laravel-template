@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Http\Requests\Contracts\Task;
+namespace App\Http\Requests\Task\Contracts;
 
 use App\Http\Requests\Contracts\FormRequest;
 
 /**
  * Interface TaskStoreRequest
- * @package App\Http\Requests\Contracts
+ * @package App\Http\Requests\Contracts\Task
  */
-interface TaskStoreRequest extends FormRequest
+interface TaskStoreRequestInterface extends FormRequest
 {
     /**
      * @return array

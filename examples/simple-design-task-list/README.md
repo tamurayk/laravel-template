@@ -92,3 +92,10 @@ $ cp -R ../laravel-basic-task-list-intermediate/resources/views/* resources/view
 ```
 # composer require barryvdh/laravel-debugbar --dev
 ```
+
+1. Factory
+
+```
+# php artisan make:factory TaskFactory --model=Task
+```
+

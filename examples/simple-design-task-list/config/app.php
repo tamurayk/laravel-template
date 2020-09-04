@@ -180,6 +180,9 @@ return [
 
         // RequestsServiceProvider
         App\Providers\RequestsServiceProvider::class,
+
+        // RequestsServiceProvider
+        App\Providers\UseCasesServiceProvider::class,
     ],
 
     /*

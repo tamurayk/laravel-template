@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Providers;
 
@@ -18,7 +19,7 @@ final class RequestsServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            \App\Http\Requests\Contracts\Task\TaskStoreRequest::class,
+            \App\Http\Requests\Task\Contracts\TaskStoreRequestInterface::class,
             \App\Http\Requests\Task\TaskStoreRequest::class
         );
     }

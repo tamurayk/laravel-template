@@ -184,7 +184,7 @@
 ```
 // シンプルなパターン
 
-Eloquent => ORM / クエリビルダ
+Eloquent => ORM
 ↓
 UseCase => ビジネスロジック
 ↓
@@ -194,7 +194,7 @@ Controller
 ```
 // (参考) Clean Architecture 的なパターンの場合
 
-Eloquent => ORM / クエリビルダ
+Eloquent => ORM
 ↓
 Query / Command => 分離する事で、レコード数の増大やクエリの複雑化に伴う応答速度の低下を解消
 ↓
@@ -220,6 +220,31 @@ $ docker-compose build
 
 // (Dockerfile を変更した場合は再ビルド)
 $ docker-compose build --no-cache
+```
+
+```
+// test 用DBの作成
+$ docker exec -it database /bin/bash
+# mysql -u webapp -D webapp -p
+mysql> CREATE DATABASE `webapp_testing`;
+
+// 権限付与
+mysql> GRANT ALL ON webapp_testing.* TO webapp;
+
+// (権限確認)
+mysql> show grants for 'webapp'@'%';
++------------------------------------------------------------+
+| Grants for webapp@%                                        |
++------------------------------------------------------------+
+| GRANT USAGE ON *.* TO 'webapp'@'%'                         |
+| GRANT ALL PRIVILEGES ON `webapp`.* TO 'webapp'@'%'         |
+| GRANT ALL PRIVILEGES ON `webapp_testing`.* TO 'webapp'@'%' |
++------------------------------------------------------------+
+```
+
+```
+// test用の Application Key の作成
+# php artisan key:generate --env=testing
 ```
 
 ### コンテナの起動
