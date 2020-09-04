@@ -284,9 +284,27 @@ $ docker exec php-fpm php artisan migrate
 $ docker-compose -f docker-compose.yml -f docker-compose.local.yml up -d
 ```
 
-## スコープ外
+## 静的解析
 
-- CD/CI
+[larastan](https://github.com/nunomaduro/larastan)
+
+```
+// run
+# ./vendor/bin/phpstan analyse --memory-limit=2G
+// help
+# ./vendor/bin/phpstan analyse -h
+// e.g.
+# ./vendor/bin/phpstan analyse -l 3 --memory-limit=2G app/
+```
+
+## PHPUnit
+
+```
+// run
+# ./vendor/bin/phpunit tests
+// help
+# ./vendor/bin/phpunit -h
+```
 
 ## note
 
