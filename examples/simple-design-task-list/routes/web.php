@@ -33,3 +33,6 @@ Route::post('/task', 'Task\TaskStoreController')
 Route::delete('/task/{task}', 'Task\TaskDestroyController')
     ->name('task.destroy')
     ->middleware('auth');
+
+Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider')->name('oauth.login');
+Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->name('oauth.callback');
