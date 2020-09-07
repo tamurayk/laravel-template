@@ -36,4 +36,10 @@ return [
         'redirect' => env('GITHUB_REDIRECT'),
     ],
 
+    'myoauthprovider' => [
+        'client_id' => env('MY_OAUTH_PROVIDER_CLIENT_ID'),
+        'client_secret' => env('MY_OAUTH_PROVIDER_CLIENT_SECRET'),
+        'redirect' => env('MY_OAUTH_PROVIDER_REDIRECT'),
+    ],
+
 ];
