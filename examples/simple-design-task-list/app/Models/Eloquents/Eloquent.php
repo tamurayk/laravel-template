@@ -3,14 +3,14 @@ declare(strict_types=1);
 
 namespace App\Models\Eloquents;
 
-use App\Models\Entities\InterfaceBase;
+use App\Models\Interfaces\BaseInterface;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class EloquentBase
+ * Class Eloquent
  * @package App\Models\Eloquents
  */
-abstract class EloquentBase extends Model implements InterfaceBase
+abstract class Eloquent extends Model implements BaseInterface
 {
     //
 }

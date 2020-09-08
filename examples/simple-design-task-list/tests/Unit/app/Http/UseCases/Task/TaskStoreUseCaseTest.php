@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Test\Unit\app\Http\UseCase\Task;
 
-use App\Http\UseCases\Task\TaskStoreUseCase;
+use App\Http\UseCases\Task\TaskStore;
 use App\Models\Eloquents\Task;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCaseBase;
@@ -19,7 +19,7 @@ class TaskStoreUseCaseTest extends TestCaseBase
     {
         $this->assertEquals(0, DB::table('tasks')->count(), 'テスト開始時点で tasks テーブルが空である事を確認');
 
-        $useCase = new TaskStoreUseCase(new Task());
+        $useCase = new TaskStore(new Task());
 
         // run UseCase
         $result = $useCase(1, ['name' => 'task A']);

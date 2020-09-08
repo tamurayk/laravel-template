@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace App\Http\UseCases\Task;
 
-use App\Http\UseCases\Task\Contracts\TaskStoreUseCaseInterface;
+use App\Http\UseCases\Task\Interfaces\TaskStoreInterface;
 use App\Models\Eloquents\Task;
-use App\Models\Entities\TaskInterface;
+use App\Models\Interfaces\TaskInterface;
 
-class TaskStoreUseCase implements TaskStoreUseCaseInterface
+class TaskStore implements TaskStoreInterface
 {
     /** @var Task */
     private $task;

@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace App\Http\UseCases\Task;
 
-use App\Http\UseCases\Task\Contracts\TaskIndexUseCaseInterface;
+use App\Http\UseCases\Task\Interfaces\TaskIndexInterface;
 use App\Models\Eloquents\Task;
-use App\Models\Entities\TaskInterface;
+use App\Models\Interfaces\TaskInterface;
 
-class TaskIndexUseCase implements TaskIndexUseCaseInterface
+class TaskIndex implements TaskIndexInterface
 {
     /** @var Task */
     private $task;

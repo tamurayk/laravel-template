@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Test\Unit\app\Http\UseCase\Task;
 
-use App\Http\UseCases\Task\TaskIndexUseCase;
+use App\Http\UseCases\Task\TaskIndex;
 use App\Models\Eloquents\Task;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCaseBase;
@@ -30,7 +30,7 @@ class TaskIndexUseCaseTest extends TestCaseBase
         $this->assertEquals(3, DB::table('tasks')->count(), 'tasks テーブルにテストデータが 3 件生成されている事');
 
         // generate UseCase
-        $useCase = new TaskIndexUseCase(new Task());
+        $useCase = new TaskIndex(new Task());
 
         // run UseCase
         $useCaseOutput = $useCase(1);

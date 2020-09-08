@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace App\Models\Eloquents;
 
-use App\Models\Entities\UserInterface;
+use App\Models\Interfaces\UserInterface;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class User extends AuthenticatableBase implements UserInterface
+class User extends Authenticatable implements UserInterface
 {
     /**
      * The attributes that are mass assignable.

@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Task;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Task\Contracts\TaskStoreRequestInterface;
+use App\Http\Requests\Task\Interfaces\TaskStoreRequestInterface;
 use App\Http\Requests\Task\TaskStoreRequest;
-use App\Http\UseCases\Task\Contracts\TaskStoreUseCaseInterface;
+use App\Http\UseCases\Task\Interfaces\TaskStoreInterface;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\RedirectResponse;
 
@@ -15,13 +15,13 @@ class TaskStoreController extends Controller
     /**
      * @param Guard $guard
      * @param TaskStoreRequestInterface $request
-     * @param TaskStoreUseCaseInterface $useCase
+     * @param TaskStoreInterface $useCase
      * @return RedirectResponse
      */
     public function __invoke(
         Guard $guard,
         TaskStoreRequestInterface $request,
-        TaskStoreUseCaseInterface $useCase
+        TaskStoreInterface $useCase
     ): RedirectResponse {
         $userId = $guard->user()->id;
 

@@ -4,17 +4,17 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Task;
 
 use App\Http\Controllers\Controller;
-use App\Http\UseCases\Task\Contracts\TaskIndexUseCaseInterface;
+use App\Http\UseCases\Task\Interfaces\TaskIndexInterface;
 use Illuminate\Contracts\Auth\Guard;
 
 class TaskIndexController extends Controller
 {
     /**
      * @param Guard $guard
-     * @param TaskIndexUseCaseInterface $useCase
+     * @param TaskIndexInterface $useCase
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function __invoke(Guard $guard, TaskIndexUseCaseInterface $useCase)
+    public function __invoke(Guard $guard, TaskIndexInterface $useCase)
     {
         $userId = $guard->user()->id;
 

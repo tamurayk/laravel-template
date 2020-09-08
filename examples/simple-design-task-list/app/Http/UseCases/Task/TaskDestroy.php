@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace App\Http\UseCases\Task;
 
-use App\Http\UseCase\Task\Exceptions\TaskDestroyFailureException;
-use App\Http\UseCases\Task\Contracts\TaskDestroyUseCaseInterface;
 use App\Models\Eloquents\Task;
-use App\Models\Entities\TaskInterface;
+use App\Models\Interfaces\TaskInterface;
+use App\Http\UseCases\Task\Interfaces\TaskDestroyInterface;
+use App\Http\UseCases\Task\Exceptions\TaskDestroyException;
 
-class TaskDestroyUseCase implements TaskDestroyUseCaseInterface
+class TaskDestroy implements TaskDestroyInterface
 {
     /** @var Task */
     private $taskEloquent;
@@ -22,7 +22,7 @@ class TaskDestroyUseCase implements TaskDestroyUseCaseInterface
      * @param int $userId
      * @param int $taskId
      * @return bool
-     * @throws TaskDestroyFailureException
+     * @throws TaskDestroyException
      */
     public function __invoke(int $userId, int $taskId): bool
     {
@@ -32,7 +32,7 @@ class TaskDestroyUseCase implements TaskDestroyUseCaseInterface
             ->delete();
 
         if (!$result) {
-            throw new TaskDestroyFailureException('Failed to delete task.', 403);
+            throw new TaskDestroyException('Failed to delete task.', 403);
         }
 
         return true;
