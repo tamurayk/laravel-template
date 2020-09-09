@@ -4,13 +4,18 @@ namespace Tests\Feature\app\Http\Controllers\Task;
 
 use App\Models\Eloquents\Task;
 use Illuminate\Support\Facades\DB;
-use Tests\TestCaseBase;
+use Tests\BaseTestCase;
 
-class TaskDestroyControllerTest extends TestCaseBase
+class TaskDestroyControllerTest extends BaseTestCase
 {
     public function setUp(): void
     {
         parent::setUp();
+    }
+
+    public function tearDown(): void
+    {
+        parent::tearDown();
     }
 
     /**

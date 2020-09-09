@@ -6,13 +6,19 @@ namespace Test\Unit\app\Http\UseCase\Task;
 use App\Http\UseCases\Task\TaskStore;
 use App\Models\Eloquents\Task;
 use Illuminate\Support\Facades\DB;
-use Tests\TestCaseBase;
+use Tests\BaseTestCase;
 
-class TaskStoreUseCaseTest extends TestCaseBase
+class TaskStoreUseCaseTest extends BaseTestCase
 {
     public function setUp(): void
     {
         parent::setUp();
+    }
+
+
+    public function tearDown(): void
+    {
+        parent::tearDown();
     }
 
     public function testUseCase()

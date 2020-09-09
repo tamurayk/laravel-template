@@ -7,13 +7,18 @@ use App\Http\UseCases\Task\Exceptions\TaskDestroyException;
 use App\Http\UseCases\Task\TaskDestroy;
 use App\Models\Eloquents\Task;
 use Illuminate\Support\Facades\DB;
-use Tests\TestCaseBase;
+use Tests\BaseTestCase;
 
-class TaskDestroyUseCaseTest extends TestCaseBase
+class TaskDestroyUseCaseTest extends BaseTestCase
 {
     public function setUp(): void
     {
         parent::setUp();
+    }
+
+    public function tearDown(): void
+    {
+        parent::tearDown();
     }
 
     public function testUseCase()

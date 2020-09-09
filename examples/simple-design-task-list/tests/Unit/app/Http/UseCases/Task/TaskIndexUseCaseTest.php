@@ -6,13 +6,18 @@ namespace Test\Unit\app\Http\UseCase\Task;
 use App\Http\UseCases\Task\TaskIndex;
 use App\Models\Eloquents\Task;
 use Illuminate\Support\Facades\DB;
-use Tests\TestCaseBase;
+use Tests\BaseTestCase;
 
-class TaskIndexUseCaseTest extends TestCaseBase
+class TaskIndexUseCaseTest extends BaseTestCase
 {
     public function setUp(): void
     {
         parent::setUp();
+    }
+
+    public function tearDown(): void
+    {
+        parent::tearDown();
     }
 
     /**

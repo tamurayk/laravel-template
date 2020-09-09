@@ -6,11 +6,21 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Task\TaskDestroyController;
 use App\Http\Controllers\Task\TaskIndexController;
 use App\Http\Controllers\Task\TaskStoreController;
-use Tests\TestCase;
+use Tests\BaseTestCase;
 use Illuminate\Support\Facades\Route;
 
-final class webTest extends TestCase
+final class webTest extends BaseTestCase
 {
+    public function setUp(): void
+    {
+        parent::setUp();
+    }
+
+    public function tearDown(): void
+    {
+        parent::tearDown();
+    }
+
     public function RouteActionNameDataProvider()
     {
         return [
