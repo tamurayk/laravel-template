@@ -11,7 +11,7 @@ use Illuminate\Events\Dispatcher;
 use Tests\BaseTestCase;
 use Illuminate\Support\Facades\Route;
 
-final class routesTest extends BaseTestCase
+final class RoutesTest extends BaseTestCase
 {
     public function setUp(): void
     {
