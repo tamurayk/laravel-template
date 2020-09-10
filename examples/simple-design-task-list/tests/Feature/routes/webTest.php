@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Task\TaskDestroyController;
 use App\Http\Controllers\Task\TaskIndexController;
 use App\Http\Controllers\Task\TaskStoreController;
+use Illuminate\Events\Dispatcher;
 use Tests\BaseTestCase;
 use Illuminate\Support\Facades\Route;
 
@@ -105,33 +106,17 @@ final class webTest extends BaseTestCase
          *   任意の Request を Router に渡して dispatch される Route が期待値通りである事を確認
          */
 
-        // Laravelアプリケーションインスタンス生成
-        $app = new \Illuminate\Foundation\Application(base_path());
+        // Routerインスタンス生成
+        $router = new \Illuminate\Routing\Router(new Dispatcher());
 
-        // アプリケーションにHTTPカーネルをバインド
-        // ※HTTPカーネルの bootstrap で Router に webミドルウェアグループが適用される
-        $app->singleton(
-            \Illuminate\Contracts\Http\Kernel::class,
-            \App\Http\Kernel::class
-        );
-
-        // カーネル生成
-        $kernel = $app->make(\Illuminate\Contracts\Http\Kernel::class);
-
-        // カーネルのプロパティからRouterを取得
-        // ※protected プロパティにアクセスする為にReflection
-        $propRouter = new \ReflectionProperty(get_class($kernel), 'router');
-        $propRouter->setAccessible(true);
-        /** @var \Illuminate\Routing\Router $router */
-        $router = $propRouter->getValue($kernel);
-
-        // protected メソッドの findRoute() にアクセスする為に Reflection
+        // Routerインスタンス の protected メソッドの findRoute() にアクセスする為に Reflection
         $reflectionRouter = new \ReflectionClass(get_class($router));
         $findRoute = $reflectionRouter->getMethod('findRoute');
         $findRoute->setAccessible(true);
 
         // TODO: router/web.php の Route が RouteCollection にセットされるタイミングが把握できてない
         //       => setUp() の時点で既にセットされてる
+        // TODO: router/web.php から直接 RouteCollection を生成する
         // RouteCollection 取得
         $routeCollection = Route::getRoutes();
         // Router の $this->routes を書き換える
@@ -145,6 +130,6 @@ final class webTest extends BaseTestCase
         // Router に Request を渡し、dispatch された Route を取得
         /** @var \Illuminate\Routing\Route $route */
         $route = $findRoute->invokeArgs($router, [$request]);
-        $this->assertEquals(TaskIndexController::class, $route->getActionName());
+        $this->assertEquals(TaskIndexController::class, $route->getActionName(), 'リクエストに対応するコントローラが期待値通りである事');
     }
 }
