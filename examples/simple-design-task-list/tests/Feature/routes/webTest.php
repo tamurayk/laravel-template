@@ -100,29 +100,27 @@ final class webTest extends BaseTestCase
     public function testDispatch()
     {
         /**
-         * テスト対象
-         *   routes/web.php (=webミドルウェア対象をなる Route の一覧)
          * テスト内容
          *   任意の Request を Router に渡して dispatch される Route が期待値通りである事を確認
          */
 
         // Routerインスタンス生成
         $router = new \Illuminate\Routing\Router(new Dispatcher());
+        $this->assertEquals(0, $router->getRoutes()->count(), 'Router に RouteCollection がセットされていない事を確認');
+
+        // RouteCollection 取得
+        // note: \Tests\TestCase の CreatesApplication トレイトで Application が生成される際に、
+        //       routes 以下の設定ファイル定義された Route が Route ファサードにセットされる
+        $routeCollection = Route::getRoutes();
+
+        // テスト対象となる RouteCollection を Router にセット
+        $router->setRoutes($routeCollection);
+        $this->assertGreaterThan(1, $router->getRoutes()->count(), 'Router に RouteCollection がセットされた事を確認');
 
         // Routerインスタンス の protected メソッドの findRoute() にアクセスする為に Reflection
         $reflectionRouter = new \ReflectionClass(get_class($router));
         $findRoute = $reflectionRouter->getMethod('findRoute');
         $findRoute->setAccessible(true);
-
-        // TODO: router/web.php の Route が RouteCollection にセットされるタイミングが把握できてない
-        //       => setUp() の時点で既にセットされてる
-        // TODO: router/web.php から直接 RouteCollection を生成する
-        // RouteCollection 取得
-        $routeCollection = Route::getRoutes();
-        // Router の $this->routes を書き換える
-        $propRoutes =  $reflectionRouter->getProperty('routes');
-        $propRoutes->setAccessible(true);
-        $propRoutes->setValue($router, $routeCollection);
 
         // リクエスト生成
         $request = \Illuminate\Http\Request::create('http://localhost:8000/tasks/', 'GET', []);
@@ -130,6 +128,10 @@ final class webTest extends BaseTestCase
         // Router に Request を渡し、dispatch された Route を取得
         /** @var \Illuminate\Routing\Route $route */
         $route = $findRoute->invokeArgs($router, [$request]);
-        $this->assertEquals(TaskIndexController::class, $route->getActionName(), 'リクエストに対応するコントローラが期待値通りである事');
+        $this->assertEquals(
+            TaskIndexController::class,
+            $route->getActionName(),
+            'リクエストに対応するコントローラが期待値通りである事'
+        );
     }
 }
