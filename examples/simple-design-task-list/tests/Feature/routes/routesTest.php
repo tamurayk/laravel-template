@@ -100,7 +100,7 @@ final class routesTest extends BaseTestCase
     ) {
         /**
          * テスト内容
-         *   任意の Request を Router に渡して dispatch される Route が期待値通りである事を確認
+         *   任意の Request を Router に渡して dispatch された Route が期待値通りである事を確認
          */
 
         // Router生成
@@ -109,7 +109,7 @@ final class routesTest extends BaseTestCase
 
         // RouteCollection 取得
         // note: \Tests\TestCase の CreatesApplication トレイトで Application が生成される際に、
-        //       routes 以下の設定ファイル定義された Route が Route ファサードにセットされる
+        //       routes 以下の設定ファイルで定義された Route が Route ファサードにセットされる
         $routeCollection = Route::getRoutes();
 
         // Router に RouteCollection をセット
