@@ -127,6 +127,8 @@ final class RoutesTest extends BaseTestCase
         // Router に Request を渡し、dispatch された Route を取得
         /** @var \Illuminate\Routing\Route $route */
         $route = $findRoute->invokeArgs($router, [$request]);
+
+        // assert
         $this->assertEquals(
             $expectedActionName,
             $route->getActionName(),
