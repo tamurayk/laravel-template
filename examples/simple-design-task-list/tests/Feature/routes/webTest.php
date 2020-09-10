@@ -6,7 +6,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Task\TaskDestroyController;
 use App\Http\Controllers\Task\TaskIndexController;
 use App\Http\Controllers\Task\TaskStoreController;
-use Illuminate\Events\Dispatcher;
 use Tests\BaseTestCase;
 use Illuminate\Support\Facades\Route;
 
@@ -97,39 +96,55 @@ final class webTest extends BaseTestCase
         $this->assertEquals($expectedActionName, Route::currentRouteAction());
     }
 
-
-    public function testMap()
+    public function testDispatch()
     {
-        // Laravelアプリケーションインスタンス生成
-        $app = new \Illuminate\Foundation\Application('/srv');
+        /**
+         * テスト対象
+         *   routes/web.php (=webミドルウェア対象をなる Route の一覧)
+         * テスト内容
+         *   任意の Request を Router に渡して dispatch される Route が期待値通りである事を確認
+         */
 
-        // アプリケーションに App\Http\Kernel をシングルトンとしてバインド
-        // App\Http\Kernel は Illuminate\Foundation\Http\Kernel を継承したクラス
+        // Laravelアプリケーションインスタンス生成
+        $app = new \Illuminate\Foundation\Application(base_path());
+
+        // アプリケーションにHTTPカーネルをバインド
+        // ※HTTPカーネルの bootstrap で Router に webミドルウェアグループが適用される
         $app->singleton(
             \Illuminate\Contracts\Http\Kernel::class,
             \App\Http\Kernel::class
         );
 
-        // ルーター生成
-        $router = new \Illuminate\Routing\Router(new Dispatcher());
-        // ルーターにルートを追加
-        $router->addRoute('GET', '/', function () {
-            return 'hoge';
-        });
+        // カーネル生成
+        $kernel = $app->make(\Illuminate\Contracts\Http\Kernel::class);
 
-        $kernel = new \Illuminate\Foundation\Http\Kernel($app, $router);
+        // カーネルのプロパティからRouterを取得
+        // ※protected プロパティにアクセスする為にReflection
+        $propRouter = new \ReflectionProperty(get_class($kernel), 'router');
+        $propRouter->setAccessible(true);
+        /** @var \Illuminate\Routing\Router $router */
+        $router = $propRouter->getValue($kernel);
 
-        $request = \Illuminate\Http\Request::create('http://localhost:8000/', 'GET');
+        // protected メソッドの findRoute() にアクセスする為に Reflection
+        $reflectionRouter = new \ReflectionClass(get_class($router));
+        $findRoute = $reflectionRouter->getMethod('findRoute');
+        $findRoute->setAccessible(true);
 
+        // TODO: router/web.php の Route が RouteCollection にセットされるタイミングが把握できてない
+        //       => setUp() の時点で既にセットされてる
+        // RouteCollection 取得
+        $routeCollection = Route::getRoutes();
+        // Router の $this->routes を書き換える
+        $propRoutes =  $reflectionRouter->getProperty('routes');
+        $propRoutes->setAccessible(true);
+        $propRoutes->setValue($router, $routeCollection);
 
-        // protected メソッドをテスト出来るようにする
-        $reflection = new \ReflectionClass(\Illuminate\Foundation\Http\Kernel::class);
-        $method = $reflection->getMethod('dispatchToRouter');
-        $method->setAccessible(true);
+        // リクエスト生成
+        $request = \Illuminate\Http\Request::create('http://localhost:8000/tasks/', 'GET', []);
 
-        $closure = $method->invokeArgs($kernel, []);
-        $response = $closure($request);
-        var_dump($response);
+        // Router に Request を渡し、dispatch された Route を取得
+        /** @var \Illuminate\Routing\Route $route */
+        $route = $findRoute->invokeArgs($router, [$request]);
+        $this->assertEquals(TaskIndexController::class, $route->getActionName());
     }
-
 }
