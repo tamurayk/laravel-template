@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\routes;
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Task\TaskDestroyController;
 use App\Http\Controllers\Task\TaskIndexController;
@@ -22,89 +23,87 @@ final class webTest extends BaseTestCase
         parent::tearDown();
     }
 
-    public function RouteActionNameDataProvider()
+    public function DispatchDataProvider()
     {
+        // TODO: config() から取得する
+        $baseUrl = 'http://localhost:8000';
+
         return [
             /**
              * Example
              *
              * [
-             *     'get', //method
-             *     '/tasks', //テスト対象の url
-             *     TaskIndexController::class, //期待されるアクション名
-             *     'task.index' //期待されるルート名
+             *     'GET', //テスト対象: メソッド
+             *     'http://localhost:8000/home/', //テスト対象: URL
+             *     HomeController::class . '@index', //期待値: コントローラ名@アクション名 or Closure
+             *     'home' //期待値: ルート名
              * ],
              */
             [
-                'get',
-                '/home',
+                'GET',
+                $baseUrl. '/',
+                'Closure',
+                null,
+            ],
+            [
+                'GET',
+                $baseUrl. '/home',
                 HomeController::class . '@index',
-                'home'
+                'home',
             ],
             [
-                'get',
-                '/tasks',
+                'GET',
+                $baseUrl. '/tasks',
                 TaskIndexController::class,
-                'task.index'
+                'task.index',
             ],
             [
-                'post',
-                '/task',
+                'POST',
+                $baseUrl. '/task',
                 TaskStoreController::class,
-                'task.store'
+                'task.store',
             ],
             [
-                'delete',
-                '/task/1',
+                'DELETE',
+                $baseUrl. '/task/1',
                 TaskDestroyController::class,
-                'task.destroy'
+                'task.destroy',
+            ],
+            [
+                'GET',
+                $baseUrl. '/login/github',
+                LoginController::class . '@redirectToProvider',
+                'oauth.login',
+            ],
+            [
+                'GET',
+                $baseUrl. '/login/github/callback',
+                LoginController::class . '@handleProviderCallback',
+                'oauth.callback',
             ],
         ];
     }
 
     /**
-     * @dataProvider RouteActionNameDataProvider
+     * @dataProvider DispatchDataProvider
      * @param $method
      * @param $url
      * @param $expectedActionName
      * @param $expectedRouteName
+     * @throws \ReflectionException
      */
-    public function testRouteActionName(
+    public function testDispatch(
         $method,
         $url,
         $expectedActionName,
         $expectedRouteName
-    )
-    {
-        // 特定のテストでのみミドルウェアを無効化
-        $this->withoutMiddleware();
-
-        switch ($method) {
-            case 'post':
-                $this->post($url);
-                break;
-            case 'get':
-                $this->get($url);
-                break;
-            case 'delete':
-                $this->delete($url);
-                break;
-            default:
-                $this->get($url);
-        }
-
-        $this->assertEquals($expectedRouteName, Route::currentRouteName());
-        $this->assertEquals($expectedActionName, Route::currentRouteAction());
-    }
-
-    public function testDispatch()
-    {
+    ) {
         /**
          * テスト内容
          *   任意の Request を Router に渡して dispatch される Route が期待値通りである事を確認
          */
 
-        // Routerインスタンス生成
+        // Router生成
         $router = new \Illuminate\Routing\Router(new Dispatcher());
         $this->assertEquals(0, $router->getRoutes()->count(), 'Router に RouteCollection がセットされていない事を確認');
 
@@ -113,25 +112,30 @@ final class webTest extends BaseTestCase
         //       routes 以下の設定ファイル定義された Route が Route ファサードにセットされる
         $routeCollection = Route::getRoutes();
 
-        // テスト対象となる RouteCollection を Router にセット
+        // Router に RouteCollection をセット
         $router->setRoutes($routeCollection);
         $this->assertGreaterThan(1, $router->getRoutes()->count(), 'Router に RouteCollection がセットされた事を確認');
 
-        // Routerインスタンス の protected メソッドの findRoute() にアクセスする為に Reflection
+        // Routerインスタンス の protected メソッドにアクセスする為に Reflection
         $reflectionRouter = new \ReflectionClass(get_class($router));
         $findRoute = $reflectionRouter->getMethod('findRoute');
         $findRoute->setAccessible(true);
 
         // リクエスト生成
-        $request = \Illuminate\Http\Request::create('http://localhost:8000/tasks/', 'GET', []);
+        $request = \Illuminate\Http\Request::create($url, $method);
 
         // Router に Request を渡し、dispatch された Route を取得
         /** @var \Illuminate\Routing\Route $route */
         $route = $findRoute->invokeArgs($router, [$request]);
         $this->assertEquals(
-            TaskIndexController::class,
+            $expectedActionName,
             $route->getActionName(),
             'リクエストに対応するコントローラが期待値通りである事'
+        );
+        $this->assertEquals(
+            $expectedRouteName,
+            $route->getName(),
+            'リクエストに対応するルート名が期待値通りである事'
         );
     }
 }
