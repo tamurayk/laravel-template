@@ -4,13 +4,19 @@ namespace Tests\Feature\app\Http\Controllers\Task;
 
 use App\Models\Eloquents\Task;
 use Illuminate\Database\Eloquent\Collection;
-use Tests\TestCaseBase;
+use Tests\BaseTestCase;
 
-class TaskIndexControllerTest extends TestCaseBase
+class TaskIndexControllerTest extends BaseTestCase
 {
     public function setUp(): void
     {
         parent::setUp();
+    }
+
+
+    public function tearDown(): void
+    {
+        parent::tearDown();
     }
 
     /**

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Models\Entities;
+namespace App\Models\Interfaces;
 
 use App\Models\Eloquents\Task;
 use Carbon\Carbon;
@@ -10,7 +10,7 @@ use Illuminate\Support\Collection;
 
 /**
  * Interface UserInterface
- * @package App\Models\Entities
+ * @package App\Models\Interfaces
  * @property int $id
  * @property string $name
  * @property string $email
@@ -19,7 +19,7 @@ use Illuminate\Support\Collection;
  * @property string|null $remember_token
  * @property Collection|Task[]|null $tasks
  */
-interface UserInterface extends InterfaceBase
+interface UserInterface extends BaseInterface
 {
     /**
      * @return HasMany

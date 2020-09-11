@@ -15,12 +15,12 @@ final class ModelsServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            \App\Models\Entities\UserInterface::class,
+            \App\Models\Interfaces\UserInterface::class,
             \App\Models\Eloquents\User::class
         );
 
         $this->app->bind(
-            \App\Models\Entities\TaskInterface::class,
+            \App\Models\Interfaces\TaskInterface::class,
             \App\Models\Eloquents\Task::class
         );
     }

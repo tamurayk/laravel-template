@@ -15,16 +15,16 @@ final class UseCasesServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            \App\Http\UseCases\Task\Contracts\TaskIndexUseCaseInterface::class,
-            \App\Http\UseCases\Task\TaskIndexUseCase::class
+            \App\Http\UseCases\Task\Interfaces\TaskIndexInterface::class,
+            \App\Http\UseCases\Task\TaskIndex::class
         );
         $this->app->bind(
-            \App\Http\UseCases\Task\Contracts\TaskStoreUseCaseInterface::class,
-            \App\Http\UseCases\Task\TaskStoreUseCase::class
+            \App\Http\UseCases\Task\Interfaces\TaskStoreInterface::class,
+            \App\Http\UseCases\Task\TaskStore::class
         );
         $this->app->bind(
-            \App\Http\UseCases\Task\Contracts\TaskDestroyUseCaseInterface::class,
-            \App\Http\UseCases\Task\TaskDestroyUseCase::class
+            \App\Http\UseCases\Task\Interfaces\TaskDestroyInterface::class,
+            \App\Http\UseCases\Task\TaskDestroy::class
         );
     }
 

@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Http\UseCases\Task\Contracts;
+namespace App\Http\UseCases\Task\Interfaces;
 
-use App\Models\Entities\TaskInterface;
+use App\Models\Interfaces\TaskInterface;
 
-interface TaskStoreUseCaseInterface
+interface TaskStoreInterface
 {
     public function __construct(TaskInterface $task);
 

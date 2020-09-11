@@ -6,10 +6,10 @@ namespace App\Http\UseCase\Task\Exceptions;
 use Exception;
 
 /**
- * Class TaskStoreFailureException
+ * Class TaskStoreException
  * @package App\Http\UseCase\Task\Exceptions
  */
-class TaskStoreFailureException extends Exception
+class TaskStoreException extends Exception
 {
     //
 }

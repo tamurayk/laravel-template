@@ -3,13 +3,19 @@
 namespace Tests\Feature\app\Http\Controllers\Task;
 
 use Illuminate\Support\Facades\DB;
-use Tests\TestCaseBase;
+use Tests\BaseTestCase;
 
-class TaskStoreControllerTest extends TestCaseBase
+class TaskStoreControllerTest extends BaseTestCase
 {
     public function setUp(): void
     {
         parent::setUp();
+    }
+
+
+    public function tearDown(): void
+    {
+        parent::tearDown();
     }
 
     /**

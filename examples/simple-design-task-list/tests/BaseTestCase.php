@@ -2,10 +2,12 @@
 
 namespace Tests;
 
+use Illuminate\Database\Connection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 
-class TestCaseBase extends TestCase
+class BaseTestCase extends TestCase
 {
     // Run migration automatically before run test.
     // Undo data changed during the test.
@@ -24,9 +26,15 @@ class TestCaseBase extends TestCase
      */
     public function tearDown(): void
     {
-        // RefreshDatabase トレイトで migration が行われるのはテスト開始時に一度だけの為、
-        // 各テスト毎に migration:refresh して、各テスト毎のテストデータの独立性を保つようにしている
-        Artisan::call('migrate:refresh');
+        /** @var Connection $connection */
+        $connection = DB::connection();
+        $tables = $connection->getDoctrineSchemaManager()->listTableNames();
+
+        // 各テスト毎のテストデータの独立性を保つように、テスト毎に truncate している
+        foreach ($tables as $tableName) {
+            DB::table($tableName)->truncate();
+        }
+
         parent::tearDown();
     }
 }
