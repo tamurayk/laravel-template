@@ -14,6 +14,9 @@ final class UseCasesServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        /**
+         * Task
+         */
         $this->app->bind(
             \App\Http\UseCases\Task\Interfaces\TaskIndexInterface::class,
             \App\Http\UseCases\Task\TaskIndex::class
@@ -25,6 +28,14 @@ final class UseCasesServiceProvider extends ServiceProvider
         $this->app->bind(
             \App\Http\UseCases\Task\Interfaces\TaskDestroyInterface::class,
             \App\Http\UseCases\Task\TaskDestroy::class
+        );
+
+        /**
+         * Admin/User
+         */
+        $this->app->bind(
+            \App\Http\UseCases\Admin\User\Interfaces\UserIndexInterface::class,
+            \App\Http\UseCases\Admin\User\UserIndex::class
         );
     }
 

@@ -8,7 +8,7 @@ use App\Models\Eloquents\Task;
 use Illuminate\Support\Facades\DB;
 use Tests\BaseTestCase;
 
-class TaskStoreUseCaseTest extends BaseTestCase
+class TaskStoreTest extends BaseTestCase
 {
     public function setUp(): void
     {

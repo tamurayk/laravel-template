@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\routes;
 
+use App\Http\Controllers\Admin\User\UserIndexController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Task\TaskDestroyController;
@@ -80,6 +81,12 @@ final class RoutesTest extends BaseTestCase
                 $baseUrl. '/login/github/callback',
                 LoginController::class . '@handleProviderCallback',
                 'oauth.callback',
+            ],
+            [
+                'GET',
+                $baseUrl. '/admin/users',
+                UserIndexController::class,
+                'admin.user.index',
             ],
         ];
     }
