@@ -9,7 +9,7 @@ use App\Models\Eloquents\Task;
 use Illuminate\Support\Facades\DB;
 use Tests\BaseTestCase;
 
-class TaskDestroyUseCaseTest extends BaseTestCase
+class TaskDestroyTest extends BaseTestCase
 {
     public function setUp(): void
     {
