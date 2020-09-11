@@ -10,6 +10,8 @@ class Administrator extends Authenticatable implements AdministratorInterface
     protected $table = 'administrators';
 
     /**
+     * The attributes that are mass assignable.
+     *
      * @var array
      */
     protected $fillable = [
@@ -17,6 +19,25 @@ class Administrator extends Authenticatable implements AdministratorInterface
         'name',
         'email',
         'password',
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
     ];
 
     /**
