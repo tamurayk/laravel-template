@@ -8,7 +8,7 @@ use App\Models\Eloquents\Task;
 use Illuminate\Support\Facades\DB;
 use Tests\BaseTestCase;
 
-class TaskIndexUseCaseTest extends BaseTestCase
+class TaskIndexTest extends BaseTestCase
 {
     public function setUp(): void
     {
@@ -54,5 +54,13 @@ class TaskIndexUseCaseTest extends BaseTestCase
         foreach ($useCaseOutput as $task) {
             $this->assertEquals(2, $task->user_id, 'user_id=2 の task のみを取得している事');
         }
+    }
+
+    /**
+     * @test
+     */
+    public function testPaginator()
+    {
+        $this->markTestIncomplete('ページネーションに対応したテストを書く');
     }
 }
