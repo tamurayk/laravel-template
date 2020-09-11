@@ -18,10 +18,17 @@ final class ModelsServiceProvider extends ServiceProvider
             \App\Models\Interfaces\UserInterface::class,
             \App\Models\Eloquents\User::class
         );
-
         $this->app->bind(
             \App\Models\Interfaces\TaskInterface::class,
             \App\Models\Eloquents\Task::class
+        );
+        $this->app->bind(
+            \App\Models\Interfaces\GroupInterface::class,
+            \App\Models\Eloquents\Group::class
+        );
+        $this->app->bind(
+            \App\Models\Interfaces\AdministratorInterface::class,
+            \App\Models\Eloquents\Administrator::class
         );
     }
 
