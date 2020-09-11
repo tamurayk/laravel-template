@@ -114,7 +114,7 @@ final class RoutesTest extends BaseTestCase
 
         // Router に RouteCollection をセット
         $router->setRoutes($routeCollection);
-        $this->assertGreaterThan(1, $router->getRoutes()->count(), 'Router に RouteCollection がセットされた事を確認');
+        $this->assertGreaterThanOrEqual(1, $router->getRoutes()->count(), 'Router に RouteCollection がセットされた事を確認');
 
         // Routerインスタンス の protected メソッドにアクセスする為に Reflection
         $reflectionRouter = new \ReflectionClass(get_class($router));
