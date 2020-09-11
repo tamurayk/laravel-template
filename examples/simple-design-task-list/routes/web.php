@@ -18,6 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// TODO: 不要になったら削除する
 Auth::routes();
 
 // GET /
