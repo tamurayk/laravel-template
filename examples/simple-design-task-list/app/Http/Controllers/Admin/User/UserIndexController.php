@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin\User;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\UseCases\Admin\User\Interfaces\UserIndexInterface;
 
-class UserIndexController extends Controller
+class UserIndexController extends AdminController
 {
     public function __invoke(UserIndexInterface $useCase)
     {

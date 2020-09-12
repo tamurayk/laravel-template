@@ -41,25 +41,51 @@ Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCall
 // GET /tasks
 Route::get('/tasks', 'Task\TaskIndexController')
     ->name('task.index')
-    ->middleware('auth');
+    ->middleware('auth:user');
 
 // POST /task
 Route::post('/task', 'Task\TaskStoreController')
     ->name('task.store')
-    ->middleware('auth');
+    ->middleware('auth:user');
 
 // DELETE /task/{task}
 Route::delete('/task/{task}', 'Task\TaskDestroyController')
     ->name('task.destroy')
-    ->middleware('auth');
+    ->middleware('auth:user');
 
 /**
  * admin
  */
-Route::prefix('admin')->group(function () {
+Route::namespace('Admin')->prefix('admin')->group(function () {
+    // GET /admin
+    Route::get('/', function () {
+        return view('admin.welcome');
+    })->middleware('guest:admin');
+
+    // GET /admin/home
+    Route::get('/home', 'HomeController@index')
+        ->middleware('auth:admin')
+        ->name('admin.home');
+
+    /**
+     * Auth
+     */
+    Route::get('login', 'Auth\LoginController@showLoginForm')
+        ->middleware('guest:admin')
+        ->name('admin.login');
+    Route::post('login', 'Auth\LoginController@login')
+        ->middleware('guest:admin')
+        ->name('admin.login');
+    Route::post('logout', 'Auth\LoginController@logout')
+        ->middleware('auth:admin')
+        ->name('admin.logout');
+
+    /**
+     * User
+     */
     // TODO: add auth middleware
     // GET /admin/users
-    Route::get('users', 'Admin\User\UserIndexController')
+    Route::get('users', 'User\UserIndexController')
+        ->middleware('auth:admin')
         ->name('admin.user.index');
 });
-

@@ -8,6 +8,7 @@ use App\Models\Interfaces\AdministratorInterface;
 use App\Models\Interfaces\GroupInterface;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class CreateAdminCommand extends Command
 {
@@ -103,7 +104,7 @@ class CreateAdminCommand extends Command
             'group_id' => 1,
             'name' => $name,
             'email' => $email,
-            'password' => $pw,
+            'password' => Hash::make($pw),
         ];
 
         $administrator = $this->administrator->newInstance($fill);

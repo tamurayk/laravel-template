@@ -1,11 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header">Admin Dashboard</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -16,9 +16,8 @@
 
                     You are logged in!
                     <div>
-                      <a href="{{ route('task.index') }}">Your task list</a>
+                        <a href="{{ route('admin.user.index') }}">Users</a>
                     </div>
-
                 </div>
             </div>
         </div>

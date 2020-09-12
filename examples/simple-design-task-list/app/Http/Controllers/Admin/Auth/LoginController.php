@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Admin\Auth;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\AdminController;
 use App\Models\Eloquents\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Http\Request;
 
-class LoginController extends Controller
+class LoginController extends AdminController
 {
     /*
     |--------------------------------------------------------------------------
@@ -30,7 +30,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = RouteServiceProvider::ADMIN_HOME;
 
     /**
      * Create a new controller instance.
@@ -51,7 +51,19 @@ class LoginController extends Controller
      */
     protected function guard()
     {
-        return Auth::guard('user');
+        return Auth::guard('admin');
+    }
+
+    /**
+     * Override to \Illuminate\Foundation\Auth\AuthenticatesUsers
+     *
+     * Show the application's login form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showLoginForm()
+    {
+        return view('admin.auth.login');
     }
 
     /**
@@ -64,7 +76,7 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
-        Auth::guard('user')->logout();
+        Auth::guard('admin')->logout();
 
         return $this->loggedOut($request);
     }
@@ -79,7 +91,7 @@ class LoginController extends Controller
      */
     public function loggedOut(Request $request)
     {
-        return redirect(route('login'));
+        return redirect(route('admin.login'));
     }
 
     /**
