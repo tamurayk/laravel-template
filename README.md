@@ -117,6 +117,8 @@
 
 ### ディレクトリ構成 (Laravel app以下)
 
+TODO: 更新する
+
 ```
 ./src/app/
     ├── Console => カスタム Artisan コマンド(=コンソールアプリ) 群
@@ -274,6 +276,12 @@ $ docker exec php-fpm php artisan key:generate
 
 ```
 $ docker exec php-fpm php artisan migrate
+```
+
+### 初期管理ユーザー作成
+
+```
+# php artisan admin:create
 ```
 
 ### 開発時に phpMyAdmin を利用する

@@ -99,3 +99,29 @@ $ cp -R ../laravel-basic-task-list-intermediate/resources/views/* resources/view
 # php artisan make:factory TaskFactory --model=Task
 ```
 
+
+## 作業log (Admin)
+
+1. Admin/Task/TaskIndexController.php
+  - CakePHP の bake と違って空の XxxxController.php が生成されるだけ (testやmodelは生成されない)
+
+```
+# php artisan make:controller Admin/User/UserIndexController
+```
+
+1. blade
+  - view は artisan では作成できないので自分で作る
+  
+```
+$ mkdir -p resources/views/admin/user
+$ simple-design-task-list $ touch resources/views/admin/user/index.blade.php
+```
+
+1. 初期管理者作成用コマンド
+
+```
+# php artisan make:model Models/Eloquents/Administrator
+# php artisan make:model Models/Eloquents/Group
+
+# php artisan make:command CreateAdminCommand
+```
