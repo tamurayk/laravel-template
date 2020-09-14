@@ -58,12 +58,14 @@ class UserIndexControllerTest extends BaseTestCase
         }
         $this->assertEquals(3, DB::table('users')->count());
 
-        // TODO: ADD authentication.
+        factory(\App\Models\Eloquents\Group::class)->create();
+        $user = factory(\App\Models\Eloquents\Administrator::class)->create();
+        $authUser = $this->actingAs($user, 'admin');
 
-        // TODO: Check authenticated.
+        $this->assertAuthenticated('admin');
 
         // HTTP request
-        $response = $this->get('/admin/users');
+        $response = $authUser->get('/admin/users');
 
         // Assert
         $response->assertStatus(200);
@@ -78,7 +80,7 @@ class UserIndexControllerTest extends BaseTestCase
         $response->assertViewHas('users', $expected);
 
         // Assert HTML
-        $this->assertNotFalse(strpos($response->content(), '<title>admin page</title>'));
+        $this->assertNotFalse(strpos($response->content(), '<title>Admin</title>'));
         $this->assertNotFalse(strpos($response->content(), '<h1>users</h1>'));
         $this->assertNotFalse(strpos($response->content(), '<th>id</th>'));
         $this->assertNotFalse(strpos($response->content(), '<th>name</th>'));
