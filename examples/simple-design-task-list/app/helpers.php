@@ -9,9 +9,9 @@ if (!function_exists('sort_query_str')) {
      * @param array $currentQueries
      * @param string $orderColumn
      * @param string|null $orderDirection must be "asc" or "desc"
-     * @return string
      * @param string $columnKey
      * @param string $directionKey
+     * @return string
      */
     function sort_query_str(
         array $currentQueries,
