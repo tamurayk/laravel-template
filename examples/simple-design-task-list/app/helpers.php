@@ -1,32 +1,35 @@
 <?php
 
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Arr;
 
-if (!function_exists('sort_url')) {
+if (!function_exists('sort_query_str')) {
     /**
-     * ソート用のURLを生成
+     * ソート用のクエリ文字列を生成して返す
      *
-     * @param LengthAwarePaginator $paginator
      * @param array $currentQueries
      * @param string $orderColumn
-     * @param string|null $orderDirection
+     * @param string|null $orderDirection must be "asc" or "desc"
      * @return string
+     * @param string $columnKey
+     * @param string $directionKey
      */
-    function sort_url(
-        LengthAwarePaginator $paginator,
+    function sort_query_str(
         array $currentQueries,
         string $orderColumn,
-        ?string $orderDirection = null
-    ) {
-        // ソートURL生成の際の appends の影響が、ソートURL生成後に出現する $paginator->links() に出ないように clone している
-        $paginator = clone $paginator;
+        ?string $orderDirection = null,
+        string $columnKey = 'column',
+        string $directionKey = 'direction'
+    ):string {
+        $newQueries = $currentQueries;
+        $currentColumn = Arr::get($currentQueries, $columnKey);
+        $currentDirection = Arr::get($currentQueries, $directionKey);
 
-        // direction(=asc/desc)が指定されてない場合
+        // directionが指定されてない場合
         if (is_null($orderDirection)) {
-            // 現在のリクエストで指定されてるdirectionを反転
-            if (array_key_exists('orderDirection', $currentQueries)
-                && $orderColumn === Arr::get($currentQueries, 'orderColumn')
-                && Arr::get($currentQueries, 'orderDirection') === 'asc'
+            // 現在のdirectionを反転
+            if ($currentDirection
+                && $currentColumn === $orderColumn
+                && $currentDirection === 'asc'
             ) {
                 $orderDirection = 'desc';
             } else {
@@ -34,9 +37,19 @@ if (!function_exists('sort_url')) {
             }
         }
 
-        $paginator->appends(['orderColumn' => $orderColumn, 'orderDirection' => $orderDirection,]);
-        $url = $paginator->url($paginator->currentPage());
+        $newQueries[$columnKey] = $orderColumn;
+        $newQueries[$directionKey] = $orderDirection;
 
-        return $url;
+        $queryString = '';
+        foreach ($newQueries as $k => $v) {
+            $queryString .= sprintf(
+                '%s%s=%s',
+                strpos($queryString, '?') === false ? '?' : '&',
+                $k,
+                $v
+            );
+        }
+
+        return $queryString;
     }
 }
