@@ -124,15 +124,15 @@ TODO: 更新する
     ├── Console => カスタム Artisan コマンド(=コンソールアプリ) 群
     ├── Models
         ├── Constants => 定数
-        ├── Entities => Interface
-        │   ├── InterfaceBase.php
+        ├── Interfaces => Interface
+        │   ├── BaseInterface.php
         │   ├── TaskInterface.php
         │   └── UserInterface.php
         └── Eloquents => Eloquent Model
-            ├── EloquentAuthenticatableBase.php
-            ├── EloquentBase.php
-            ├── Task.php => Task Eloquent Model
-            └── User.php => User Eloquent Model
+            ├── Authenticatable.php => Auth ファサードの認証機能を利用するには、Authenticatable を継承した EloquentModel が必要
+            ├── Eloquent.php
+            ├── Task.php => Task Eloquent Model //Eloquent を継承
+            └── User.php => User Eloquent Model //Authenticatable を継承
     ├── Exceptions
     ├── Http
         ├── Controllers
@@ -144,7 +144,7 @@ TODO: 更新する
             └── Controller.php
         ├── Kernel.php
         ├── Middleware
-        ├── Requests => formRequest 群
+        ├── Requests => formRequest 群 ※formRequest は Request を拡張した機能
             ├── Contracts => interface
             │   ├── FormRequest.php
             │   └── Task
@@ -312,6 +312,14 @@ $ docker-compose -f docker-compose.yml -f docker-compose.local.yml up -d
 # ./vendor/bin/phpunit tests
 // help
 # ./vendor/bin/phpunit -h
+```
+
+## tips
+
+### ルーティング定義
+
+```
+php artisan route:list
 ```
 
 ## note
