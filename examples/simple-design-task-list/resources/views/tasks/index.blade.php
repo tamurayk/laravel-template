@@ -1,3 +1,7 @@
+@php
+/** @var App\Models\Eloquents\Task[] $tasks */
+@endphp
+
 @extends('layouts.app')
 
 @section('content')
@@ -71,6 +75,9 @@
               </tbody>
             </table>
           </div>
+        </div>
+        <div>
+          {{ $tasks->appends(request()->query())->links() }}
         </div>
       @endif
     </div>

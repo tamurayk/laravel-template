@@ -5,20 +5,26 @@ namespace App\Http\Controllers\Task;
 
 use App\Http\Controllers\Controller;
 use App\Http\UseCases\Task\Interfaces\TaskIndexInterface;
+use App\Models\Constants\TaskConstants;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Http\Request;
 
 class TaskIndexController extends Controller
 {
     /**
      * @param Guard $guard
      * @param TaskIndexInterface $useCase
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function __invoke(Guard $guard, TaskIndexInterface $useCase)
+    public function __invoke(Guard $guard, TaskIndexInterface $useCase, Request $request)
     {
         $userId = $guard->user()->id;
 
-        $tasks = $useCase($userId);
+        $tasks = $useCase(
+            $userId,
+            (int)$request->query('perPage', TaskConstants::PER_PAGE)
+        );
 
         return view('tasks.index', [
             'tasks' => $tasks,
