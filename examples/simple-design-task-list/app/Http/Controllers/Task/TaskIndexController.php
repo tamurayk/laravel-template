@@ -22,7 +22,7 @@ class TaskIndexController extends Controller
 
         $tasks = $useCase(
             $userId,
-            (int)$request->query('perPage', null),
+            $request->query('perPage', null) ? (int) $request->query('perPage') : null,
             $request->query('orderColumn', null),
             $request->query('orderDirection', null)
         );
