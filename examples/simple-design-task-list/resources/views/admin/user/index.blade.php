@@ -1,6 +1,7 @@
-<?php
+@php
 /** @var App\Models\Eloquents\User[] $users*/
-?>
+@endphp
+
 @extends('layouts.admin')
 @section('content')
   <h1>users</h1>

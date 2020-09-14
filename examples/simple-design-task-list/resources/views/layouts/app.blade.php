@@ -43,6 +43,11 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
+                            @if (Route::has('oauth.login'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('oauth.login', ['provider' => 'myoauthprovider']) }}">{{ __('OAuth Login') }}</a>
+                                </li>
+                            @endif
                             @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
