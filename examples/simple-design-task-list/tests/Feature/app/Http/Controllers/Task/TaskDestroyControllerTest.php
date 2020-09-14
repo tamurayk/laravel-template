@@ -57,7 +57,7 @@ class TaskDestroyControllerTest extends BaseTestCase
         $user = factory(\App\Models\Eloquents\User::class)->create([
             'id' => 1,
         ]);
-        $authUser = $this->actingAs($user, 'web');
+        $authUser = $this->actingAs($user, 'user');
 
         $this->assertEquals(3, DB::table('tasks')->count(), 'HTTPリクエスト前の tasks テーブルのレコード数が 3 件である事を確認');
 
@@ -90,7 +90,7 @@ class TaskDestroyControllerTest extends BaseTestCase
         $user = factory(\App\Models\Eloquents\User::class)->create([
             'id' => 1,
         ]);
-        $authUser = $this->actingAs($user, 'web');
+        $authUser = $this->actingAs($user, 'user');
 
         // HTTP リクエスト
         $response = $authUser->delete('/task/1');
@@ -110,7 +110,7 @@ class TaskDestroyControllerTest extends BaseTestCase
         $user = factory(\App\Models\Eloquents\User::class)->create([
             'id' => 1,
         ]);
-        $authUser = $this->actingAs($user, 'web');
+        $authUser = $this->actingAs($user, 'user');
 
         // HTTP リクエスト
         $response = $authUser->delete('/task/1');

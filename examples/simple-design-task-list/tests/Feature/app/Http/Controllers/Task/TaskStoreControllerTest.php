@@ -45,7 +45,7 @@ class TaskStoreControllerTest extends BaseTestCase
         $user = factory(\App\Models\Eloquents\User::class)->create([
             'id' => 1,
         ]);
-        $authUser = $this->actingAs($user, 'web');
+        $authUser = $this->actingAs($user, 'user');
 
         // HTTP リクエスト
         $data = [
