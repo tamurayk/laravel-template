@@ -52,9 +52,9 @@
           <div class="panel-body">
             <table class="table table-striped task-table">
               <thead>
-              <th><a href="{{ sort_url($tasks, request()->query(), 'id') }}">id</a></th>
-              <th><a href="{{ sort_url($tasks, request()->query(), 'name') }}">name</a></th>
-              <th><a href="{{ sort_url($tasks, request()->query(), 'created_at') }}">created_at</a></th>
+              <th><a href="{{ $tasks->path() . sort_query_str(request()->query(), 'id') }}">id</a></th>
+              <th><a href="{{ $tasks->path() . sort_query_str(request()->query(), 'name') }}">name</a></th>
+              <th><a href="{{ $tasks->path() . sort_query_str(request()->query(), 'created_at') }}">created_at</a></th>
               <th>&nbsp;</th>
               </thead>
               <tbody>
