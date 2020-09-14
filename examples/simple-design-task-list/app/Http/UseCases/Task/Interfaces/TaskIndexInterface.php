@@ -20,7 +20,7 @@ interface TaskIndexInterface
     public function __invoke(
         int $userId,
         ?int $perPage,
-        ?string $orderColumn,
-        ?string $orderDirection
+        ?string $orderColumn = null,
+        ?string $orderDirection = null
     ): LengthAwarePaginator;
 }

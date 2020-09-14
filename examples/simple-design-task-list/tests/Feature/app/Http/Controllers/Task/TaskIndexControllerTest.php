@@ -2,8 +2,10 @@
 
 namespace Tests\Feature\app\Http\Controllers\Task;
 
+use App\Models\Constants\TaskConstants;
 use App\Models\Eloquents\Task;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Tests\BaseTestCase;
 
 class TaskIndexControllerTest extends BaseTestCase
@@ -45,10 +47,10 @@ class TaskIndexControllerTest extends BaseTestCase
 
         // 認証
         $user = factory(\App\Models\Eloquents\User::class)->create();
-        $authUser = $this->actingAs($user, 'web');
+        $authUser = $this->actingAs($user, 'user');
 
         // 認証済みである事を確認
-        $this->assertAuthenticated('web');
+        $this->assertAuthenticated('user');
 
         // HTTP リクエスト
         $response = $authUser->get('/tasks');
@@ -91,10 +93,10 @@ class TaskIndexControllerTest extends BaseTestCase
         $user = factory(\App\Models\Eloquents\User::class)->create([
             'id' => 1,
         ]);
-        $authUser = $this->actingAs($user, 'web');
+        $authUser = $this->actingAs($user, 'user');
 
         // Check authenticated.
-        $this->assertAuthenticated('web');
+        $this->assertAuthenticated('user');
 
         // Http request
         $response = $authUser->get('/tasks');
@@ -104,11 +106,20 @@ class TaskIndexControllerTest extends BaseTestCase
         $response->assertViewIs('tasks.index');
 
         // Assert view vars.
-        // note: 期待値は、中身が TaskEloquentModel の配列の Collection
-        $expected = new Collection([
-            (new Task())->newQuery()->find(1), //note: EloquentModel の find() は EloquentModel を返す
+        $collection = new Collection([
+            (new Task())->newQuery()->find(1),
             (new Task())->newQuery()->find(3),
         ]);
+        $expected = new LengthAwarePaginator(
+            $collection,
+            2,
+            TaskConstants::PER_PAGE,
+            1,
+            [
+                'path' => sprintf('%s/tasks', config('app.url')),
+                'pageName' => 'page',
+            ]
+        );
         $response->assertViewHas('tasks', $expected);
 
         // Assert HTML
@@ -122,7 +133,7 @@ class TaskIndexControllerTest extends BaseTestCase
         $user = factory(\App\Models\Eloquents\User::class)->create([
             'id' => 2,
         ]);
-        $authUser = $this->actingAs($user, 'web');
+        $authUser = $this->actingAs($user, 'user');
 
         // Http request
         $response = $authUser->get('/tasks');
@@ -132,9 +143,19 @@ class TaskIndexControllerTest extends BaseTestCase
         $response->assertViewIs('tasks.index');
 
         // Assert view vars.
-        $expected = new Collection([
+        $collection = new Collection([
             (new Task())->newQuery()->find(2),
         ]);
+        $expected = new LengthAwarePaginator(
+            $collection,
+            1,
+            TaskConstants::PER_PAGE,
+            1,
+            [
+                'path' => sprintf('%s/tasks', config('app.url')),
+                'pageName' => 'page',
+            ]
+        );
         $response->assertViewHas('tasks', $expected);
 
         // Assert HTML
