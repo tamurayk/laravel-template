@@ -3,9 +3,8 @@ declare(strict_types=1);
 
 namespace App\Http\UseCases\Task\Interfaces;
 
-use App\Models\Constants\TaskConstants;
 use App\Models\Interfaces\TaskInterface;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 interface TaskIndexInterface
 {
@@ -13,11 +12,15 @@ interface TaskIndexInterface
 
     /**
      * @param int $userId
-     * @param int $perPage
+     * @param int|null $perPage
+     * @param string|null $orderColumn
+     * @param string|null $orderDirection
      * @return LengthAwarePaginator
      */
     public function __invoke(
         int $userId,
-        int $perPage = TaskConstants::PER_PAGE
+        ?int $perPage,
+        ?string $orderColumn,
+        ?string $orderDirection
     ): LengthAwarePaginator;
 }

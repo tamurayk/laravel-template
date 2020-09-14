@@ -1,5 +1,6 @@
 @php
-/** @var App\Models\Eloquents\Task[] $tasks */
+  /** @var \Illuminate\Pagination\LengthAwarePaginator $tasks */
+  /** @var App\Models\Eloquents\Task $task */
 @endphp
 
 @extends('layouts.app')
@@ -51,13 +52,17 @@
           <div class="panel-body">
             <table class="table table-striped task-table">
               <thead>
-              <th>Task</th>
+              <th><a href="{{ sort_url($tasks, request()->query(), 'id') }}">id</a></th>
+              <th><a href="{{ sort_url($tasks, request()->query(), 'name') }}">name</a></th>
+              <th><a href="{{ sort_url($tasks, request()->query(), 'created_at') }}">created_at</a></th>
               <th>&nbsp;</th>
               </thead>
               <tbody>
               @foreach ($tasks as $task)
                 <tr>
+                  <td class="table-text"><div>{{ $task->id }}</div></td>
                   <td class="table-text"><div>{{ $task->name }}</div></td>
+                  <td class="table-text"><div>{{ $task->created_at }}</div></td>
 
                   <!-- Task Delete Button -->
                   <td>
@@ -77,7 +82,7 @@
           </div>
         </div>
         <div>
-          {{ $tasks->appends(request()->query())->links() }}
+          {{ $tasks->links() }}
         </div>
       @endif
     </div>

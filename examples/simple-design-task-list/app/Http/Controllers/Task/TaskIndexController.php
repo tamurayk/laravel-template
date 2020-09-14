@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Task;
 
 use App\Http\Controllers\Controller;
 use App\Http\UseCases\Task\Interfaces\TaskIndexInterface;
-use App\Models\Constants\TaskConstants;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 
@@ -23,11 +22,13 @@ class TaskIndexController extends Controller
 
         $tasks = $useCase(
             $userId,
-            (int)$request->query('perPage', TaskConstants::PER_PAGE)
+            (int)$request->query('perPage', null),
+            $request->query('orderColumn', null),
+            $request->query('orderDirection', null)
         );
 
         return view('tasks.index', [
-            'tasks' => $tasks,
+            'tasks' => $tasks->appends($request->query()),
         ]);
     }
 }
