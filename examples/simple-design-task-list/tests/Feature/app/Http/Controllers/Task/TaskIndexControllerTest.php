@@ -120,7 +120,7 @@ class TaskIndexControllerTest extends AppTestCase
                 'pageName' => 'page',
             ]
         );
-        $response->assertViewHas('tasks', $expected);
+        $response->assertViewHas('paginator', $expected);
 
         // Assert HTML
         $this->assertNotFalse(strpos($response->content(), '<td class="table-text"><div>user 1 task 1</div></td>'));
@@ -156,7 +156,7 @@ class TaskIndexControllerTest extends AppTestCase
                 'pageName' => 'page',
             ]
         );
-        $response->assertViewHas('tasks', $expected);
+        $response->assertViewHas('paginator', $expected);
 
         // Assert HTML
         $this->assertNotFalse(strpos($response->content(), '<td class="table-text"><div>user 2 task 1</div></td>'));

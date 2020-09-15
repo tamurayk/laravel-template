@@ -20,7 +20,7 @@ class TaskIndexController extends AppController
     {
         $userId = $guard->user()->id;
 
-        $tasks = $useCase(
+        $paginator = $useCase(
             $userId,
             $request->query('perPage', null) ? (int) $request->query('perPage') : null,
             $request->query('column', null),
@@ -28,7 +28,7 @@ class TaskIndexController extends AppController
         );
 
         return view('tasks.index', [
-            'tasks' => $tasks->appends($request->query()),
+            'paginator' => $paginator->appends($request->query()),
         ]);
     }
 }

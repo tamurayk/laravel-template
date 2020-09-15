@@ -1,5 +1,5 @@
 @php
-  /** @var \Illuminate\Pagination\LengthAwarePaginator $tasks */
+  /** @var \Illuminate\Pagination\LengthAwarePaginator $paginator */
   /** @var App\Models\Eloquents\Task $task */
 @endphp
 
@@ -43,7 +43,7 @@
       </div>
 
       <!-- Current Tasks -->
-      @if (count($tasks) > 0)
+      @if (count($paginator) > 0)
         <div class="panel panel-default">
           <div class="panel-heading">
             Current Tasks
@@ -52,13 +52,13 @@
           <div class="panel-body">
             <table class="table table-striped task-table">
               <thead>
-              <th><a href="{{ $tasks->path() . sort_query_str(request()->query(), 'id') }}">id</a></th>
-              <th><a href="{{ $tasks->path() . sort_query_str(request()->query(), 'name') }}">name</a></th>
-              <th><a href="{{ $tasks->path() . sort_query_str(request()->query(), 'created_at') }}">created_at</a></th>
+              <th><a href="{{ $paginator->path() . sort_query_str(request()->query(), 'id') }}">id</a></th>
+              <th><a href="{{ $paginator->path() . sort_query_str(request()->query(), 'name') }}">name</a></th>
+              <th><a href="{{ $paginator->path() . sort_query_str(request()->query(), 'created_at') }}">created_at</a></th>
               <th>&nbsp;</th>
               </thead>
               <tbody>
-              @foreach ($tasks as $task)
+              @foreach ($paginator as $task)
                 <tr>
                   <td class="table-text"><div>{{ $task->id }}</div></td>
                   <td class="table-text"><div>{{ $task->name }}</div></td>
@@ -82,7 +82,7 @@
           </div>
         </div>
         <div>
-          {{ $tasks->links() }}
+          {{ $paginator->links() }}
         </div>
       @endif
     </div>
