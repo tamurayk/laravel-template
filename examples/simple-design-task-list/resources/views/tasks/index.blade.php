@@ -52,10 +52,14 @@
           <div class="panel-body">
             <table class="table table-striped task-table">
               <thead>
-              <th><a href="{{ $paginator->path() . sort_query_str(request()->query(), 'id') }}">id</a></th>
-              <th><a href="{{ $paginator->path() . sort_query_str(request()->query(), 'name') }}">name</a></th>
-              <th><a href="{{ $paginator->path() . sort_query_str(request()->query(), 'created_at') }}">created_at</a></th>
-              <th>&nbsp;</th>
+              @php
+                $currentUri = request()->fullUrlWithQuery(request()->query());
+                $currentColumn = request()->query('column');
+                $currentDirection = request()->query('direction');
+              @endphp
+              <th><a href="{{ sort_url($currentUri, 'id', sort_direction('id', $currentColumn, $currentDirection)) }}">id</a></th>
+              <th><a href="{{ sort_url($currentUri, 'name', sort_direction('name', $currentColumn, $currentDirection)) }}">name</a></th>
+              <th><a href="{{ sort_url($currentUri, 'created_at', sort_direction('created_at', $currentColumn, $currentDirection)) }}">created_at</a></th>
               </thead>
               <tbody>
               @foreach ($paginator as $task)
