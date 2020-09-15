@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Task;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\AppController;
 use App\Http\UseCases\Task\Interfaces\TaskIndexInterface;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 
-class TaskIndexController extends Controller
+class TaskIndexController extends AppController
 {
     /**
      * @param Guard $guard

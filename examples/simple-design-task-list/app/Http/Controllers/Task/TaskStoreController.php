@@ -3,14 +3,14 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Task;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\AppController;
 use App\Http\Requests\Task\Interfaces\TaskStoreRequestInterface;
 use App\Http\Requests\Task\TaskStoreRequest;
 use App\Http\UseCases\Task\Interfaces\TaskStoreInterface;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\RedirectResponse;
 
-class TaskStoreController extends Controller
+class TaskStoreController extends AppController
 {
     /**
      * @param Guard $guard
