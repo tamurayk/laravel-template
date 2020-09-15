@@ -6,9 +6,9 @@ use App\Models\Constants\TaskConstants;
 use App\Models\Eloquents\Task;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Tests\BaseTestCase;
+use Tests\AppTestCase;
 
-class TaskIndexControllerTest extends BaseTestCase
+class TaskIndexControllerTest extends AppTestCase
 {
     public function setUp(): void
     {

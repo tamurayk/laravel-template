@@ -6,9 +6,9 @@ namespace Test\Unit\app\Http\UseCase\Task;
 use App\Http\UseCases\Task\TaskStore;
 use App\Models\Eloquents\Task;
 use Illuminate\Support\Facades\DB;
-use Tests\BaseTestCase;
+use Tests\AppTestCase;
 
-class TaskStoreTest extends BaseTestCase
+class TaskStoreTest extends AppTestCase
 {
     public function setUp(): void
     {

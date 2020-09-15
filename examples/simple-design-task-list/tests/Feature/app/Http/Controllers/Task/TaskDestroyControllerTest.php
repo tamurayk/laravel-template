@@ -4,9 +4,9 @@ namespace Tests\Feature\app\Http\Controllers\Task;
 
 use App\Models\Eloquents\Task;
 use Illuminate\Support\Facades\DB;
-use Tests\BaseTestCase;
+use Tests\AppTestCase;
 
-class TaskDestroyControllerTest extends BaseTestCase
+class TaskDestroyControllerTest extends AppTestCase
 {
     public function setUp(): void
     {

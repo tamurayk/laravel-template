@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 
-class BaseTestCase extends TestCase
+class AppTestCase extends TestCase
 {
     // Run migration automatically before run test.
     // Undo data changed during the test.

@@ -9,10 +9,10 @@ use App\Http\Controllers\Task\TaskDestroyController;
 use App\Http\Controllers\Task\TaskIndexController;
 use App\Http\Controllers\Task\TaskStoreController;
 use Illuminate\Events\Dispatcher;
-use Tests\BaseTestCase;
+use Tests\AppTestCase;
 use Illuminate\Support\Facades\Route;
 
-final class RoutesTest extends BaseTestCase
+final class RoutesTest extends AppTestCase
 {
     public function setUp(): void
     {
