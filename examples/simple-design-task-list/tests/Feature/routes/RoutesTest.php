@@ -4,7 +4,7 @@ namespace Tests\Feature\routes;
 
 use App\Http\Controllers\Admin\User\UserIndexController;
 use App\Http\Controllers\User\Auth\LoginController;
-use App\Http\Controllers\User\HomeController;
+use App\Http\Controllers\User\Home\HomeIndexController;
 use App\Http\Controllers\User\Task\TaskDestroyController;
 use App\Http\Controllers\User\Task\TaskIndexController;
 use App\Http\Controllers\User\Task\TaskStoreController;
@@ -51,8 +51,8 @@ final class RoutesTest extends AppTestCase
             [
                 'GET',
                 $baseUrl. '/home',
-                HomeController::class . '@index',
-                'home',
+                HomeIndexController::class,
+                'home.index',
             ],
             [
                 'GET',
