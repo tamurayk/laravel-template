@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Http\UseCases\Task\Interfaces;
+namespace App\Http\UseCases\User\Task\Interfaces;
 
 use App\Models\Interfaces\TaskInterface;
 use Illuminate\Pagination\LengthAwarePaginator;

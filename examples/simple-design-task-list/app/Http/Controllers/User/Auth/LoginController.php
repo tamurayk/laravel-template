@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\User\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -52,6 +52,18 @@ class LoginController extends Controller
     protected function guard()
     {
         return Auth::guard('user');
+    }
+
+    /**
+     * Override to \Illuminate\Foundation\Auth\AuthenticatesUsers
+     *
+     * Show the application's login form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showLoginForm()
+    {
+        return view('user.auth.login');
     }
 
     /**

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Test\Unit\app\Http\UseCase\Task;
 
-use App\Http\UseCases\Task\TaskIndex;
+use App\Http\UseCases\User\Task\TaskIndex;
 use App\Models\Constants\TaskConstants;
 use App\Models\Eloquents\Task;
 use Illuminate\Support\Facades\DB;

@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Task;
+namespace App\Http\Controllers\User\Task;
 
-use App\Http\Controllers\AppController;
-use App\Http\UseCases\Task\Interfaces\TaskIndexInterface;
+use App\Http\Controllers\User\AppController;
+use App\Http\UseCases\User\Task\Interfaces\TaskIndexInterface;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 
@@ -27,7 +27,7 @@ class TaskIndexController extends AppController
             $request->query('direction', null)
         );
 
-        return view('tasks.index', [
+        return view('user.tasks.index', [
             'paginator' => $paginator->appends($request->query()),
         ]);
     }

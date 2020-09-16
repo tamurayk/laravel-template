@@ -58,7 +58,7 @@ class TaskIndexControllerTest extends AppTestCase
         // 認証済みユーザーからのリクエストの場合は 200 が返る事
         $response->assertStatus(200);
         // 正しい Blade ファイルを表示している事
-        $response->assertViewIs('tasks.index');
+        $response->assertViewIs('user.tasks.index');
     }
 
     /**
@@ -103,7 +103,7 @@ class TaskIndexControllerTest extends AppTestCase
 
         // Assert
         $response->assertStatus(200);
-        $response->assertViewIs('tasks.index');
+        $response->assertViewIs('user.tasks.index');
 
         // Assert view vars.
         $collection = new Collection([
@@ -140,7 +140,7 @@ class TaskIndexControllerTest extends AppTestCase
 
         // Assert
         $response->assertStatus(200);
-        $response->assertViewIs('tasks.index');
+        $response->assertViewIs('user.tasks.index');
 
         // Assert view vars.
         $collection = new Collection([

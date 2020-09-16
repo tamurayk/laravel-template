@@ -52,7 +52,7 @@ if (!function_exists('sort_uri_from_current_uri')) {
         string $directionKey = 'direction'
     ):string {
         $parsedUri = parse_url($currentUri);
-        parse_str(Arr::get($parsedUri, 'query'), $queries);
+        parse_str(Arr::get($parsedUri, 'query', ''), $queries);
 
         $queries[$columnKey] = $orderColumn;
         if (!is_null($orderDirection)) {

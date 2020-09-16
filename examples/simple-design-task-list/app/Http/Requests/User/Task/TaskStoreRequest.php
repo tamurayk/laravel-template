@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Http\Requests\Task;
+namespace App\Http\Requests\User\Task;
 
-use App\Http\Requests\Task\Interfaces\TaskStoreRequestInterface;
+use App\Http\Requests\User\Task\Interfaces\TaskStoreRequestInterface;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TaskStoreRequest extends FormRequest implements TaskStoreRequestInterface

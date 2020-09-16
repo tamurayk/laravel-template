@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Http\Requests\Task\Interfaces;
+namespace App\Http\Requests\User\Task\Interfaces;
 
 use App\Http\Requests\Interfaces\FormRequestInterface;
 

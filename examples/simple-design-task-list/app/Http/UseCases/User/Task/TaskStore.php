@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Http\UseCases\Task;
+namespace App\Http\UseCases\User\Task;
 
-use App\Http\UseCases\Task\Interfaces\TaskStoreInterface;
+use App\Http\UseCases\User\Task\Interfaces\TaskStoreInterface;
 use App\Models\Eloquents\Task;
 use App\Models\Interfaces\TaskInterface;
 

@@ -18,16 +18,16 @@ final class UseCasesServiceProvider extends ServiceProvider
          * Task
          */
         $this->app->bind(
-            \App\Http\UseCases\Task\Interfaces\TaskIndexInterface::class,
-            \App\Http\UseCases\Task\TaskIndex::class
+            \App\Http\UseCases\User\Task\Interfaces\TaskIndexInterface::class,
+            \App\Http\UseCases\User\Task\TaskIndex::class
         );
         $this->app->bind(
-            \App\Http\UseCases\Task\Interfaces\TaskStoreInterface::class,
-            \App\Http\UseCases\Task\TaskStore::class
+            \App\Http\UseCases\User\Task\Interfaces\TaskStoreInterface::class,
+            \App\Http\UseCases\User\Task\TaskStore::class
         );
         $this->app->bind(
-            \App\Http\UseCases\Task\Interfaces\TaskDestroyInterface::class,
-            \App\Http\UseCases\Task\TaskDestroy::class
+            \App\Http\UseCases\User\Task\Interfaces\TaskDestroyInterface::class,
+            \App\Http\UseCases\User\Task\TaskDestroy::class
         );
 
         /**

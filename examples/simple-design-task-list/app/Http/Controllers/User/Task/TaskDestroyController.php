@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Task;
+namespace App\Http\Controllers\User\Task;
 
-use App\Http\Controllers\AppController;
-use App\Http\UseCases\Task\Interfaces\TaskDestroyInterface;
+use App\Http\Controllers\User\AppController;
+use App\Http\UseCases\User\Task\Interfaces\TaskDestroyInterface;
 use App\Models\Eloquents\Task;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\RedirectResponse;
