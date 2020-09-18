@@ -26,11 +26,13 @@ class TaskIndex implements TaskIndexInterface
 
     /**
      * @param int $userId
+     * @param array $searchParam
      * @param array $paginatorParam
      * @return LengthAwarePaginator
      */
     public function __invoke(
         int $userId,
+        array $searchParam = [],
         array $paginatorParam = []
     ): LengthAwarePaginator {
         $perPage = Arr::get($paginatorParam, 'perPage') ?? TaskConstants::PER_PAGE;
@@ -40,6 +42,10 @@ class TaskIndex implements TaskIndexInterface
         $query = $this->task->newQuery()
             ->where('user_id', $userId)
             ->orderBy($orderColumn, $orderDirection);
+
+        if ($searchParam['name']) {
+            $query->where('name', 'like','%' . $searchParam['name'] . '%');
+        }
 
         // paginate() メソッド実行時に、HTTP Request の page クエリ文字列から対象ページを自動取得し、SQL に limit と offset が付与される
         $paginator = $query->paginate($perPage);
