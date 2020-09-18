@@ -5,15 +5,22 @@ namespace App\Http\Controllers\Admin\User;
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\UseCases\Admin\User\Interfaces\UserIndexInterface;
+use Illuminate\Http\Request;
 
 class UserIndexController extends AdminController
 {
-    public function __invoke(UserIndexInterface $useCase)
+    public function __invoke(UserIndexInterface $useCase, Request $request)
     {
-        $users = $useCase();
+        $paginatorParams = [
+            'perPage' => $request->query('perPage'),
+            'column' => $request->query('column'),
+            'direction' => $request->query('direction'),
+        ];
+
+        $paginator = $useCase($paginatorParams);
 
         return view('admin.user.index', [
-            'users' => $users,
+            'paginator' => $paginator->appends($request->query()),
         ]);
     }
 }

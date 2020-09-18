@@ -12,15 +12,11 @@ interface TaskIndexInterface
 
     /**
      * @param int $userId
-     * @param int|null $perPage
-     * @param string|null $orderColumn
-     * @param string|null $orderDirection
+     * @param array $paginatorParam
      * @return LengthAwarePaginator
      */
     public function __invoke(
         int $userId,
-        ?int $perPage,
-        ?string $orderColumn = null,
-        ?string $orderDirection = null
+        array $paginatorParam = []
     ): LengthAwarePaginator;
 }

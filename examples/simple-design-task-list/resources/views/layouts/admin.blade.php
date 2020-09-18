@@ -23,7 +23,7 @@
 <div id="app">
   <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="container">
-      <a class="navbar-brand" href="{{ url('/') }}">
+      <a class="navbar-brand" href="{{ route('admin.index') }}">
         Admin
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -72,9 +72,19 @@
     </div>
   </nav>
 
-  <main class="py-4">
+  <div class="container">
+    @if(session('message'))
+      <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        {{@session('message')}}
+      </div>
+    @endif
+
+    @yield('header')
     @yield('content')
-  </main>
+  </div>
 </div>
 </body>
 </html>

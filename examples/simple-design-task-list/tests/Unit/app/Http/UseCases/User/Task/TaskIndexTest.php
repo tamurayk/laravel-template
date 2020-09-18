@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Test\Unit\app\Http\UseCase\User\Task;
 
 use App\Http\UseCases\User\Task\TaskIndex;
-use App\Models\Constants\TaskConstants;
 use App\Models\Eloquents\Task;
 use Illuminate\Support\Facades\DB;
 use Tests\AppTestCase;
@@ -39,7 +38,7 @@ class TaskIndexTest extends AppTestCase
         $useCase = new TaskIndex(new Task());
 
         // run UseCase
-        $useCaseOutput = $useCase(1, TaskConstants::PER_PAGE);
+        $useCaseOutput = $useCase(1);
 
         // assert
         $this->assertCount(2, $useCaseOutput, 'user_id=1 の task のみを取得している事');
@@ -48,7 +47,7 @@ class TaskIndexTest extends AppTestCase
         }
 
         // run UseCase
-        $useCaseOutput = $useCase(2, TaskConstants::PER_PAGE);
+        $useCaseOutput = $useCase(2);
 
         // assert
         $this->assertCount(1, $useCaseOutput, 'user_id=2 の task のみを取得している事');
