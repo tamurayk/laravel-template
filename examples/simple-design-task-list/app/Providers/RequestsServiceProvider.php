@@ -19,8 +19,8 @@ final class RequestsServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            \App\Http\Requests\Task\Interfaces\TaskStoreRequestInterface::class,
-            \App\Http\Requests\Task\TaskStoreRequest::class
+            \App\Http\Requests\User\Task\Interfaces\TaskStoreRequestInterface::class,
+            \App\Http\Requests\User\Task\TaskStoreRequest::class
         );
     }
 

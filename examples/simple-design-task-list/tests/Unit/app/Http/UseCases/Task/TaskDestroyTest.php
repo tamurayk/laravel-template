@@ -3,13 +3,13 @@ declare(strict_types=1);
 
 namespace Test\Unit\app\Http\UseCase\Task;
 
-use App\Http\UseCases\Task\Exceptions\TaskDestroyException;
-use App\Http\UseCases\Task\TaskDestroy;
+use App\Http\UseCases\User\Task\Exceptions\TaskDestroyException;
+use App\Http\UseCases\User\Task\TaskDestroy;
 use App\Models\Eloquents\Task;
 use Illuminate\Support\Facades\DB;
-use Tests\BaseTestCase;
+use Tests\AppTestCase;
 
-class TaskDestroyTest extends BaseTestCase
+class TaskDestroyTest extends AppTestCase
 {
     public function setUp(): void
     {

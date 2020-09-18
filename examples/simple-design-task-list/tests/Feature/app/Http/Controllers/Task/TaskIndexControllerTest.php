@@ -6,9 +6,9 @@ use App\Models\Constants\TaskConstants;
 use App\Models\Eloquents\Task;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Tests\BaseTestCase;
+use Tests\AppTestCase;
 
-class TaskIndexControllerTest extends BaseTestCase
+class TaskIndexControllerTest extends AppTestCase
 {
     public function setUp(): void
     {
@@ -58,7 +58,7 @@ class TaskIndexControllerTest extends BaseTestCase
         // 認証済みユーザーからのリクエストの場合は 200 が返る事
         $response->assertStatus(200);
         // 正しい Blade ファイルを表示している事
-        $response->assertViewIs('tasks.index');
+        $response->assertViewIs('user.tasks.index');
     }
 
     /**
@@ -103,7 +103,7 @@ class TaskIndexControllerTest extends BaseTestCase
 
         // Assert
         $response->assertStatus(200);
-        $response->assertViewIs('tasks.index');
+        $response->assertViewIs('user.tasks.index');
 
         // Assert view vars.
         $collection = new Collection([
@@ -120,7 +120,7 @@ class TaskIndexControllerTest extends BaseTestCase
                 'pageName' => 'page',
             ]
         );
-        $response->assertViewHas('tasks', $expected);
+        $response->assertViewHas('paginator', $expected);
 
         // Assert HTML
         $this->assertNotFalse(strpos($response->content(), '<td class="table-text"><div>user 1 task 1</div></td>'));
@@ -140,7 +140,7 @@ class TaskIndexControllerTest extends BaseTestCase
 
         // Assert
         $response->assertStatus(200);
-        $response->assertViewIs('tasks.index');
+        $response->assertViewIs('user.tasks.index');
 
         // Assert view vars.
         $collection = new Collection([
@@ -156,7 +156,7 @@ class TaskIndexControllerTest extends BaseTestCase
                 'pageName' => 'page',
             ]
         );
-        $response->assertViewHas('tasks', $expected);
+        $response->assertViewHas('paginator', $expected);
 
         // Assert HTML
         $this->assertNotFalse(strpos($response->content(), '<td class="table-text"><div>user 2 task 1</div></td>'));

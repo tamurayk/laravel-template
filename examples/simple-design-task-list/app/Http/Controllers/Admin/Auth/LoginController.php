@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Admin\Auth;
 
 use App\Http\Controllers\Admin\AdminController;
-use App\Models\Eloquents\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Http\Request;
 
 class LoginController extends AdminController

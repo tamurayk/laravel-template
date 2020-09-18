@@ -5,9 +5,9 @@ namespace Test\Unit\app\Http\UseCases\Admin\User;
 use App\Http\UseCases\Admin\User\UserIndex;
 use App\Models\Eloquents\User;
 use Illuminate\Support\Facades\DB;
-use Tests\BaseTestCase;
+use Tests\AppTestCase;
 
-class UserIndexTest extends BaseTestCase
+class UserIndexTest extends AppTestCase
 {
     public function setUp(): void
     {

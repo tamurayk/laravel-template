@@ -5,9 +5,9 @@ namespace Tests\Feature\app\Http\Controllers\Admin\User;
 use App\Models\Eloquents\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
-use Tests\BaseTestCase;
+use Tests\AppTestCase;
 
-class UserIndexControllerTest extends BaseTestCase
+class UserIndexControllerTest extends AppTestCase
 {
     public function setUp(): void
     {

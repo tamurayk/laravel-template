@@ -3,16 +3,16 @@
 namespace Tests\Feature\routes;
 
 use App\Http\Controllers\Admin\User\UserIndexController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Task\TaskDestroyController;
-use App\Http\Controllers\Task\TaskIndexController;
-use App\Http\Controllers\Task\TaskStoreController;
+use App\Http\Controllers\User\Auth\LoginController;
+use App\Http\Controllers\User\Home\HomeIndexController;
+use App\Http\Controllers\User\Task\TaskDestroyController;
+use App\Http\Controllers\User\Task\TaskIndexController;
+use App\Http\Controllers\User\Task\TaskStoreController;
 use Illuminate\Events\Dispatcher;
-use Tests\BaseTestCase;
+use Tests\AppTestCase;
 use Illuminate\Support\Facades\Route;
 
-final class RoutesTest extends BaseTestCase
+final class RoutesTest extends AppTestCase
 {
     public function setUp(): void
     {
@@ -26,8 +26,10 @@ final class RoutesTest extends BaseTestCase
 
     public function DispatchDataProvider()
     {
-        // TODO: config() から取得する
-        $baseUrl = 'http://localhost:8000';
+        // dataProvider 内で config() を使用する為には、dataProvider内で $this->createApplication() する必要がある
+        $this->createApplication();
+
+        $baseUrl = config('app.url');
 
         return [
             /**
@@ -49,8 +51,8 @@ final class RoutesTest extends BaseTestCase
             [
                 'GET',
                 $baseUrl. '/home',
-                HomeController::class . '@index',
-                'home',
+                HomeIndexController::class,
+                'home.index',
             ],
             [
                 'GET',

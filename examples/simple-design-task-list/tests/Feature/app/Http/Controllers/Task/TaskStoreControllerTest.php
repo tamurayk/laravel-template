@@ -3,9 +3,9 @@
 namespace Tests\Feature\app\Http\Controllers\Task;
 
 use Illuminate\Support\Facades\DB;
-use Tests\BaseTestCase;
+use Tests\AppTestCase;
 
-class TaskStoreControllerTest extends BaseTestCase
+class TaskStoreControllerTest extends AppTestCase
 {
     public function setUp(): void
     {
