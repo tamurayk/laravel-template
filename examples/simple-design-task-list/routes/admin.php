@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 /**
- * admin
+ * routes for admin.
+ * These route are applied "admin" middleware group by \App\Http\Kernel::$middlewareGroups.
  */
 Route::prefix('admin')->group(function () {
     /**
