@@ -1,12 +1,16 @@
 <?php
 
-namespace Tests\Feature\app\Http\Controllers\Task;
+namespace Tests\Feature\app\Http\Controllers\User\Task;
 
+use App\Http\Controllers\User\Task\TaskStoreController;
 use Illuminate\Support\Facades\DB;
 use Tests\AppTestCase;
+use Tests\Traits\RoutingTestTrait;
 
 class TaskStoreControllerTest extends AppTestCase
 {
+    use RoutingTestTrait;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -16,6 +20,25 @@ class TaskStoreControllerTest extends AppTestCase
     public function tearDown(): void
     {
         parent::tearDown();
+    }
+
+    /**
+     * Override to \Tests\Traits\RoutingTestTrait::RoutingTestDataProvider
+     * @return array
+     */
+    public function RoutingTestDataProvider()
+    {
+        $this->createApplication();
+        $baseUrl = config('app.url');
+
+        return [
+            [
+                'POST',
+                $baseUrl. '/task',
+                TaskStoreController::class,
+                'task.store',
+            ],
+        ];
     }
 
     /**

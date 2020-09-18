@@ -1,13 +1,17 @@
 <?php
 
-namespace Tests\Feature\app\Http\Controllers\Task;
+namespace Tests\Feature\app\Http\Controllers\User\Task;
 
+use App\Http\Controllers\User\Task\TaskDestroyController;
 use App\Models\Eloquents\Task;
 use Illuminate\Support\Facades\DB;
 use Tests\AppTestCase;
+use Tests\Traits\RoutingTestTrait;
 
 class TaskDestroyControllerTest extends AppTestCase
 {
+    use RoutingTestTrait;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -16,6 +20,25 @@ class TaskDestroyControllerTest extends AppTestCase
     public function tearDown(): void
     {
         parent::tearDown();
+    }
+
+    /**
+     * Override to \Tests\Traits\RoutingTestTrait::RoutingTestDataProvider
+     * @return array
+     */
+    public function RoutingTestDataProvider()
+    {
+        $this->createApplication();
+        $baseUrl = config('app.url');
+
+        return [
+            [
+                'DELETE',
+                $baseUrl. '/task/1',
+                TaskDestroyController::class,
+                'task.destroy',
+            ],
+        ];
     }
 
     /**

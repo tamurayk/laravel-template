@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\app\Http\Controllers\Task;
+namespace Tests\Feature\app\Http\Controllers\User\Task;
 
 use App\Http\Controllers\User\Task\TaskIndexController;
 use App\Models\Constants\TaskConstants;

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Test\Unit\app\Http\UseCase\Task;
+namespace Test\Unit\app\Http\UseCase\User\Task;
 
 use App\Http\UseCases\User\Task\TaskIndex;
 use App\Models\Constants\TaskConstants;
