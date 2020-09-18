@@ -27,7 +27,7 @@ class TaskIndexController extends AppController
             $request->query('direction', null)
         );
 
-        return view('user.tasks.index', [
+        return view('user.task.index', [
             'paginator' => $paginator->appends($request->query()),
         ]);
     }
