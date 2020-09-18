@@ -186,4 +186,12 @@ class TaskIndexControllerTest extends AppTestCase
         // Assert HTML
         $this->assertNotFalse(strpos($response->content(), '<td class="table-text"><div>user 2 task 1</div></td>'));
     }
+
+    /**
+     * @test
+     */
+    public function index_検索()
+    {
+        $this->markTestIncomplete('検索機能のテストを書く');
+    }
 }

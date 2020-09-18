@@ -23,13 +23,37 @@
           <!-- Display Validation Errors -->
         @include('common.errors')
 
+        <!-- Search Form -->
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <div class="panel-title">Search Form</div>
+            </div>
+            <div class="panel-body">
+              <form method="GET" action="{{ route('task.index') }}" class="form-horizontal">
+                <div class="form-group">
+                  <label for="name" class="control-label col-sm-2">Name</label>
+                  <div class="col-sm-4">
+                    <input type="text" name="name" id="name" class="form-control input-sm" value="{{request()->get('name')}}"/>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <button type="submit" value="検索" class="btn btn-primary">Search</button>
+                  <button type="reset" value="クリア" class="btn ">Clear</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
         <!-- New Task Form -->
           <form action="{{ url('task') }}" method="POST" class="form-horizontal">
           {{ csrf_field() }}
 
           <!-- Task Name -->
             <div class="form-group">
-              <label for="task-name" class="col-sm-3 control-label">New Task</label>
+              <div class="panel-heading">
+                <div class="panel-title">New Task</div>
+              </div>
+              <label for="task-name" class="col-sm-3 control-label">Task</label>
 
               <div class="col-sm-6">
                 <input type="text" name="name" id="task-name" class="form-control" value="{{ old('task') }}">
@@ -73,7 +97,7 @@
                     <a class="btn btn-sm btn-warning" onclick="alert('not yet implemented.')">
                       <i class="fas fa-edit"></i> Edit
                     </a>
-                    <form action="{{url('task/' . $task->id)}}" method="POST" style="display: inline;"
+                    <form action="{{ route('task.destroy', ['task' => $task->id]) }}" method="POST" style="display: inline;"
                           onsubmit="return confirm('Delete? Are you sure?');">
                       {{ csrf_field() }}
                       {{ method_field('DELETE') }}

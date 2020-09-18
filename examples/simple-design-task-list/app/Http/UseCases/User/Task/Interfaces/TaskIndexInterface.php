@@ -12,11 +12,13 @@ interface TaskIndexInterface
 
     /**
      * @param int $userId
+     * @param array $searchParam
      * @param array $paginatorParam
      * @return LengthAwarePaginator
      */
     public function __invoke(
         int $userId,
+        array $searchParam = [],
         array $paginatorParam = []
     ): LengthAwarePaginator;
 }
