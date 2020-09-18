@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/', \App\Http\Controllers\IndexController::class)->name('index');
 
+// \Illuminate\Routing\Router::auth で $this->get('login', 'Auth\LoginController@showLoginForm') のように指定されている為、namespace を補完してる
 Route::namespace('App\Http\Controllers\User')->group(function () {
     /**
      * Auth
