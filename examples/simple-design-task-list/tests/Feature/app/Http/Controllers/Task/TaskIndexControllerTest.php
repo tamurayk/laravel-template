@@ -2,14 +2,18 @@
 
 namespace Tests\Feature\app\Http\Controllers\Task;
 
+use App\Http\Controllers\User\Task\TaskIndexController;
 use App\Models\Constants\TaskConstants;
 use App\Models\Eloquents\Task;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Tests\AppTestCase;
+use Tests\Traits\RoutingTestTrait;
 
 class TaskIndexControllerTest extends AppTestCase
 {
+    use RoutingTestTrait;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -19,6 +23,27 @@ class TaskIndexControllerTest extends AppTestCase
     public function tearDown(): void
     {
         parent::tearDown();
+    }
+
+    /**
+     * Override to \Tests\Traits\RoutingTestTrait::RoutingTestDataProvider
+     * @return array
+     */
+    public function RoutingTestDataProvider()
+    {
+        // dataProvider 内で config() を使用する為には、dataProvider内で $this->createApplication() する必要がある
+        $this->createApplication();
+
+        $baseUrl = config('app.url');
+
+        return [
+            [
+                'GET',
+                $baseUrl. '/tasks',
+                TaskIndexController::class,
+                'task.index',
+            ],
+        ];
     }
 
     /**
