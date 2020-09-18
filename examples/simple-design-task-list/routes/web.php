@@ -14,9 +14,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'IndexController')->name('index');
 
 Route::namespace('User')->group(function () {
     /**
@@ -26,11 +24,13 @@ Route::namespace('User')->group(function () {
      */
     Auth::routes();
 
-    /**
-     * OAuth Login
-     */
-    Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider')->name('oauth.login');
-    Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->name('oauth.callback');
+    Route::middleware('guest:user')->group(function () {
+        /**
+         * OAuth Login
+         */
+        Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider')->name('oauth.login');
+        Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->name('oauth.callback');
+    });
 
     /**
      * Require user auth

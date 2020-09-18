@@ -2,13 +2,17 @@
 
 namespace Tests\Feature\app\Http\Controllers\Admin\User;
 
+use App\Http\Controllers\Admin\User\UserIndexController;
 use App\Models\Eloquents\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Tests\AppTestCase;
+use Tests\Traits\RoutingTestTrait;
 
 class UserIndexControllerTest extends AppTestCase
 {
+    use RoutingTestTrait;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -17,6 +21,25 @@ class UserIndexControllerTest extends AppTestCase
     public function tearDown(): void
     {
         parent::tearDown();
+    }
+
+    /**
+     * Override to \Tests\Traits\RoutingTestTrait::RoutingTestDataProvider
+     * @return array
+     */
+    public function RoutingTestDataProvider()
+    {
+        $this->createApplication();
+        $baseUrl = config('app.url');
+
+        return [
+            [
+                'GET',
+                $baseUrl. '/admin/users',
+                UserIndexController::class,
+                'admin.user.index',
+            ],
+        ];
     }
 
     /**

@@ -1,36 +1,14 @@
 <?php
 
-namespace Tests\Feature\routes;
+namespace Tests\Traits;
 
-use App\Http\Controllers\Admin\User\UserIndexController;
-use App\Http\Controllers\User\Auth\LoginController;
-use App\Http\Controllers\User\Home\HomeIndexController;
-use App\Http\Controllers\User\Task\TaskDestroyController;
-use App\Http\Controllers\User\Task\TaskIndexController;
-use App\Http\Controllers\User\Task\TaskStoreController;
 use Illuminate\Events\Dispatcher;
-use Tests\AppTestCase;
 use Illuminate\Support\Facades\Route;
 
-final class RoutesTest extends AppTestCase
+trait RoutingTestTrait
 {
-    public function setUp(): void
+    public function RoutingTestDataProvider()
     {
-        parent::setUp();
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-    }
-
-    public function DispatchDataProvider()
-    {
-        // dataProvider 内で config() を使用する為には、dataProvider内で $this->createApplication() する必要がある
-        $this->createApplication();
-
-        $baseUrl = config('app.url');
-
         return [
             /**
              * Example
@@ -43,58 +21,13 @@ final class RoutesTest extends AppTestCase
              * ],
              */
             [
-                'GET',
-                $baseUrl. '/',
-                'Closure',
-                null,
-            ],
-            [
-                'GET',
-                $baseUrl. '/home',
-                HomeIndexController::class,
-                'home.index',
-            ],
-            [
-                'GET',
-                $baseUrl. '/tasks',
-                TaskIndexController::class,
-                'task.index',
-            ],
-            [
-                'POST',
-                $baseUrl. '/task',
-                TaskStoreController::class,
-                'task.store',
-            ],
-            [
-                'DELETE',
-                $baseUrl. '/task/1',
-                TaskDestroyController::class,
-                'task.destroy',
-            ],
-            [
-                'GET',
-                $baseUrl. '/login/github',
-                LoginController::class . '@redirectToProvider',
-                'oauth.login',
-            ],
-            [
-                'GET',
-                $baseUrl. '/login/github/callback',
-                LoginController::class . '@handleProviderCallback',
-                'oauth.callback',
-            ],
-            [
-                'GET',
-                $baseUrl. '/admin/users',
-                UserIndexController::class,
-                'admin.user.index',
+                //
             ],
         ];
     }
 
     /**
-     * @dataProvider DispatchDataProvider
+     * @dataProvider RoutingTestDataProvider
      * @param $method
      * @param $url
      * @param $expectedActionName
