@@ -36,11 +36,15 @@ Route::namespace('User')->group(function () {
      * Require user auth
      */
     Route::middleware('auth:user')->group(function () {
-        Route::get('/home', 'Home\HomeIndexController')->name('home.index');
 
-        Route::get('/tasks', 'Task\TaskIndexController')->name('task.index');
-        Route::post('/task', 'Task\TaskStoreController')->name('task.store');
-        Route::delete('/task/{task}', 'Task\TaskDestroyController')->name('task.destroy');
+        Route::namespace('Home')->group(function () {
+            Route::get('/home', 'HomeIndexController')->name('home.index');
+        });
+
+        Route::namespace('Task')->group(function () {
+            Route::get('/tasks', 'TaskIndexController')->name('task.index');
+            Route::post('/task', 'TaskStoreController')->name('task.store');
+            Route::delete('/task/{task}', 'TaskDestroyController')->name('task.destroy');
+        });
     });
-
 });
