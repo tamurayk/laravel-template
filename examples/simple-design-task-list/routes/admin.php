@@ -5,18 +5,16 @@ use Illuminate\Support\Facades\Route;
 /**
  * admin
  */
-Route::namespace('Admin')->prefix('admin')->group(function () {
+Route::prefix('admin')->group(function () {
     /**
-     * 認証済みの場合は、 guest middleware によって、RouteServiceProvider::ADMIN_HOME にリダイレクト
-     *   guest middleware = RedirectIfAuthenticated\App\Http\Middleware\RedirectIfAuthenticated (\App\Http\Kernel::$routeMiddleware にて設定)
+     * If authenticated, redirect to RouteServiceProvider::ADMIN_HOME by guest middleware.
+     * note: guest middleware = RedirectIfAuthenticated\App\Http\Middleware\RedirectIfAuthenticated (See: \App\Http\Kernel::$routeMiddleware)
      */
     Route::middleware('guest:admin')->group(function () {
-        Route::get('/', 'IndexController')->name('admin.index');
+        Route::get('/', \App\Http\Controllers\Admin\IndexController::class)->name('admin.index');
 
-        Route::namespace('Auth')->group(function () {
-            Route::get('login', 'LoginController@showLoginForm')->name('admin.login');
-            Route::post('login', 'LoginController@login')->name('admin.login');
-        });
+        Route::get('login', \App\Http\Controllers\Admin\Auth\LoginController::class . '@showLoginForm')->name('admin.login');
+        Route::post('login', \App\Http\Controllers\Admin\Auth\LoginController::class . '@login')->name('admin.login');
     });
 
     /**
@@ -27,12 +25,7 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
             Route::post('logout', 'LoginController@logout')->name('admin.logout');
         });
 
-        Route::namespace('Home')->group(function () {
-            Route::get('/home', 'HomeIndexController')->name('admin.home.index');
-        });
-
-        Route::namespace('User')->group(function () {
-            Route::get('/users', 'UserIndexController')->name('admin.user.index');
-        });
+        Route::get('/home', \App\Http\Controllers\Admin\Home\HomeIndexController::class)->name('admin.home.index');
+        Route::get('/users', \App\Http\Controllers\Admin\User\UserIndexController::class)->name('admin.user.index');
     });
 });

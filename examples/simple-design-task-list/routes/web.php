@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', 'IndexController')->name('index');
+Route::get('/', \App\Http\Controllers\IndexController::class)->name('index');
 
-Route::namespace('User')->group(function () {
+Route::namespace('App\Http\Controllers\User')->group(function () {
     /**
      * Auth
      *
@@ -24,27 +24,28 @@ Route::namespace('User')->group(function () {
      */
     Auth::routes();
 
-    Route::middleware('guest:user')->group(function () {
-        /**
-         * OAuth Login
-         */
-        Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider')->name('oauth.login');
-        Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->name('oauth.callback');
-    });
+});
 
+/**
+ * If authenticated, redirect to RouteServiceProvider::HOME by guest middleware.
+ * note: guest middleware = RedirectIfAuthenticated\App\Http\Middleware\RedirectIfAuthenticated (See: \App\Http\Kernel::$routeMiddleware)
+ */
+Route::middleware('guest:user')->group(function () {
     /**
-     * Require user auth
+     * OAuth Login
      */
-    Route::middleware('auth:user')->group(function () {
+    Route::get('login/{provider}', \App\Http\Controllers\User\Auth\LoginController::class . '@redirectToProvider')->name('oauth.login');
+    Route::get('login/{provider}/callback', \App\Http\Controllers\User\Auth\LoginController::class . '@handleProviderCallback')->name('oauth.callback');
+});
 
-        Route::namespace('Home')->group(function () {
-            Route::get('/home', 'HomeIndexController')->name('home.index');
-        });
+/**
+ * Require user auth
+ */
+Route::middleware('auth:user')->group(function () {
 
-        Route::namespace('Task')->group(function () {
-            Route::get('/tasks', 'TaskIndexController')->name('task.index');
-            Route::post('/task', 'TaskStoreController')->name('task.store');
-            Route::delete('/task/{task}', 'TaskDestroyController')->name('task.destroy');
-        });
-    });
+    Route::get('/home', \App\Http\Controllers\User\Home\HomeIndexController::class)->name('home.index');
+
+    Route::get('/tasks', \App\Http\Controllers\User\Task\TaskIndexController::class)->name('task.index');
+    Route::post('/task', \App\Http\Controllers\User\Task\TaskStoreController::class)->name('task.store');
+    Route::delete('/task/{task}', \App\Http\Controllers\User\Task\TaskDestroyController::class)->name('task.destroy');
 });
