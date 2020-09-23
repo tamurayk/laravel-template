@@ -2,7 +2,11 @@
 
 namespace Tests\Feature\app\Http\Controllers\User\Auth;
 
+use App\Http\Controllers\User\Auth\ConfirmPasswordController;
+use App\Http\Controllers\User\Auth\ForgotPasswordController;
 use App\Http\Controllers\User\Auth\LoginController;
+use App\Http\Controllers\User\Auth\ResetPasswordController;
+use App\Http\Controllers\User\Auth\VerificationController;
 use Tests\AppTestCase;
 use Tests\Traits\RoutingTestTrait;
 
@@ -31,6 +35,25 @@ class LoginControllerTest extends AppTestCase
         $baseUrl = config('app.url');
 
         return [
+            [
+                'GET',
+                $baseUrl. '/login',
+                LoginController::class . '@showLoginForm',
+                'login',
+            ],
+            [
+                'POST',
+                $baseUrl. '/login',
+                LoginController::class . '@login',
+                '',
+            ],
+            [
+                'POST',
+                $baseUrl. '/logout',
+                LoginController::class . '@logout',
+                'logout',
+            ],
+
             [
                 'GET',
                 $baseUrl. '/login/github',
