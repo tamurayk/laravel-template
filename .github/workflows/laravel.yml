@@ -17,9 +17,10 @@ jobs:
 
     services:
       database:
-        container_name: database
         image: mysql:5.7
-        environment:
+        ports: 3306:3306
+        options: --health-cmd "mysqladmin ping -h localhost" --health-interval 20s --health-timeout 10s --health-retries 10
+        env:
           MYSQL_DATABASE: webapp_testing
 #          MYSQL_USER: webapp
           MYSQL_PASSWORD: Passw0rd
