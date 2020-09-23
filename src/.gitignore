@@ -10,3 +10,12 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+
+# Laravel Mix
+/public/css/app.css
+/public/js/app.js
+/public/js/app.js.LICENSE.txt
+/public/mix-manifest.json
+
+# local notes or temporary file for developer.
+/__memo.md
