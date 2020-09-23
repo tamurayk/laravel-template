@@ -41,7 +41,7 @@ class LoginControllerTest extends AppTestCase
                 'POST',
                 $baseUrl. '/admin/login',
                 LoginController::class . '@login',
-                'admin.login',
+                '',
             ],
             [
                 'POST',

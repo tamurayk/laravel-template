@@ -17,8 +17,7 @@ Route::prefix('admin')->group(function () {
 
         Route::get('login', \App\Http\Controllers\Admin\Auth\LoginController::class . '@showLoginForm')
             ->name('admin.login');
-        Route::post('login', \App\Http\Controllers\Admin\Auth\LoginController::class . '@login')
-            ->name('admin.login');
+        Route::post('login', \App\Http\Controllers\Admin\Auth\LoginController::class . '@login');
     });
 
     /**
