@@ -15,6 +15,18 @@ jobs:
         operating-system: [ubuntu-latest]
         php-versions: ['7.4']
 
+    services:
+      database:
+        container_name: database
+        image: mysql:5.7
+        environment:
+          MYSQL_DATABASE: webapp_testing
+#          MYSQL_USER: webapp
+          MYSQL_PASSWORD: Passw0rd
+          MYSQL_ROOT_PASSWORD: Passw0rd
+#        volumes:
+#          - laravel-template-database-data:/var/lib/mysql:cached
+
     steps:
     - uses: actions/checkout@v2
     - name: Setup PHP, with composer and extensions
@@ -38,13 +50,13 @@ jobs:
       run: |
         cd src
         chmod -R 777 storage bootstrap/cache
-    - name: Create Database
-      run: |
-        sudo systemctl start mysql.service
-        mysql -uroot -h127.0.0.1 -proot -e 'CREATE DATABASE IF NOT EXISTS webapp_testing;'
+#    - name: Create Database
+#      run: |
+#        sudo systemctl start mysql.service
+#        mysql -uroot -h127.0.0.1 -proot -e 'CREATE DATABASE IF NOT EXISTS webapp_testing;'
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
-        DB_CONNECTION: mysql
+        DB_CONNECTION: database
         DB_TEST_HOST: 127.0.0.1
         DB_TEST_PORT: 3306
         DB_TEST_DATABASE: webapp_testing
