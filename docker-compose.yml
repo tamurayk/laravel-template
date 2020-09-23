@@ -31,7 +31,7 @@ services:
     ports:
       - "8000:80"
     volumes:
-      - ./src/app/public:/srv/app/public:cached
+      - ./src/public:/srv/public:cached
     depends_on:
       - php-fpm
 
