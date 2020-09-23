@@ -1,12 +1,8 @@
 <?php
 
-namespace Tests\Feature\app\Http\Controllers\User\Auth;
+namespace Tests\Feature\app\Http\Controllers\Admin\Auth;
 
-use App\Http\Controllers\User\Auth\ConfirmPasswordController;
-use App\Http\Controllers\User\Auth\ForgotPasswordController;
-use App\Http\Controllers\User\Auth\LoginController;
-use App\Http\Controllers\User\Auth\ResetPasswordController;
-use App\Http\Controllers\User\Auth\VerificationController;
+use App\Http\Controllers\Admin\Auth\LoginController;
 use Tests\AppTestCase;
 use Tests\Traits\RoutingTestTrait;
 
@@ -37,34 +33,21 @@ class LoginControllerTest extends AppTestCase
         return [
             [
                 'GET',
-                $baseUrl. '/login',
+                $baseUrl. '/admin/login',
                 LoginController::class . '@showLoginForm',
-                'login',
+                'admin.login',
             ],
             [
                 'POST',
-                $baseUrl. '/login',
+                $baseUrl. '/admin/login',
                 LoginController::class . '@login',
                 '',
             ],
             [
                 'POST',
-                $baseUrl. '/logout',
+                $baseUrl. '/admin/logout',
                 LoginController::class . '@logout',
-                'logout',
-            ],
-
-            [
-                'GET',
-                $baseUrl. '/login/github',
-                LoginController::class . '@redirectToProvider',
-                'oauth.login',
-            ],
-            [
-                'GET',
-                $baseUrl. '/login/github/callback',
-                LoginController::class . '@handleProviderCallback',
-                'oauth.callback',
+                'admin.logout',
             ],
         ];
     }
