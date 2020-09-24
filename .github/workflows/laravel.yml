@@ -40,7 +40,7 @@ jobs:
       DB_PORT: 3306
       DB_DATABASE: webapp_testing
       DB_USERNAME: webapp
-      DB_PASSWORD: Pass0rd
+      DB_PASSWORD: Passw0rd
 
     steps:
     - uses: actions/checkout@v2
