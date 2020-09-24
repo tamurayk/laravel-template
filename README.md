@@ -338,8 +338,8 @@
 
 ### DI と サービスコンテナ
 
-- Model, UseCase, FormRequest 等を追加した際は、`src/app/Providers` 以下のサービスコンテナ(=DIコンテナ)への登録が必要です
-- サービスコンテナにインターフェースとクラスを登録する事で、コンストラクタインジェクション/メソッドインジェクションが可能になります
+- Model, UseCase, FormRequest 等を追加した際は、`src/app/Providers` 以下のサービスプロバイダーへの登録が必要です
+- サービスプロバイダーにインターフェースとクラスを登録する事で、コンストラクタインジェクション/メソッドインジェクションが可能になります
 
 ```
 // 例: UseCasesServiceProvider に TaskStoreUseCase のインターフェースとクラスを登録
@@ -554,3 +554,202 @@ $ docker exec php-fpm php artisan migrate
   - https://readouble.com/laravel/7.x/en/structure.html#introduction
 
 
+### `Illuminate\Pagination\Paginator` vs `Illuminate\Pagination\LengthAwarePaginator`
+
+- paginator の取得方法
+  - `Illuminate\Pagination\Paginator`
+    - `\Illuminate\Database\Eloquent\Builder` の `simplePaginate()` メソッドで取得
+      - 例
+        - `DB::table('users')->simplePaginate()`
+        - `$UserEloquentModel->simplePaginate()`
+        - `$UserEloquentModel->newQuery()->get()->simplePaginate()`
+  
+  - `Illuminate\Pagination\LengthAwarePaginator` 
+    - `\Illuminate\Database\Eloquent\Builder` の `paginate()` メソッドで取得
+        - `DB::table('users')->paginate()`
+        - `$UserEloquentModel->paginate()`
+        - `$UserEloquentModel->newQuery()->where()->paginate()`
+        - note
+          - `get()` の後で `->paginate()` すると、`Method Illuminate\Database\Eloquent\Collection::paginate does not exist.` エラーになる
+
+- 現在のページ
+  - `paginate()` メソッド実行時に、現在のページ数を、HTTP Request の page クエリ文字列から自動的に取得する
+    - SQL に `limit` と `offset` が付与される
+
+
+### `php artisan ui`
+
+- Controller は作成しない
+  - `app/Http/Controllers/Auth` は Laravel インストール時に作成されるもの
+
+- `php artisan ui vue --auth` で作成されるものは以下
+  - `resources/sass/*`
+  - `resources/views/auth/*`
+  - `resources/views/layouts/app.blade.php`
+
+- `php artisan ui vue --auth` で変更されるものは以下
+  - `package.json `
+  - `routes/web.php`
+    - `Auth::routes();` が追加される
+
+- 参考コミット
+  - https://github.com/tamurayk/laravel-template/commit/be709bb58e0b7e77623936e4303bb8eb0a8537bb#diff-779f18bddd18edad64537505c9b5bcbf
+
+
+## リクエストライフサイクル
+
+https://readouble.com/laravel/6.x/ja/lifecycle.html
+
+```
+public/index.php
+↓
+public/index.php:24
+  // Composerが生成したオートローダーの定義をロード
+  require __DIR__.'/../vendor/autoload.php';
+↓
+public/index.php:38
+  // サービスコンテナ(=DIコンテナ)を生成
+  //   ※$app = サービスコンテナ
+  $app = require_once __DIR__.'/../bootstrap/app.php';
+    ↓
+    bootstrap/app.php 
+      Illuminate\Foundation\Application を new する
+      ↓
+      $app->singleton()
+        ↓
+        \Illuminate\Container\Container::singleton
+          サービスコンテナに下記をシングルトンで結合(bind)
+          ※結合(bind) = キーと解決処理をペアでサービスコンテナに登録する事
+            App\Http\Kernel
+            App\Console\Kernel
+            App\Exceptions\Handler
+      ↓
+      // Illuminate\Foundation\Application が return される
+      //   Illuminate\Foundation\Application は \Illuminate\Container\Container を継承したものである
+      //    つまり、$app = サービスコンテナ である
+      return $app;
+↓
+カーネルクラスのインスタンスを生成
+public/index.php:52
+  // サービスコンテナが HTTP カーネル を明示的に解決(resolve)
+  //  ※解決(resolve) = 結合されたインスタンス化の方法を元に、インスタンスを生成する事
+  //   ※makeメソッド = 明示的な解決(resolve)を行う
+  $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
+    ↓
+    \Illuminate\Foundation\Application::make
+      ↓
+      \Illuminate\Container\Container::make
+        ↓
+        \Illuminate\Container\Container::resolve
+          ↓
+          与えられたクラス名からインスタンスを生成
+          (resolveDependencies() に コンストラクタの引数を配列で渡す)
+          \Illuminate\Container\Container::build
+            ↓
+            resolveDependencies がインスタンスを返す
+            \Illuminate\Container\Container::resolveDependencies
+
+↓
+public/index.php:54
+  // HTTPカーネルによって、リクエストがハンドリングされ、レスポンスを取得
+  //  ※$kernel->handle() に渡すRequestの生成に Symfony が使用されてる
+  $kernel->handle(
+      $request = Illuminate\Http\Request::capture() => \Symfony\Component\HttpFoundation\Request::createFromGlobals
+  )
+  ↓
+  vendor/laravel/framework/src/Illuminate/Foundation/Application.php:902 Application@handle
+    ↓
+    vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php:105 Kernel@handle()
+      ↓
+      vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php:110
+      $this->sendRequestThroughRouter($request);
+        ↓
+        リクエストをミドルウェア/ルーター経由で送信
+        \Illuminate\Foundation\Http\Kernel::sendRequestThroughRouter
+          ↓
+          // リクエストを結合(=bind =キーと解決処理をペアでサービスコンテナに登録)
+          $this->app->instance('request', $request);
+          ↓
+          // 解決済みの Request ファサードをクリア
+          Facade::clearResolvedInstance('request');
+          ↓
+          // bootstrap が実行済みか確認し、未実行であればbootstrapを実行
+          \Illuminate\Foundation\Http\Kernel::bootstrap
+          ↓
+            bootstrap 処理
+            \Illuminate\Foundation\Application::bootstrapWith に \Illuminate\Foundation\Http\Kernel::$bootstrappers を渡す
+              // 環境変数をロード
+              // Config をロード
+              // 例外のハンドリング
+              // ファサードを登録 (config/app.php の aliases を参照してる)
+              // サービスプロバイダーの登録 (config/app.php の providers で設定されたサービスプロバイダーのインスタンス生成)
+              // サービスプロバイダーの boot() メソッドを実行
+              protected $bootstrappers = [
+                  \Illuminate\Foundation\Bootstrap\LoadEnvironmentVariables::class,
+                  \Illuminate\Foundation\Bootstrap\LoadConfiguration::class,
+                  \Illuminate\Foundation\Bootstrap\HandleExceptions::class,
+                  \Illuminate\Foundation\Bootstrap\RegisterFacades::class,
+                  \Illuminate\Foundation\Bootstrap\RegisterProviders::class, => \Illuminate\Foundation\Application::registerConfiguredProviders
+                  \Illuminate\Foundation\Bootstrap\BootProviders::class, => \Illuminate\Foundation\Application::boot
+              ];
+          ↓
+          // パイプライン生成
+          //   ミドルウェアを経由して、Requesut を Router にディスパッチして、Response を取得
+          new Pipeline($this->app)
+            ↓
+            \Illuminate\Routing\Pipeline
+            ↓
+            \Illuminate\Pipeline\Pipeline::__construct
+            ↓
+            \Illuminate\Pipeline\Pipeline::send
+            ↓
+            //ミドルウェアを経由する
+            \Illuminate\Pipeline\Pipeline::through
+            ↓
+            Router に Request をディスパッチ
+            \Illuminate\Foundation\Http\Kernel::dispatchToRouter
+              ↓
+              \Illuminate\Routing\Router::dispatch
+              ↓
+              \Illuminate\Routing\Router::dispatchToRoute
+              ↓
+              \Illuminate\Routing\Router::findRoute
+              ↓
+              \Illuminate\Routing\Router::runRoute
+              ↓
+              〜 略 〜
+              ↓
+              // Response インスタンスが返る
+              \Illuminate\Routing\Router::prepareResponse
+      ↓
+      イベントを発火して、イベントリスナをcall
+      vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php:121
+        \Illuminate\Events\Dispatcher
+          ↓
+          \Illuminate\Events\Dispatcher::dispatch
+      ↓
+      レスポンスを返す
+      vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php:125
+        return $response;
+↓
+public/index.php:58
+  // HTTP ヘッダーとコンテンツを返す
+  $response->send();
+    ↓
+    \Symfony\Component\HttpFoundation\Response::send
+↓
+public/index.php:60
+  // ターミネート
+  $kernel->terminate($request, $response);
+    ↓
+    \Illuminate\Foundation\Http\Kernel::terminate
+      ↓
+      \Illuminate\Foundation\Http\Kernel::terminateMiddleware
+      ↓
+      \Illuminate\Foundation\Application::terminate
+```
+
+### routes/web.php
+
+webミドルウェアグループにアサインされる
+app/Providers/RouteServiceProvider.php:59
