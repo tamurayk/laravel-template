@@ -46,16 +46,16 @@
 ```
 .
 ├── src => Laravelプロジェクトをインストールするディレクトリ
-├── nginx
-│   ├── Dockerfile
-│   └── config
-│       └── default.conf
-├── php-fpm
-│   ├── Dockerfile
-│   └── config
-│       └── php.ini-development
+├── docker
+│   ├── nginx
+│   │   ├── Dockerfile
+│   │   └── config
+│   │       └── default.conf
+│   └── php-fpm
+│       ├── Dockerfile
+│       └── config
+│           └── php.ini-development
 ├── docker-compose.local.yml
-├── docker-compose.override.yml
 ├── docker-compose.yml
 ├── .git
 ├── .github
