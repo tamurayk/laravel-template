@@ -554,48 +554,6 @@ $ docker exec php-fpm php artisan migrate
   - https://readouble.com/laravel/7.x/en/structure.html#introduction
 
 
-### `Illuminate\Pagination\Paginator` vs `Illuminate\Pagination\LengthAwarePaginator`
-
-- paginator の取得方法
-  - `Illuminate\Pagination\Paginator`
-    - `\Illuminate\Database\Eloquent\Builder` の `simplePaginate()` メソッドで取得
-      - 例
-        - `DB::table('users')->simplePaginate()`
-        - `$UserEloquentModel->simplePaginate()`
-        - `$UserEloquentModel->newQuery()->get()->simplePaginate()`
-  
-  - `Illuminate\Pagination\LengthAwarePaginator` 
-    - `\Illuminate\Database\Eloquent\Builder` の `paginate()` メソッドで取得
-        - `DB::table('users')->paginate()`
-        - `$UserEloquentModel->paginate()`
-        - `$UserEloquentModel->newQuery()->where()->paginate()`
-        - note
-          - `get()` の後で `->paginate()` すると、`Method Illuminate\Database\Eloquent\Collection::paginate does not exist.` エラーになる
-
-- 現在のページ
-  - `paginate()` メソッド実行時に、現在のページ数を、HTTP Request の page クエリ文字列から自動的に取得する
-    - SQL に `limit` と `offset` が付与される
-
-
-### `php artisan ui`
-
-- Controller は作成しない
-  - `app/Http/Controllers/Auth` は Laravel インストール時に作成されるもの
-
-- `php artisan ui vue --auth` で作成されるものは以下
-  - `resources/sass/*`
-  - `resources/views/auth/*`
-  - `resources/views/layouts/app.blade.php`
-
-- `php artisan ui vue --auth` で変更されるものは以下
-  - `package.json `
-  - `routes/web.php`
-    - `Auth::routes();` が追加される
-
-- 参考コミット
-  - https://github.com/tamurayk/laravel-template/commit/be709bb58e0b7e77623936e4303bb8eb0a8537bb#diff-779f18bddd18edad64537505c9b5bcbf
-
-
 ## リクエストライフサイクル
 
 https://readouble.com/laravel/6.x/ja/lifecycle.html
@@ -753,3 +711,43 @@ public/index.php:60
 
 webミドルウェアグループにアサインされる
 app/Providers/RouteServiceProvider.php:59
+
+### `php artisan ui`
+
+- Controller は作成しない
+  - `app/Http/Controllers/Auth` は Laravel インストール時に作成されるもの
+
+- `php artisan ui vue --auth` で作成されるものは以下
+  - `resources/sass/*`
+  - `resources/views/auth/*`
+  - `resources/views/layouts/app.blade.php`
+
+- `php artisan ui vue --auth` で変更されるものは以下
+  - `package.json `
+  - `routes/web.php`
+    - `Auth::routes();` が追加される
+
+- 参考コミット
+  - https://github.com/tamurayk/laravel-template/commit/be709bb58e0b7e77623936e4303bb8eb0a8537bb#diff-779f18bddd18edad64537505c9b5bcbf
+
+### `Illuminate\Pagination\Paginator` vs `Illuminate\Pagination\LengthAwarePaginator`
+
+- paginator の取得方法
+  - `Illuminate\Pagination\Paginator`
+    - `\Illuminate\Database\Eloquent\Builder` の `simplePaginate()` メソッドで取得
+      - 例
+        - `DB::table('users')->simplePaginate()`
+        - `$UserEloquentModel->simplePaginate()`
+        - `$UserEloquentModel->newQuery()->get()->simplePaginate()`
+  
+  - `Illuminate\Pagination\LengthAwarePaginator` 
+    - `\Illuminate\Database\Eloquent\Builder` の `paginate()` メソッドで取得
+        - `DB::table('users')->paginate()`
+        - `$UserEloquentModel->paginate()`
+        - `$UserEloquentModel->newQuery()->where()->paginate()`
+        - note
+          - `get()` の後で `->paginate()` すると、`Method Illuminate\Database\Eloquent\Collection::paginate does not exist.` エラーになる
+
+- 現在のページ
+  - `paginate()` メソッド実行時に、現在のページ数を、HTTP Request の page クエリ文字列から自動的に取得する
+    - SQL に `limit` と `offset` が付与される
