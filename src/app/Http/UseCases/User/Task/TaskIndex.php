@@ -43,7 +43,7 @@ class TaskIndex implements TaskIndexInterface
             ->where('user_id', $userId)
             ->orderBy($orderColumn, $orderDirection);
 
-        if ($searchParam['name']) {
+        if (Arr::get($searchParam, 'name')) {
             $query->where('name', 'like','%' . $searchParam['name'] . '%');
         }
 
