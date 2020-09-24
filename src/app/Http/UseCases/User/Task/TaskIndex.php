@@ -8,6 +8,7 @@ use App\Models\Constants\TaskConstants;
 use App\Models\Eloquents\Task;
 use App\Models\Interfaces\TaskInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Arr;
 
 class TaskIndex implements TaskIndexInterface
 {
@@ -25,24 +26,26 @@ class TaskIndex implements TaskIndexInterface
 
     /**
      * @param int $userId
-     * @param int|null $perPage
-     * @param string|null $orderColumn
-     * @param string|null $orderDirection
+     * @param array $searchParam
+     * @param array $paginatorParam
      * @return LengthAwarePaginator
      */
     public function __invoke(
         int $userId,
-        ?int $perPage,
-        ?string $orderColumn = null,
-        ?string $orderDirection = null
+        array $searchParam = [],
+        array $paginatorParam = []
     ): LengthAwarePaginator {
-        $perPage = $perPage ?? TaskConstants::PER_PAGE;
-        $orderColumn = $orderColumn ?? 'created_at';
-        $orderDirection = $orderDirection ?? 'desc';
+        $perPage = Arr::get($paginatorParam, 'perPage') ?? TaskConstants::PER_PAGE;
+        $orderColumn = Arr::get($paginatorParam, 'column') ?? 'created_at';
+        $orderDirection = Arr::get($paginatorParam, 'direction') ?? 'desc';
 
         $query = $this->task->newQuery()
             ->where('user_id', $userId)
             ->orderBy($orderColumn, $orderDirection);
+
+        if ($searchParam['name']) {
+            $query->where('name', 'like','%' . $searchParam['name'] . '%');
+        }
 
         // paginate() メソッド実行時に、HTTP Request の page クエリ文字列から対象ページを自動取得し、SQL に limit と offset が付与される
         $paginator = $query->paginate($perPage);

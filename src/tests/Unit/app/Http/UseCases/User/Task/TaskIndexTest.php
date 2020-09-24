@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Test\Unit\app\Http\UseCase\User\Task;
 
 use App\Http\UseCases\User\Task\TaskIndex;
-use App\Models\Constants\TaskConstants;
 use App\Models\Eloquents\Task;
 use Illuminate\Support\Facades\DB;
 use Tests\AppTestCase;
@@ -39,7 +38,7 @@ class TaskIndexTest extends AppTestCase
         $useCase = new TaskIndex(new Task());
 
         // run UseCase
-        $useCaseOutput = $useCase(1, TaskConstants::PER_PAGE);
+        $useCaseOutput = $useCase(1);
 
         // assert
         $this->assertCount(2, $useCaseOutput, 'user_id=1 の task のみを取得している事');
@@ -48,7 +47,7 @@ class TaskIndexTest extends AppTestCase
         }
 
         // run UseCase
-        $useCaseOutput = $useCase(2, TaskConstants::PER_PAGE);
+        $useCaseOutput = $useCase(2);
 
         // assert
         $this->assertCount(1, $useCaseOutput, 'user_id=2 の task のみを取得している事');
@@ -62,6 +61,49 @@ class TaskIndexTest extends AppTestCase
      */
     public function testPaginator()
     {
-        $this->markTestIncomplete('ページネーションに対応したテストを書く');
+        $this->markTestIncomplete('ページネーションのテストを書く');
+    }
+
+    /**
+     * @test
+     */
+    public function search_検索結果が正しい事()
+    {
+        // Generate test data.
+        factory(Task::class)->create([
+            'id' => 1,
+            'user_id' => 1,
+            'name' => 'keyword'
+        ]);
+        factory(Task::class)->create([
+            'id' => 2,
+            'user_id' => 1,
+            'name' => 'xxxxkeywordxxxx'
+        ]);
+        factory(Task::class)->create([
+            'id' => 3,
+            'user_id' => 1,
+            'name' => 'foobar'
+        ]);
+        factory(Task::class)->create([
+            'id' => 4,
+            'user_id' => 2,
+            'name' => 'keyword'
+        ]);
+        $this->assertEquals(4, DB::table('tasks')->count(), 'tasks テーブルに意図した件数のテストデータが生成されている事');
+
+        // generate UseCase
+        $useCase = new TaskIndex(new Task());
+
+        // run UseCase
+        $searchParam = [
+            'name' => 'keyword'
+        ];
+        $useCaseOutput = $useCase(1, $searchParam);
+
+        // assert
+        $this->assertCount(2, $useCaseOutput, '検索結果が正しい事(tasks.name を部分一致で検索した結果になっている事)');
+        $this->assertEquals('keyword', $useCaseOutput->items()[0]->name, '検索結果が正しい事(tasks.name を部分一致で検索した結果になっている事)');
+        $this->assertEquals('xxxxkeywordxxxx', $useCaseOutput->items()[1]->name, '検索結果が正しい事(tasks.name を部分一致で検索した結果になっている事)');
     }
 }

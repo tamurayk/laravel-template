@@ -19,13 +19,16 @@ class TaskIndexController extends AppController
     public function __invoke(Guard $guard, TaskIndexInterface $useCase, Request $request)
     {
         $userId = $guard->user()->id;
+        $searchParams = [
+            'name' => $request['name'],
+        ];
+        $paginatorParams = [
+            'perPage' => $request->query('perPage'),
+            'column' => $request->query('column'),
+            'direction' => $request->query('direction'),
+        ];
 
-        $paginator = $useCase(
-            $userId,
-            $request->query('perPage', null) ? (int) $request->query('perPage') : null,
-            $request->query('column', null),
-            $request->query('direction', null)
-        );
+        $paginator = $useCase($userId, $searchParams, $paginatorParams);
 
         return view('user.task.index', [
             'paginator' => $paginator->appends($request->query()),
