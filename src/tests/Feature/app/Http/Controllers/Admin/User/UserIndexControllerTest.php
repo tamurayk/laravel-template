@@ -3,8 +3,10 @@
 namespace Tests\Feature\app\Http\Controllers\Admin\User;
 
 use App\Http\Controllers\Admin\User\UserIndexController;
+use App\Models\Constants\UserConstants;
 use App\Models\Eloquents\User;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Tests\AppTestCase;
 use Tests\Traits\RoutingTestTrait;
@@ -95,22 +97,28 @@ class UserIndexControllerTest extends AppTestCase
         $response->assertViewIs('admin.user.index');
 
         // Assert view vars
-        $expected = new Collection([
-            (new User())->newQuery()->find(1),
-            (new User())->newQuery()->find(2),
+        $collection = new Collection([
             (new User())->newQuery()->find(3),
+            (new User())->newQuery()->find(2),
+            (new User())->newQuery()->find(1),
         ]);
-        $response->assertViewHas('users', $expected);
+        $expected = new LengthAwarePaginator(
+            $collection,
+            3,
+            UserConstants::PER_PAGE,
+            1,
+            [
+                'path' => sprintf('%s/admin/users', config('app.url')),
+                'pageName' => 'page',
+            ]
+        );
+        $response->assertViewHas('paginator', $expected);
 
         // Assert HTML
         $this->assertNotFalse(strpos($response->content(), '<title>Admin</title>'));
-        $this->assertNotFalse(strpos($response->content(), '<h1>users</h1>'));
-        $this->assertNotFalse(strpos($response->content(), '<th>id</th>'));
-        $this->assertNotFalse(strpos($response->content(), '<th>name</th>'));
-        $this->assertNotFalse(strpos($response->content(), '<th>email</th>'));
-        $this->assertNotFalse(strpos($response->content(), '<td>user-1</td>'));
-        $this->assertNotFalse(strpos($response->content(), '<td>user-2</td>'));
-        $this->assertNotFalse(strpos($response->content(), '<td>user-3</td>'));
-        $this->assertFalse(strpos($response->content(), '<td>user-4</td>'));
+        $this->assertNotFalse(strpos($response->content(), 'user-3'));
+        $this->assertNotFalse(strpos($response->content(), 'user-2'));
+        $this->assertNotFalse(strpos($response->content(), 'user-1'));
+        $this->assertFalse(strpos($response->content(), 'user-4'));
     }
 }
