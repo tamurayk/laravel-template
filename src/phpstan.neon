@@ -13,6 +13,7 @@ parameters:
 
     ignoreErrors:
         - '#Method .* should return Illuminate\\Http\\Response but returns Illuminate\\View\\View.#'
+        - '#Return typehint of method App\\Models\\Interfaces\\BaseInterface::all\(\) has invalid type App\\Models\\Interfaces\\static.#'
 
     excludes_analyse:
         #- ./*/*/FileToBeExcluded.php
