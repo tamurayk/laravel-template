@@ -179,6 +179,7 @@ return [
         App\Providers\RequestsServiceProvider::class,
         App\Providers\UseCasesServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+        App\Providers\HelperServiceProvider::class,
     ],
 
     /*
