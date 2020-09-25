@@ -2,6 +2,7 @@
 
 namespace App\SocialiteProviders;
 
+use App\Models\Eloquents\User;
 use Exception;
 use Illuminate\Support\Arr;
 use Laravel\Socialite\Two\AbstractProvider;
@@ -83,7 +84,7 @@ class MyOAuthProvider extends AbstractProvider implements ProviderInterface
      */
     protected function mapUserToObject(array $user)
     {
-        return (new User)->setRaw($user)->map([
+        return (new User())->setRaw($user)->map([
             'id' => $user['id'],
             'nickname' => $user['login'],
             'name' => Arr::get($user, 'name'),
