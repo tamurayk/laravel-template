@@ -26,7 +26,8 @@ class RegisterController extends AdminController
 
     use RegistersUsers;
 
-    private $administrator;
+    /** @var AdministratorInterface  */
+    private $administratorEloquent;
 
     /**
      * Where to redirect users after registration.
@@ -45,7 +46,7 @@ class RegisterController extends AdminController
     {
         $this->middleware('guest');
 
-        $this->administrator = $administrator;
+        $this->administratorEloquent = $administrator;
     }
 
     /**
@@ -101,7 +102,7 @@ class RegisterController extends AdminController
      */
     protected function create(array $data)
     {
-        $query = $this->administrator->newQuery();
+        $query = $this->administratorEloquent->newQuery();
         // TODO: group_id 追加
         return $query->create([
             'name' => $data['name'],

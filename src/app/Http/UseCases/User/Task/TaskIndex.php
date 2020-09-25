@@ -11,7 +11,8 @@ use Illuminate\Support\Arr;
 
 class TaskIndex implements TaskIndexInterface
 {
-    private $task;
+    /** @var TaskInterface  */
+    private $taskEloquent;
 
     /**
      * TaskIndexController constructor.
@@ -19,7 +20,7 @@ class TaskIndex implements TaskIndexInterface
      */
     public function __construct(TaskInterface $task)
     {
-        $this->task = $task;
+        $this->taskEloquent = $task;
     }
 
     /**
@@ -37,7 +38,7 @@ class TaskIndex implements TaskIndexInterface
         $orderColumn = Arr::get($paginatorParam, 'column') ?? 'created_at';
         $orderDirection = Arr::get($paginatorParam, 'direction') ?? 'desc';
 
-        $query = $this->task->newQuery()
+        $query = $this->taskEloquent->newQuery()
             ->where('user_id', $userId)
             ->orderBy($orderColumn, $orderDirection);
 

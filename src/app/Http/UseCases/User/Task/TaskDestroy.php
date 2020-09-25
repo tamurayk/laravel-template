@@ -9,6 +9,7 @@ use App\Http\UseCases\User\Task\Exceptions\TaskDestroyException;
 
 class TaskDestroy implements TaskDestroyInterface
 {
+    /** @var TaskInterface  */
     private $taskEloquent;
 
     public function __construct(TaskInterface $task)

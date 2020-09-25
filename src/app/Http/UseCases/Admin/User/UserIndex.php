@@ -11,11 +11,12 @@ use Illuminate\Support\Arr;
 
 class UserIndex implements UserIndexInterface
 {
-    private $user;
+    /** @var UserInterface  */
+    private $userEloquent;
 
     public function __construct(UserInterface $user)
     {
-        $this->user = $user;
+        $this->userEloquent = $user;
     }
 
     /**
@@ -29,7 +30,7 @@ class UserIndex implements UserIndexInterface
         $orderColumn = Arr::get($paginatorParam, 'column') ?? 'id';
         $orderDirection = Arr::get($paginatorParam, 'direction') ?? 'desc';
 
-        $query = $this->user->newQuery()
+        $query = $this->userEloquent->newQuery()
             ->orderBy($orderColumn, $orderDirection);
 
         $paginator = $query->paginate($perPage);
