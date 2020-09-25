@@ -1,8 +1,8 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests\Feature\app\Http\Controllers\Admin;
 
-use App\Http\Controllers\IndexController;
 use Tests\AppTestCase;
 use Tests\Traits\RoutingTestTrait;
 

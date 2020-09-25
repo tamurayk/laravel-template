@@ -1,12 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests\Feature\app\Http\Controllers\User\Auth;
 
-use App\Http\Controllers\User\Auth\ConfirmPasswordController;
-use App\Http\Controllers\User\Auth\ForgotPasswordController;
 use App\Http\Controllers\User\Auth\LoginController;
-use App\Http\Controllers\User\Auth\ResetPasswordController;
-use App\Http\Controllers\User\Auth\VerificationController;
 use Tests\AppTestCase;
 use Tests\Traits\RoutingTestTrait;
 
