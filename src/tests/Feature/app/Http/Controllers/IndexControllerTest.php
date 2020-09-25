@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Feature\app\Http\Controllers\User\Task;
+namespace Tests\Feature\app\Http\Controllers;
 
 use App\Http\Controllers\IndexController;
 use Tests\AppTestCase;
