@@ -12,7 +12,7 @@ parameters:
     level: 5
 
     ignoreErrors:
-        #- '#Call to an undefined method App\\Http\\Requests\\Task\\Contracts\\TaskStoreRequestInterface::validated\(\).#'
+        - '#Method .* should return Illuminate\\Http\\Response but returns Illuminate\\View\\View.#'
 
     excludes_analyse:
         #- ./*/*/FileToBeExcluded.php
