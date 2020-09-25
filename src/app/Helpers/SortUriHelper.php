@@ -22,8 +22,8 @@ if (!function_exists('sort_uri')) {
         string $directionKey = 'direction'
     ):string {
         $currentUri = $request->fullUrlWithQuery($request->query());
-        $currentColumn = $request->query('column');
-        $currentDirection = $request->query('direction');
+        $currentColumn = $request->query($columnKey);
+        $currentDirection = $request->query($directionKey);
 
         $orderDirection = $orderDirection ?? sort_direction($orderColumn, $currentColumn, $currentDirection);;
 
