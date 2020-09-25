@@ -2,8 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Eloquents\Administrator;
-use App\Models\Eloquents\Group;
 use App\Models\Interfaces\AdministratorInterface;
 use App\Models\Interfaces\GroupInterface;
 use Illuminate\Console\Command;
@@ -26,14 +24,8 @@ class CreateAdminCommand extends Command
      */
     protected $description = 'Command description';
 
-    /**
-     * @var Administrator
-     */
     private $administrator;
 
-    /**
-     * @var Group
-     */
     private $group;
 
     /**

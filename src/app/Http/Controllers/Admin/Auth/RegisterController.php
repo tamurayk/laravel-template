@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin\Auth;
 
 use App\Http\Controllers\Admin\AdminController;
-use App\Models\Eloquents\Administrator;
 use App\Models\Eloquents\User;
 use App\Models\Interfaces\AdministratorInterface;
 use App\Providers\RouteServiceProvider;
@@ -27,7 +26,6 @@ class RegisterController extends AdminController
 
     use RegistersUsers;
 
-    /** @var Administrator  */
     private $administrator;
 
     /**

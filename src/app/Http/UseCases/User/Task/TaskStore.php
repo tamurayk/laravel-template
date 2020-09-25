@@ -4,12 +4,10 @@ declare(strict_types=1);
 namespace App\Http\UseCases\User\Task;
 
 use App\Http\UseCases\User\Task\Interfaces\TaskStoreInterface;
-use App\Models\Eloquents\Task;
 use App\Models\Interfaces\TaskInterface;
 
 class TaskStore implements TaskStoreInterface
 {
-    /** @var Task */
     private $task;
 
     /**
