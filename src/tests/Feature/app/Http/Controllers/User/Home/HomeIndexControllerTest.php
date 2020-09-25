@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Feature\app\Http\Controllers\User\Auth;
+namespace Tests\Feature\app\Http\Controllers\User\Home;
 
 use App\Http\Controllers\User\Home\HomeIndexController;
 use Tests\AppTestCase;

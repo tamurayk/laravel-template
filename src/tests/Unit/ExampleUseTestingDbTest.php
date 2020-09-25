@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
-class ExampleUseTesting extends TestCase
+class ExampleUseTestingDbTest extends TestCase
 {
     // テスト実行時に自動的にマイグレーションを実行 + テスト中に変更したレコードを元に戻す
     use RefreshDatabase;
