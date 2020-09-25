@@ -497,7 +497,9 @@ $ docker exec php-fpm php artisan migrate
 
 ## 静的解析
 
-[larastan](https://github.com/nunomaduro/larastan)
+### PHPStan
+
+- [larastan](https://github.com/nunomaduro/larastan)
 
 ```
 // run
@@ -506,6 +508,15 @@ $ docker exec php-fpm php artisan migrate
 # ./vendor/bin/phpstan analyse -h
 // e.g.
 # ./vendor/bin/phpstan analyse -l 3 --memory-limit=2G app/
+```
+
+### Psalm
+
+- [psalm/psalm-plugin-laravel](https://github.com/psalm/psalm-plugin-laravel)
+
+```
+// run
+# ./vendor/bin/psalm
 ```
 
 ## PHPUnit
