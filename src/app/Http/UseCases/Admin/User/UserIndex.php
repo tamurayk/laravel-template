@@ -7,7 +7,7 @@ use App\Http\UseCases\Admin\User\Interfaces\UserIndexInterface;
 use App\Models\Constants\UserConstants;
 use App\Models\Eloquents\User;
 use App\Models\Interfaces\UserInterface;
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 
 class UserIndex implements UserIndexInterface

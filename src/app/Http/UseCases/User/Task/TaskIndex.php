@@ -7,7 +7,7 @@ use App\Http\UseCases\User\Task\Interfaces\TaskIndexInterface;
 use App\Models\Constants\TaskConstants;
 use App\Models\Eloquents\Task;
 use App\Models\Interfaces\TaskInterface;
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 
 class TaskIndex implements TaskIndexInterface

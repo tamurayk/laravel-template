@@ -69,7 +69,7 @@ class MyOAuthProvider extends AbstractProvider implements ProviderInterface
                 $emailsUrl, $this->getRequestOptions($token)
             );
         } catch (Exception $e) {
-            return;
+            return null;
         }
 
         foreach (json_decode($response->getBody(), true) as $email) {

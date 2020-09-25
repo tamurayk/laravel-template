@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Http\UseCases\User\Task\Interfaces;
 
 use App\Models\Interfaces\TaskInterface;
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 interface TaskIndexInterface
 {

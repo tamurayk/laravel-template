@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Auth;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Eloquents\Administrator;
 use App\Models\Eloquents\User;
+use App\Models\Interfaces\AdministratorInterface;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +27,9 @@ class RegisterController extends AdminController
 
     use RegistersUsers;
 
+    /** @var Administrator  */
+    private $administrator;
+
     /**
      * Where to redirect users after registration.
      *
@@ -36,11 +40,14 @@ class RegisterController extends AdminController
     /**
      * Create a new controller instance.
      *
+     * @param AdministratorInterface $administrator
      * @return void
      */
-    public function __construct()
+    public function __construct(AdministratorInterface $administrator)
     {
         $this->middleware('guest');
+
+        $this->administrator = $administrator;
     }
 
     /**
@@ -55,13 +62,12 @@ class RegisterController extends AdminController
         return Auth::guard('user');
     }
 
-
     /**
      * Override to \Illuminate\Foundation\Auth\RegistersUsers
      *
      * Get the guard to be used during authentication.
      *
-     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     * @return \Illuminate\Http\Response
      */
     public function showRegistrationForm()
     {
@@ -90,10 +96,16 @@ class RegisterController extends AdminController
      * @param  array  $data
      * @return User
      */
+
+    /**
+     * @param array $data
+     * @return mixed
+     */
     protected function create(array $data)
     {
+        $query = $this->administrator->newQuery();
         // TODO: group_id 追加
-        return Administrator::create([
+        return $query->create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),

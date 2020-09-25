@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class UserIndexController extends AdminController
 {
+    /**
+     * @param UserIndexInterface $useCase
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function __invoke(UserIndexInterface $useCase, Request $request)
     {
         $paginatorParams = [
