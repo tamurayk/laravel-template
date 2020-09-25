@@ -2,11 +2,11 @@
 
 namespace App\SocialiteProviders;
 
-use App\Models\Eloquents\User;
 use Exception;
 use Illuminate\Support\Arr;
 use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\ProviderInterface;
+use Laravel\Socialite\Two\User;
 
 class MyOAuthProvider extends AbstractProvider implements ProviderInterface
 {
@@ -77,6 +77,8 @@ class MyOAuthProvider extends AbstractProvider implements ProviderInterface
                 return $email['email'];
             }
         }
+
+        return null;
     }
 
     /**

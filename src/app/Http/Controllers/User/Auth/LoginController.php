@@ -105,7 +105,7 @@ class LoginController extends Controller
     }
 
     /**
-     * @param $provider
+     * @param string $provider
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function handleProviderCallback(string $provider)

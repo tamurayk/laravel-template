@@ -35,4 +35,9 @@ interface FormRequestInterface
      * @return array
      */
     public function messages(): array;
+
+    /**
+     * @return array
+     */
+    public function validated();
 }

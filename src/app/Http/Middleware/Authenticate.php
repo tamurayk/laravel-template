@@ -25,5 +25,7 @@ class Authenticate extends Middleware
                 return route($this->admin_route);
             }
         }
+
+        return null;
     }
 }
