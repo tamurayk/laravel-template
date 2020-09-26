@@ -5,15 +5,14 @@ namespace App\Http\UseCases\User\Task;
 
 use App\Http\UseCases\User\Task\Interfaces\TaskIndexInterface;
 use App\Models\Constants\TaskConstants;
-use App\Models\Eloquents\Task;
 use App\Models\Interfaces\TaskInterface;
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 
 class TaskIndex implements TaskIndexInterface
 {
-    /** @var Task */
-    private $task;
+    /** @var TaskInterface  */
+    private $taskEloquent;
 
     /**
      * TaskIndexController constructor.
@@ -21,7 +20,7 @@ class TaskIndex implements TaskIndexInterface
      */
     public function __construct(TaskInterface $task)
     {
-        $this->task = $task;
+        $this->taskEloquent = $task;
     }
 
     /**
@@ -39,7 +38,7 @@ class TaskIndex implements TaskIndexInterface
         $orderColumn = Arr::get($paginatorParam, 'column') ?? 'created_at';
         $orderDirection = Arr::get($paginatorParam, 'direction') ?? 'desc';
 
-        $query = $this->task->newQuery()
+        $query = $this->taskEloquent->newQuery()
             ->where('user_id', $userId)
             ->orderBy($orderColumn, $orderDirection);
 

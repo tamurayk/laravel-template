@@ -3,14 +3,13 @@ declare(strict_types=1);
 
 namespace App\Http\UseCases\User\Task;
 
-use App\Models\Eloquents\Task;
 use App\Models\Interfaces\TaskInterface;
 use App\Http\UseCases\User\Task\Interfaces\TaskDestroyInterface;
 use App\Http\UseCases\User\Task\Exceptions\TaskDestroyException;
 
 class TaskDestroy implements TaskDestroyInterface
 {
-    /** @var Task */
+    /** @var TaskInterface  */
     private $taskEloquent;
 
     public function __construct(TaskInterface $task)

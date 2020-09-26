@@ -507,8 +507,12 @@ $ docker exec php-fpm php artisan migrate
 // help
 # ./vendor/bin/phpstan analyse -h
 // e.g.
-# ./vendor/bin/phpstan analyse -l 3 --memory-limit=2G app/
+# ./vendor/bin/phpstan analyse -l 6 --memory-limit=2G app/
 ```
+
+- note
+  - 現時点では、Level 6 まで対応した (推奨レベルは要検討)
+  - https://phpstan.org/user-guide/rule-levels
 
 ### Psalm
 

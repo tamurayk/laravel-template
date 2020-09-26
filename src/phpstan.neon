@@ -12,7 +12,8 @@ parameters:
     level: 5
 
     ignoreErrors:
-        #- '#Call to an undefined method App\\Http\\Requests\\Task\\Contracts\\TaskStoreRequestInterface::validated\(\).#'
+        - '#Method .* should return Illuminate\\Http\\Response but returns Illuminate\\View\\View.#'
+        - '#Return typehint of method App\\Models\\Interfaces\\BaseInterface::all\(\) has invalid type App\\Models\\Interfaces\\static.#'
 
     excludes_analyse:
         #- ./*/*/FileToBeExcluded.php

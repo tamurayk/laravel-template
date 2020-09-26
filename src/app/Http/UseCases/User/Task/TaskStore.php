@@ -4,13 +4,12 @@ declare(strict_types=1);
 namespace App\Http\UseCases\User\Task;
 
 use App\Http\UseCases\User\Task\Interfaces\TaskStoreInterface;
-use App\Models\Eloquents\Task;
 use App\Models\Interfaces\TaskInterface;
 
 class TaskStore implements TaskStoreInterface
 {
-    /** @var Task */
-    private $task;
+    /** @var TaskInterface  */
+    private $taskEloquent;
 
     /**
      * TaskIndexController constructor.
@@ -18,7 +17,7 @@ class TaskStore implements TaskStoreInterface
      */
     public function __construct(TaskInterface $task)
     {
-        $this->task = $task;
+        $this->taskEloquent = $task;
     }
 
     /**
@@ -32,7 +31,7 @@ class TaskStore implements TaskStoreInterface
             'user_id' => $useId,
         ]);
 
-        $task = $this->task->newInstance($fill);
+        $task = $this->taskEloquent->newInstance($fill);
         return $task->save();
     }
 }

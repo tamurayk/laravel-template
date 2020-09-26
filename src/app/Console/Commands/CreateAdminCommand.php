@@ -2,8 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Eloquents\Administrator;
-use App\Models\Eloquents\Group;
 use App\Models\Interfaces\AdministratorInterface;
 use App\Models\Interfaces\GroupInterface;
 use Illuminate\Console\Command;
@@ -26,15 +24,11 @@ class CreateAdminCommand extends Command
      */
     protected $description = 'Command description';
 
-    /**
-     * @var Administrator
-     */
-    private $administrator;
+    /** @var AdministratorInterface  */
+    private $administratorEloquent;
 
-    /**
-     * @var Group
-     */
-    private $group;
+    /** @var GroupInterface  */
+    private $groupEloquent;
 
     /**
      * Create a new command instance.
@@ -49,8 +43,8 @@ class CreateAdminCommand extends Command
     ) {
         parent::__construct();
 
-        $this->administrator = $administrator;
-        $this->group = $group;
+        $this->administratorEloquent = $administrator;
+        $this->groupEloquent = $group;
     }
 
     /**
@@ -86,9 +80,9 @@ class CreateAdminCommand extends Command
         }
 
         // TODO: group_id=1 は Seeder で作成したい
-        if (is_null($this->group->newQuery()->find(1))) {
+        if (is_null($this->groupEloquent->newQuery()->find(1))) {
             $this->info('Create group 1...');
-            $group = $this->group->newInstance([
+            $group = $this->groupEloquent->newInstance([
                 'name' => 'administrator',
             ]);
             if (!$group->save()) {
@@ -107,7 +101,7 @@ class CreateAdminCommand extends Command
             'password' => Hash::make($pw),
         ];
 
-        $administrator = $this->administrator->newInstance($fill);
+        $administrator = $this->administratorEloquent->newInstance($fill);
         $result = $administrator->save();
 
         if (!$result) {

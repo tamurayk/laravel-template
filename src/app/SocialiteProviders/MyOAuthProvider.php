@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Support\Arr;
 use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\ProviderInterface;
+use Laravel\Socialite\Two\User;
 
 class MyOAuthProvider extends AbstractProvider implements ProviderInterface
 {
@@ -68,7 +69,7 @@ class MyOAuthProvider extends AbstractProvider implements ProviderInterface
                 $emailsUrl, $this->getRequestOptions($token)
             );
         } catch (Exception $e) {
-            return;
+            return null;
         }
 
         foreach (json_decode($response->getBody(), true) as $email) {
@@ -76,6 +77,8 @@ class MyOAuthProvider extends AbstractProvider implements ProviderInterface
                 return $email['email'];
             }
         }
+
+        return null;
     }
 
     /**
@@ -83,7 +86,7 @@ class MyOAuthProvider extends AbstractProvider implements ProviderInterface
      */
     protected function mapUserToObject(array $user)
     {
-        return (new User)->setRaw($user)->map([
+        return (new User())->setRaw($user)->map([
             'id' => $user['id'],
             'nickname' => $user['login'],
             'name' => Arr::get($user, 'name'),
