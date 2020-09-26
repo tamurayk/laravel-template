@@ -40,19 +40,19 @@ trait ValidationTestTrait
     /**
      * @dataProvider validationTestDataProvider
      * @param FormRequestInterface $formRequest
-     * @param array $formDara
+     * @param array $formData
      * @param bool $isPass
      * @param array $expectedMegs
      */
     public function testValidationRules(
         FormRequestInterface $formRequest,
-        array $formDara,
+        array $formData,
         bool $isPass,
         array $expectedMegs
     ) {
         // Validator を生成
         $validator = Validator::make(
-            $formDara,
+            $formData,
             $formRequest->rules(), //formRequest から バリデーションルール を取得
             $formRequest->messages(), //formRequest から カスタムエラーメッセージ を取得
             $formRequest->attributes() //formRequest から カスタムAttributes を取得
