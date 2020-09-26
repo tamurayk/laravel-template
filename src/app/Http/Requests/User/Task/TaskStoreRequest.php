@@ -45,8 +45,8 @@ class TaskStoreRequest extends FormRequest implements TaskStoreRequestInterface
     public function messages(): array
     {
         return [
-            'name.require' => ':attribute is required.',
-            'name.max' => ':attribute must be :digits characters or less.',
+            'name.required' => ':attribute is required.',
+            'name.max' => ':attribute may not be greater than :max characters.',
         ];
     }
 }
