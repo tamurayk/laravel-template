@@ -54,6 +54,11 @@ class CreateAdminCommand extends Command
      */
     public function handle()
     {
+        if (is_null($this->groupEloquent->newQuery()->find(1))) {
+            $this->info('groups.id = 1 not exists. You should run `php artisan db:seed` to create it.');
+            return 1;
+        }
+
         $name = $this->ask('Please enter name.');
         $email = $this->ask('Please enter email.');
         $pw = $this->ask('Please enter password.');
@@ -77,19 +82,6 @@ class CreateAdminCommand extends Command
                 $this->error($error);
             }
             return 1;
-        }
-
-        // TODO: group_id=1 は Seeder で作成したい
-        if (is_null($this->groupEloquent->newQuery()->find(1))) {
-            $this->info('Create group 1...');
-            $group = $this->groupEloquent->newInstance([
-                'name' => 'administrator',
-            ]);
-            if (!$group->save()) {
-                $this->error('Failed to create group 1.');
-                return 1;
-            }
-            $this->info('Success to create group 1.');
         }
 
         $this->info('Create administrator...');

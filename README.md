@@ -484,6 +484,18 @@ $ docker exec php-fpm php artisan key:generate
 $ docker exec php-fpm php artisan migrate
 ```
 
+### seeder の実行
+
+```
+$ docker exec -it php-fpm /bin/ash
+
+// (Seederを追加した場合はオートローダを再生成)
+# composer dump-autoload
+
+// DatabaseSeeder クラスを実行
+# php artisan db:seed
+```
+
 ### 初期管理ユーザー作成 (初回のみ)
 
 ```
@@ -492,8 +504,9 @@ $ docker exec php-fpm php artisan migrate
 
 ### アプリケーションへのアクセス
 
-- http://localhost:8000/ で ユーザー向けサイト にアクセスできます
-- http://localhost:8000/admin で 管理サイト にアクセスできます
+- ユーザー向けサイト: http://localhost:8000/
+- 管理サイト: http://localhost:8000/admin
+- phpMyAdmin: http://localhost:8080/ (phpMyAdmin コンテナを起動している場合のみアクセス可)
 
 ## 静的解析
 
