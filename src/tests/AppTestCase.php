@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use Carbon\Carbon;
 use Illuminate\Database\Connection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
@@ -39,6 +40,8 @@ class AppTestCase extends TestCase
         }
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+        Carbon::setTestNow();
 
         parent::tearDown();
     }
