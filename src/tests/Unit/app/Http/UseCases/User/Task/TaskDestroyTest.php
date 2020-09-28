@@ -6,6 +6,7 @@ namespace Test\Unit\app\Http\UseCase\User\Task;
 use App\Http\UseCases\User\Task\Exceptions\TaskDestroyException;
 use App\Http\UseCases\User\Task\TaskDestroy;
 use App\Models\Eloquents\Task;
+use App\Models\Eloquents\User;
 use Illuminate\Support\Facades\DB;
 use Tests\AppTestCase;
 
@@ -24,6 +25,12 @@ class TaskDestroyTest extends AppTestCase
     public function testUseCase()
     {
         // Generate test data.
+        factory(User::class)->create([
+            'id' => 1,
+        ]);
+        factory(User::class)->create([
+            'id' => 2,
+        ]);
         factory(Task::class, 1)->create([
             'id' => 1,
             'user_id' => 1,

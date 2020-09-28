@@ -5,6 +5,7 @@ namespace Test\Unit\app\Http\UseCase\User\Task;
 
 use App\Http\UseCases\User\Task\TaskIndex;
 use App\Models\Eloquents\Task;
+use App\Models\Eloquents\User;
 use Illuminate\Support\Facades\DB;
 use Tests\AppTestCase;
 
@@ -26,6 +27,12 @@ class TaskIndexTest extends AppTestCase
     public function testUseCase()
     {
         // Generate test data.
+        factory(User::class)->create([
+            'id' => 1,
+        ]);
+        factory(User::class)->create([
+            'id' => 2,
+        ]);
         factory(Task::class, 2)->create([
             'user_id' => 1,
         ]);
@@ -70,6 +77,12 @@ class TaskIndexTest extends AppTestCase
     public function search_検索結果が正しい事()
     {
         // Generate test data.
+        factory(User::class)->create([
+            'id' => 1,
+        ]);
+        factory(User::class)->create([
+            'id' => 2,
+        ]);
         factory(Task::class)->create([
             'id' => 1,
             'user_id' => 1,
