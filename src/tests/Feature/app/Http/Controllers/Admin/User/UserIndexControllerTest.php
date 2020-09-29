@@ -46,6 +46,24 @@ class UserIndexControllerTest extends AppTestCase
     }
 
     /**
+     * Override to \Tests\Traits\RoutingTestTrait::AppliedMiddlewareTestDataProvider
+     * @return array
+     */
+    public function AppliedMiddlewareTestDataProvider()
+    {
+        return [
+            [
+                'admin/users',
+                'GET',
+                [
+                    'admin',
+                    'auth:admin',
+                ],
+            ],
+        ];
+    }
+
+    /**
      * @test
      */
     public function index_未ログインの場合はログイン画面にリダイレクト()

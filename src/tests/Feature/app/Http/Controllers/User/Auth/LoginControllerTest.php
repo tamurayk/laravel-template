@@ -65,4 +65,51 @@ class LoginControllerTest extends AppTestCase
             ],
         ];
     }
+
+    /**
+     * Override to \Tests\Traits\RoutingTestTrait::AppliedMiddlewareTestDataProvider
+     * @return array
+     */
+    public function AppliedMiddlewareTestDataProvider()
+    {
+        return [
+            [
+                'login',
+                'GET',
+                [
+                    'web',
+                ],
+            ],
+            [
+                'login',
+                'POST',
+                [
+                    'web',
+                ],
+            ],
+            [
+                'logout',
+                'POST',
+                [
+                    'web',
+                ],
+            ],
+            [
+                'login/{provider}',
+                'GET',
+                [
+                    'web',
+                    'guest:user',
+                ],
+            ],
+            [
+                'login/{provider}/callback',
+                'GET',
+                [
+                    'web',
+                    'guest:user',
+                ],
+            ],
+        ];
+    }
 }

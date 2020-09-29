@@ -33,10 +33,28 @@ class HomeIndexControllerTest extends AppTestCase
 
         return [
             [
-                'GET',
                 $baseUrl. '/home',
+                'GET',
                 HomeIndexController::class,
                 'home.index',
+            ],
+        ];
+    }
+
+    /**
+     * Override to \Tests\Traits\RoutingTestTrait::AppliedMiddlewareTestDataProvider
+     * @return array
+     */
+    public function AppliedMiddlewareTestDataProvider()
+    {
+        return [
+            [
+                'home',
+                'GET',
+                [
+                    'web',
+                    'auth:user',
+                ],
             ],
         ];
     }

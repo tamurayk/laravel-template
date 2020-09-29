@@ -43,6 +43,24 @@ class TaskStoreControllerTest extends AppTestCase
     }
 
     /**
+     * Override to \Tests\Traits\RoutingTestTrait::AppliedMiddlewareTestDataProvider
+     * @return array
+     */
+    public function AppliedMiddlewareTestDataProvider()
+    {
+        return [
+            [
+                'task',
+                'POST',
+                [
+                    'web',
+                    'auth:user',
+                ],
+            ],
+        ];
+    }
+
+    /**
      * @test
      */
     public function index_未ログインの場合はログイン画面にリダイレクト()

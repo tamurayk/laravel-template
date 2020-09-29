@@ -44,6 +44,24 @@ class TaskDestroyControllerTest extends AppTestCase
     }
 
     /**
+     * Override to \Tests\Traits\RoutingTestTrait::AppliedMiddlewareTestDataProvider
+     * @return array
+     */
+    public function AppliedMiddlewareTestDataProvider()
+    {
+        return [
+            [
+                'task/{task}',
+                'DELETE',
+                [
+                    'web',
+                    'auth:user',
+                ],
+            ],
+        ];
+    }
+
+    /**
      * @test
      */
     public function index_未ログインの場合はログイン画面にリダイレクト()

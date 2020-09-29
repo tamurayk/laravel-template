@@ -39,4 +39,22 @@ class IndexControllerTest extends AppTestCase
             ],
         ];
     }
+
+    /**
+     * Override to \Tests\Traits\RoutingTestTrait::AppliedMiddlewareTestDataProvider
+     * @return array
+     */
+    public function AppliedMiddlewareTestDataProvider()
+    {
+        return [
+            [
+                'admin',
+                'GET',
+                [
+                    'admin',
+                    'guest:admin',
+                ],
+            ],
+        ];
+    }
 }
