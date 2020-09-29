@@ -28,10 +28,10 @@ class TaskIndexControllerTest extends AppTestCase
     }
 
     /**
-     * Override to \Tests\Traits\RoutingTestTrait::RoutingTestDataProvider
+     * Override to \Tests\Traits\RoutingTestTrait::RoutingDispatchTestDataProvider
      * @return array
      */
-    public function RoutingTestDataProvider()
+    public function RoutingDispatchTestDataProvider()
     {
         // dataProvider 内で config() を使用する為には、dataProvider内で $this->createApplication() する必要がある
         $this->createApplication();
@@ -40,10 +40,28 @@ class TaskIndexControllerTest extends AppTestCase
 
         return [
             [
-                'GET',
                 $baseUrl. '/tasks',
+                'GET',
                 TaskIndexController::class,
                 'task.index',
+            ],
+        ];
+    }
+
+    /**
+     * Override to \Tests\Traits\RoutingTestTrait::AppliedMiddlewareTestDataProvider
+     * @return array
+     */
+    public function AppliedMiddlewareTestDataProvider()
+    {
+        return [
+            [
+                'tasks',
+                'GET',
+                [
+                    'web',
+                    'auth:user',
+                ],
             ],
         ];
     }

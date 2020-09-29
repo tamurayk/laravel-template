@@ -22,18 +22,18 @@ class IndexControllerTest extends AppTestCase
     }
 
     /**
-     * Override to \Tests\Traits\RoutingTestTrait::RoutingTestDataProvider
+     * Override to \Tests\Traits\RoutingTestTrait::RoutingDispatchTestDataProvider
      * @return array
      */
-    public function RoutingTestDataProvider()
+    public function RoutingDispatchTestDataProvider()
     {
         $this->createApplication();
         $baseUrl = config('app.url');
 
         return [
             [
-                'GET',
                 $baseUrl. '/admin',
+                'GET',
                 \App\Http\Controllers\Admin\IndexController::class,
                 'admin.index',
             ],

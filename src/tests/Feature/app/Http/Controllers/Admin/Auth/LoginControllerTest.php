@@ -23,30 +23,30 @@ class LoginControllerTest extends AppTestCase
     }
 
     /**
-     * Override to \Tests\Traits\RoutingTestTrait::RoutingTestDataProvider
+     * Override to \Tests\Traits\RoutingTestTrait::RoutingDispatchTestDataProvider
      * @return array
      */
-    public function RoutingTestDataProvider()
+    public function RoutingDispatchTestDataProvider()
     {
         $this->createApplication();
         $baseUrl = config('app.url');
 
         return [
             [
-                'GET',
                 $baseUrl. '/admin/login',
+                'GET',
                 LoginController::class . '@showLoginForm',
                 'admin.login',
             ],
             [
-                'POST',
                 $baseUrl. '/admin/login',
+                'POST',
                 LoginController::class . '@login',
                 '',
             ],
             [
-                'POST',
                 $baseUrl. '/admin/logout',
+                'POST',
                 LoginController::class . '@logout',
                 'admin.logout',
             ],

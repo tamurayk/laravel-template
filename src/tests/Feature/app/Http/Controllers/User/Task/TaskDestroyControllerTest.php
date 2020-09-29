@@ -25,18 +25,18 @@ class TaskDestroyControllerTest extends AppTestCase
     }
 
     /**
-     * Override to \Tests\Traits\RoutingTestTrait::RoutingTestDataProvider
+     * Override to \Tests\Traits\RoutingTestTrait::RoutingDispatchTestDataProvider
      * @return array
      */
-    public function RoutingTestDataProvider()
+    public function RoutingDispatchTestDataProvider()
     {
         $this->createApplication();
         $baseUrl = config('app.url');
 
         return [
             [
-                'DELETE',
                 $baseUrl. '/task/1',
+                'DELETE',
                 TaskDestroyController::class,
                 'task.destroy',
             ],
