@@ -21,40 +21,35 @@ class IndexControllerTest extends AppTestCase
         parent::tearDown();
     }
 
-    /**
-     * Override to \Tests\Traits\RoutingTestTrait::RoutingDispatchTestDataProvider
-     * @return array
-     */
-    public function RoutingDispatchTestDataProvider()
+    public function testRouting()
     {
-        $this->createApplication();
-        $baseUrl = config('app.url');
+        $this->initAssertRouting();
 
-        return [
+        $baseUrl = config('app.url');
+        $this->assertDispatchedRoute(
+            $baseUrl. '/admin',
+            'GET',
             [
-                $baseUrl. '/admin',
-                'GET',
-                \App\Http\Controllers\Admin\IndexController::class,
-                'admin.index',
-            ],
-        ];
+                'actionName' => \App\Http\Controllers\Admin\IndexController::class,
+                'routeName' => 'admin.index',
+            ]
+        );
     }
 
-    /**
-     * Override to \Tests\Traits\RoutingTestTrait::AppliedMiddlewareTestDataProvider
-     * @return array
-     */
-    public function AppliedMiddlewareTestDataProvider()
+    public function testMiddleware()
     {
-        return [
+        $this->initAssertRouting();
+
+        $baseUrl = config('app.url');
+        $this->assertAppliedMiddleware(
+            $baseUrl. '/admin',
+            'GET',
             [
-                'admin',
-                'GET',
-                [
+                'middleware' => [
                     'admin',
                     'guest:admin',
                 ],
-            ],
-        ];
+            ]
+        );
     }
 }

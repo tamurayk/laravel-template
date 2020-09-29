@@ -22,68 +22,71 @@ class LoginControllerTest extends AppTestCase
         parent::tearDown();
     }
 
-    /**
-     * Override to \Tests\Traits\RoutingTestTrait::RoutingDispatchTestDataProvider
-     * @return array
-     */
-    public function RoutingDispatchTestDataProvider()
+    public function testRouting()
     {
-        $this->createApplication();
-        $baseUrl = config('app.url');
+        $this->initAssertRouting();
 
-        return [
+        $baseUrl = config('app.url');
+        $this->assertDispatchedRoute(
+            $baseUrl . '/admin/login',
+            'GET',
             [
-                $baseUrl. '/admin/login',
-                'GET',
-                LoginController::class . '@showLoginForm',
-                'admin.login',
-            ],
+                'actionName' => LoginController::class . '@showLoginForm',
+                'routeName' => 'admin.login',
+            ]
+        );
+        $this->assertDispatchedRoute(
+            $baseUrl. '/admin/login',
+            'POST',
             [
-                $baseUrl. '/admin/login',
-                'POST',
-                LoginController::class . '@login',
-                '',
-            ],
+                'actionName' => LoginController::class . '@login',
+                'routeName' => '',
+            ]
+        );
+        $this->assertDispatchedRoute(
+            $baseUrl . '/admin/logout',
+            'POST',
             [
-                $baseUrl. '/admin/logout',
-                'POST',
-                LoginController::class . '@logout',
-                'admin.logout',
-            ],
-        ];
+                'actionName' => LoginController::class . '@logout',
+                'routeName' => 'admin.logout',
+            ]
+        );
     }
 
-    /**
-     * Override to \Tests\Traits\RoutingTestTrait::AppliedMiddlewareTestDataProvider
-     * @return array
-     */
-    public function AppliedMiddlewareTestDataProvider()
+    public function testMiddleware()
     {
-        return [
+        $this->initAssertRouting();
+
+        $baseUrl = config('app.url');
+        $this->assertAppliedMiddleware(
+            $baseUrl . '/admin',
+            'GET',
             [
-                'admin/login',
-                'GET',
-                [
+                'middleware' => [
                     'admin',
                     'guest:admin',
                 ],
-            ],
+            ]
+        );
+        $this->assertAppliedMiddleware(
+            $baseUrl . '/admin/login',
+            'POST',
             [
-                'admin/login',
-                'POST',
-                [
+                'middleware' => [
                     'admin',
                     'guest:admin',
                 ],
-            ],
+            ]
+        );
+        $this->assertAppliedMiddleware(
+            $baseUrl . '/admin/logout',
+            'POST',
             [
-                'admin/logout',
-                'POST',
-                [
+                'middleware' => [
                     'admin',
                     'auth:admin',
                 ],
-            ],
-        ];
+            ]
+        );
     }
 }

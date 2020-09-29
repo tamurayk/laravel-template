@@ -16,46 +16,40 @@ class HomeIndexControllerTest extends AppTestCase
         parent::setUp();
     }
 
-
     public function tearDown(): void
     {
         parent::tearDown();
     }
 
-    /**
-     * Override to \Tests\Traits\RoutingTestTrait::RoutingDispatchTestDataProvider
-     * @return array
-     */
-    public function RoutingDispatchTestDataProvider()
+    public function testRouting()
     {
-        $this->createApplication();
-        $baseUrl = config('app.url');
+        $this->initAssertRouting();
 
-        return [
+        $baseUrl = config('app.url');
+        $this->assertDispatchedRoute(
+            $baseUrl. '/home',
+            'GET',
             [
-                $baseUrl. '/home',
-                'GET',
-                HomeIndexController::class,
-                'home.index',
-            ],
-        ];
+                'actionName' => HomeIndexController::class,
+                'routeName' => 'home.index',
+            ]
+        );
     }
 
-    /**
-     * Override to \Tests\Traits\RoutingTestTrait::AppliedMiddlewareTestDataProvider
-     * @return array
-     */
-    public function AppliedMiddlewareTestDataProvider()
+    public function testMiddleware()
     {
-        return [
+        $this->initAssertRouting();
+
+        $baseUrl = config('app.url');
+        $this->assertAppliedMiddleware(
+            $baseUrl. '/home',
+            'GET',
             [
-                'home',
-                'GET',
-                [
+                'middleware' => [
                     'web',
                     'auth:user',
                 ],
-            ],
-        ];
+            ]
+        );
     }
 }

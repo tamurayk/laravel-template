@@ -22,39 +22,34 @@ class IndexControllerTest extends AppTestCase
         parent::tearDown();
     }
 
-    /**
-     * Override to \Tests\Traits\RoutingTestTrait::RoutingDispatchTestDataProvider
-     * @return array
-     */
-    public function RoutingDispatchTestDataProvider()
+    public function testRouting()
     {
-        $this->createApplication();
-        $baseUrl = config('app.url');
+        $this->initAssertRouting();
 
-        return [
+        $baseUrl = config('app.url');
+        $this->assertDispatchedRoute(
+            $baseUrl. '/',
+            'GET',
             [
-                $baseUrl. '/',
-                'GET',
-                IndexController::class,
-                'index',
-            ],
-        ];
+                'actionName' => IndexController::class,
+                'routeName' => 'index',
+            ]
+        );
     }
 
-    /**
-     * Override to \Tests\Traits\RoutingTestTrait::AppliedMiddlewareTestDataProvider
-     * @return array
-     */
-    public function AppliedMiddlewareTestDataProvider()
+    public function testMiddleware()
     {
-        return [
+        $this->initAssertRouting();
+
+        $baseUrl = config('app.url');
+        $this->assertAppliedMiddleware(
+            $baseUrl. '/',
+            'GET',
             [
-                '/',
-                'GET',
-                [
+                'middleware' => [
                     'web',
                 ],
-            ],
-        ];
+            ]
+        );
     }
 }

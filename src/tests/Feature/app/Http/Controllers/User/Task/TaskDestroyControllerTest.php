@@ -24,41 +24,36 @@ class TaskDestroyControllerTest extends AppTestCase
         parent::tearDown();
     }
 
-    /**
-     * Override to \Tests\Traits\RoutingTestTrait::RoutingDispatchTestDataProvider
-     * @return array
-     */
-    public function RoutingDispatchTestDataProvider()
+    public function testRouting()
     {
-        $this->createApplication();
-        $baseUrl = config('app.url');
+        $this->initAssertRouting();
 
-        return [
+        $baseUrl = config('app.url');
+        $this->assertDispatchedRoute(
+            $baseUrl. '/task/1',
+            'DELETE',
             [
-                $baseUrl. '/task/1',
-                'DELETE',
-                TaskDestroyController::class,
-                'task.destroy',
-            ],
-        ];
+                'actionName' => TaskDestroyController::class,
+                'routeName' => 'task.destroy',
+            ]
+        );
     }
 
-    /**
-     * Override to \Tests\Traits\RoutingTestTrait::AppliedMiddlewareTestDataProvider
-     * @return array
-     */
-    public function AppliedMiddlewareTestDataProvider()
+    public function testMiddleware()
     {
-        return [
+        $this->initAssertRouting();
+
+        $baseUrl = config('app.url');
+        $this->assertAppliedMiddleware(
+            $baseUrl. '/task/1',
+            'DELETE',
             [
-                'task/{task}',
-                'DELETE',
-                [
+                'middleware' => [
                     'web',
                     'auth:user',
                 ],
-            ],
-        ];
+            ]
+        );
     }
 
     /**
