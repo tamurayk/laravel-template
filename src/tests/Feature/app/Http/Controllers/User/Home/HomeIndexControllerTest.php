@@ -23,20 +23,38 @@ class HomeIndexControllerTest extends AppTestCase
     }
 
     /**
-     * Override to \Tests\Traits\RoutingTestTrait::RoutingTestDataProvider
+     * Override to \Tests\Traits\RoutingTestTrait::RoutingDispatchTestDataProvider
      * @return array
      */
-    public function RoutingTestDataProvider()
+    public function RoutingDispatchTestDataProvider()
     {
         $this->createApplication();
         $baseUrl = config('app.url');
 
         return [
             [
-                'GET',
                 $baseUrl. '/home',
+                'GET',
                 HomeIndexController::class,
                 'home.index',
+            ],
+        ];
+    }
+
+    /**
+     * Override to \Tests\Traits\RoutingTestTrait::AppliedMiddlewareTestDataProvider
+     * @return array
+     */
+    public function AppliedMiddlewareTestDataProvider()
+    {
+        return [
+            [
+                'home',
+                'GET',
+                [
+                    'web',
+                    'auth:user',
+                ],
             ],
         ];
     }

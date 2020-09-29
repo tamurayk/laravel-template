@@ -8,15 +8,15 @@ use Illuminate\Support\Facades\Route;
 
 trait RoutingTestTrait
 {
-    public function RoutingTestDataProvider()
+    public function RoutingDispatchTestDataProvider()
     {
         return [
             /**
              * Example
              *
              * [
-             *     'GET', //テスト対象: メソッド
              *     'http://localhost:8000/home/', //テスト対象: URL
+             *     'GET', //テスト対象: メソッド
              *     HomeController::class . '@index', //期待値: コントローラ名@アクション名 or Closure
              *     'home' //期待値: ルート名
              * ],
@@ -28,18 +28,18 @@ trait RoutingTestTrait
     }
 
     /**
-     * @dataProvider RoutingTestDataProvider
-     * @param $method
-     * @param $url
-     * @param $expectedActionName
-     * @param $expectedRouteName
+     * @dataProvider RoutingDispatchTestDataProvider
+     * @param string $url
+     * @param string $method
+     * @param string $expectedActionName
+     * @param string $expectedRouteName
      * @throws \ReflectionException
      */
     public function testDispatch(
-        $method,
-        $url,
-        $expectedActionName,
-        $expectedRouteName
+        string $url,
+        string $method,
+        string $expectedActionName,
+        string $expectedRouteName
     ) {
         /**
          * テスト内容
@@ -65,7 +65,7 @@ trait RoutingTestTrait
         $findRoute->setAccessible(true);
 
         // リクエスト生成
-        $request = \Illuminate\Http\Request::create($url, $method);
+        $request = \Illuminate\Http\Request::create($url, strtoupper($method));
 
         // Router に Request を渡し、dispatch された Route を取得
         /** @var \Illuminate\Routing\Route $route */
@@ -82,5 +82,63 @@ trait RoutingTestTrait
             $route->getName(),
             'リクエストに対応するルート名が期待値通りである事'
         );
+    }
+
+    public function AppliedMiddlewareTestDataProvider()
+    {
+        return [
+            /**
+             * Example
+             *
+             * [
+             *     // テスト対象: URI (Route::get() 等の第一引数で設定した $uri)
+             *     'admin/users',
+             *
+             *     // テスト対象: メソッド
+             *     'GET',
+             *
+             *     // 期待値: Route に適用される Middleware
+             *     [
+             *         'admin',
+             *         'auth:admin'
+             *     ],
+             * ],
+             */
+            [
+                //
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider AppliedMiddlewareTestDataProvider
+     * @param string $uri
+     * @param string $method
+     * @param array $expectedMiddleware
+     */
+    public function testAppliedMiddleware(
+        string $uri,
+        string $method,
+        array $expectedMiddleware
+    ) {
+        // RouteCollection 取得
+        $routeCollection = Route::getRoutes();
+
+        // RouteCollection から テスト対象 Route を取得
+        $route = collect($routeCollection)
+            ->where('uri', $uri)
+            ->filter(function ($route) use ($method)  {
+                return in_array(strtoupper($method), $route->methods);
+            })
+            ->first();
+
+        // テスト対象 Route に適用される Middleware を取得
+        $appliedMiddleware = $route->action['middleware'];
+
+        // assert
+        $this->assertCount(count($expectedMiddleware), $appliedMiddleware);
+        foreach ($expectedMiddleware as $middleware) {
+            $this->assertTrue(in_array($middleware, $appliedMiddleware));
+        }
     }
 }

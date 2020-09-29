@@ -23,20 +23,37 @@ class IndexControllerTest extends AppTestCase
     }
 
     /**
-     * Override to \Tests\Traits\RoutingTestTrait::RoutingTestDataProvider
+     * Override to \Tests\Traits\RoutingTestTrait::RoutingDispatchTestDataProvider
      * @return array
      */
-    public function RoutingTestDataProvider()
+    public function RoutingDispatchTestDataProvider()
     {
         $this->createApplication();
         $baseUrl = config('app.url');
 
         return [
             [
-                'GET',
                 $baseUrl. '/',
+                'GET',
                 IndexController::class,
                 'index',
+            ],
+        ];
+    }
+
+    /**
+     * Override to \Tests\Traits\RoutingTestTrait::AppliedMiddlewareTestDataProvider
+     * @return array
+     */
+    public function AppliedMiddlewareTestDataProvider()
+    {
+        return [
+            [
+                '/',
+                'GET',
+                [
+                    'web',
+                ],
             ],
         ];
     }

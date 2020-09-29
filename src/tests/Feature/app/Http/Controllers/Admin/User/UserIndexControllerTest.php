@@ -27,20 +27,38 @@ class UserIndexControllerTest extends AppTestCase
     }
 
     /**
-     * Override to \Tests\Traits\RoutingTestTrait::RoutingTestDataProvider
+     * Override to \Tests\Traits\RoutingTestTrait::RoutingDispatchTestDataProvider
      * @return array
      */
-    public function RoutingTestDataProvider()
+    public function RoutingDispatchTestDataProvider()
     {
         $this->createApplication();
         $baseUrl = config('app.url');
 
         return [
             [
-                'GET',
                 $baseUrl. '/admin/users',
+                'GET',
                 UserIndexController::class,
                 'admin.user.index',
+            ],
+        ];
+    }
+
+    /**
+     * Override to \Tests\Traits\RoutingTestTrait::AppliedMiddlewareTestDataProvider
+     * @return array
+     */
+    public function AppliedMiddlewareTestDataProvider()
+    {
+        return [
+            [
+                'admin/users',
+                'GET',
+                [
+                    'admin',
+                    'auth:admin',
+                ],
             ],
         ];
     }

@@ -23,45 +23,92 @@ class LoginControllerTest extends AppTestCase
     }
 
     /**
-     * Override to \Tests\Traits\RoutingTestTrait::RoutingTestDataProvider
+     * Override to \Tests\Traits\RoutingTestTrait::RoutingDispatchTestDataProvider
      * @return array
      */
-    public function RoutingTestDataProvider()
+    public function RoutingDispatchTestDataProvider()
     {
         $this->createApplication();
         $baseUrl = config('app.url');
 
         return [
             [
-                'GET',
                 $baseUrl. '/login',
+                'GET',
                 LoginController::class . '@showLoginForm',
                 'login',
             ],
             [
-                'POST',
                 $baseUrl. '/login',
+                'POST',
                 LoginController::class . '@login',
                 '',
             ],
             [
-                'POST',
                 $baseUrl. '/logout',
+                'POST',
                 LoginController::class . '@logout',
                 'logout',
             ],
 
             [
-                'GET',
                 $baseUrl. '/login/github',
+                'GET',
                 LoginController::class . '@redirectToProvider',
                 'oauth.login',
             ],
             [
-                'GET',
                 $baseUrl. '/login/github/callback',
+                'GET',
                 LoginController::class . '@handleProviderCallback',
                 'oauth.callback',
+            ],
+        ];
+    }
+
+    /**
+     * Override to \Tests\Traits\RoutingTestTrait::AppliedMiddlewareTestDataProvider
+     * @return array
+     */
+    public function AppliedMiddlewareTestDataProvider()
+    {
+        return [
+            [
+                'login',
+                'GET',
+                [
+                    'web',
+                ],
+            ],
+            [
+                'login',
+                'POST',
+                [
+                    'web',
+                ],
+            ],
+            [
+                'logout',
+                'POST',
+                [
+                    'web',
+                ],
+            ],
+            [
+                'login/{provider}',
+                'GET',
+                [
+                    'web',
+                    'guest:user',
+                ],
+            ],
+            [
+                'login/{provider}/callback',
+                'GET',
+                [
+                    'web',
+                    'guest:user',
+                ],
             ],
         ];
     }
