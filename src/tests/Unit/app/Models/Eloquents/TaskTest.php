@@ -5,6 +5,8 @@ namespace Test\Unit\app\Models\Eloquents;
 
 use App\Models\Eloquents\Task;
 use App\Models\Eloquents\User;
+use App\Models\Interfaces\BaseInterface;
+use App\Models\Interfaces\TaskInterface;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Tests\AppTestCase;
@@ -20,6 +22,16 @@ class TaskTest extends AppTestCase
     public function tearDown(): void
     {
         parent::tearDown();
+    }
+
+    /**
+     * @test
+     */
+    public function testExtendAndImplements()
+    {
+        $taskEloquent = new Task();
+        $this->assertTrue(is_subclass_of($taskEloquent, BaseInterface::class));
+        $this->assertTrue(is_subclass_of($taskEloquent, TaskInterface::class));
     }
 
     /**
@@ -114,6 +126,7 @@ class TaskTest extends AppTestCase
         $this->assertEquals(0, DB::table('tasks')->count(), 'テスト開始時点で tasks テーブルが空である事を確認');
 
         $fill = [
+            'id' => 2,
             'user_id' => 1,
             'name' => 'test',
             'created_at' => '2020-12-31 00:00:00',
@@ -127,15 +140,17 @@ class TaskTest extends AppTestCase
         $this->assertTrue($result);
         $this->assertEquals(1, DB::table('tasks')->count(), 'レコードが1件追加されている事');
         $this->assertDatabaseHas('tasks', [
+            'id' => 1, //$fillable に定義されていないカラムの為、$fill で指定した値が反映されない事
             'user_id' => 1,
             'name' => 'test',
-            'created_at' => '2020-01-01 00:00:00', //$fillable に定義されていないカラムの為、$fill で指定した値が無視される事
-            'updated_at' => '2020-01-01 00:00:00', //$fillable に定義されていないカラムの為、$fill で指定した値が無視される事
+            'created_at' => '2020-01-01 00:00:00', //$fillable に定義されていないカラムの為、$fill で指定した値が反映されない事
+            'updated_at' => '2020-01-01 00:00:00', //$fillable に定義されていないカラムの為、$fill で指定した値が反映されない事
         ]);
     }
 
     /**
      * @test
+     * @group relation
      */
     public function testRelation()
     {
@@ -143,7 +158,6 @@ class TaskTest extends AppTestCase
             'id' => 1,
             'name' => 'aaa'
         ]);
-
         factory(Task::class)->create([
             'id' => 1,
             'user_id' => 1,
