@@ -23,23 +23,19 @@ class TaskStoreControllerTest extends AppTestCase
         parent::tearDown();
     }
 
-    /**
-     * Override to \Tests\Traits\RoutingTestTrait::RoutingDispatchTestDataProvider
-     * @return array
-     */
-    public function RoutingDispatchTestDataProvider()
+    public function testRouting()
     {
-        $this->createApplication();
-        $baseUrl = config('app.url');
+        $this->initAssertRouting();
 
-        return [
+        $baseUrl = config('app.url');
+        $this->assertRouting(
+            $baseUrl. '/task',
+            'POST',
             [
-                $baseUrl. '/task',
-                'POST',
-                TaskStoreController::class,
-                'task.store',
-            ],
-        ];
+                'actionName' => TaskStoreController::class,
+                'routeName' => 'task.store',
+            ]
+        );
     }
 
     /**

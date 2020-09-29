@@ -22,35 +22,35 @@ class LoginControllerTest extends AppTestCase
         parent::tearDown();
     }
 
-    /**
-     * Override to \Tests\Traits\RoutingTestTrait::RoutingDispatchTestDataProvider
-     * @return array
-     */
-    public function RoutingDispatchTestDataProvider()
+    public function testRouting()
     {
-        $this->createApplication();
-        $baseUrl = config('app.url');
+        $this->initAssertRouting();
 
-        return [
+        $baseUrl = config('app.url');
+        $this->assertRouting(
+            $baseUrl . '/admin/login',
+            'GET',
             [
-                $baseUrl. '/admin/login',
-                'GET',
-                LoginController::class . '@showLoginForm',
-                'admin.login',
-            ],
+                'actionName' => LoginController::class . '@showLoginForm',
+                'routeName' => 'admin.login',
+            ]
+        );
+        $this->assertRouting(
+            $baseUrl. '/admin/login',
+            'POST',
             [
-                $baseUrl. '/admin/login',
-                'POST',
-                LoginController::class . '@login',
-                '',
-            ],
+                'actionName' => LoginController::class . '@login',
+                'routeName' => '',
+            ]
+        );
+        $this->assertRouting(
+            $baseUrl . '/admin/logout',
+            'POST',
             [
-                $baseUrl. '/admin/logout',
-                'POST',
-                LoginController::class . '@logout',
-                'admin.logout',
-            ],
-        ];
+                'actionName' => LoginController::class . '@logout',
+                'routeName' => 'admin.logout',
+            ]
+        );
     }
 
     /**

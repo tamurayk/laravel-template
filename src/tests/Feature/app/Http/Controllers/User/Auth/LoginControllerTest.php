@@ -22,48 +22,52 @@ class LoginControllerTest extends AppTestCase
         parent::tearDown();
     }
 
-    /**
-     * Override to \Tests\Traits\RoutingTestTrait::RoutingDispatchTestDataProvider
-     * @return array
-     */
-    public function RoutingDispatchTestDataProvider()
+    public function testRouting()
     {
-        $this->createApplication();
+        $this->initAssertRouting();
+
         $baseUrl = config('app.url');
+        $this->assertRouting(
+            $baseUrl. '/login',
+            'GET',
+            [
+                'actionName' => LoginController::class . '@showLoginForm',
+                'routeName' => 'login',
 
-        return [
+            ]
+        );
+        $this->assertRouting(
+            $baseUrl. '/login',
+            'POST',
             [
-                $baseUrl. '/login',
-                'GET',
-                LoginController::class . '@showLoginForm',
-                'login',
-            ],
+                'actionName' => LoginController::class . '@login',
+                'routeName' => '',
+            ]
+        );
+        $this->assertRouting(
+            $baseUrl. '/logout',
+            'POST',
             [
-                $baseUrl. '/login',
-                'POST',
-                LoginController::class . '@login',
-                '',
-            ],
+                'actionName' => LoginController::class . '@logout',
+                'routeName' => 'logout',
+            ]
+        );
+        $this->assertRouting(
+            $baseUrl. '/login/github',
+            'GET',
             [
-                $baseUrl. '/logout',
-                'POST',
-                LoginController::class . '@logout',
-                'logout',
-            ],
-
+                'actionName' => LoginController::class . '@redirectToProvider',
+                'routeName' => 'oauth.login',
+            ]
+        );
+        $this->assertRouting(
+            $baseUrl . '/login/github/callback',
+            'GET',
             [
-                $baseUrl. '/login/github',
-                'GET',
-                LoginController::class . '@redirectToProvider',
-                'oauth.login',
-            ],
-            [
-                $baseUrl. '/login/github/callback',
-                'GET',
-                LoginController::class . '@handleProviderCallback',
-                'oauth.callback',
-            ],
-        ];
+                'actionName' => LoginController::class . '@handleProviderCallback',
+                'routeName' => 'oauth.callback',
+            ]
+        );
     }
 
     /**

@@ -21,23 +21,20 @@ class IndexControllerTest extends AppTestCase
         parent::tearDown();
     }
 
-    /**
-     * Override to \Tests\Traits\RoutingTestTrait::RoutingDispatchTestDataProvider
-     * @return array
-     */
-    public function RoutingDispatchTestDataProvider()
+    public function testRouting()
     {
-        $this->createApplication();
-        $baseUrl = config('app.url');
+        $this->initAssertRouting();
 
-        return [
+        $baseUrl = config('app.url');
+        $this->assertRouting(
+            $baseUrl. '/admin',
+            'GET',
             [
-                $baseUrl. '/admin',
-                'GET',
-                \App\Http\Controllers\Admin\IndexController::class,
-                'admin.index',
-            ],
-        ];
+                'actionName' => \App\Http\Controllers\Admin\IndexController::class,
+                'routeName' => 'admin.index',
+
+            ]
+        );
     }
 
     /**

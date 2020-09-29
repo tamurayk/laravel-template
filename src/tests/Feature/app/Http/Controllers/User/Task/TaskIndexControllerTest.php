@@ -28,25 +28,19 @@ class TaskIndexControllerTest extends AppTestCase
         parent::tearDown();
     }
 
-    /**
-     * Override to \Tests\Traits\RoutingTestTrait::RoutingDispatchTestDataProvider
-     * @return array
-     */
-    public function RoutingDispatchTestDataProvider()
+    public function testRouting()
     {
-        // dataProvider 内で config() を使用する為には、dataProvider内で $this->createApplication() する必要がある
-        $this->createApplication();
+        $this->initAssertRouting();
 
         $baseUrl = config('app.url');
-
-        return [
+        $this->assertRouting(
+            $baseUrl. '/tasks',
+            'GET',
             [
-                $baseUrl. '/tasks',
-                'GET',
-                TaskIndexController::class,
-                'task.index',
-            ],
-        ];
+                'actionName' => TaskIndexController::class,
+                'routeName' => 'task.index',
+            ]
+        );
     }
 
     /**

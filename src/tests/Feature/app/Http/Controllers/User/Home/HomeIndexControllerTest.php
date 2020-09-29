@@ -14,7 +14,6 @@ class HomeIndexControllerTest extends AppTestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->initAssertRouting();
     }
 
     public function tearDown(): void
@@ -24,6 +23,8 @@ class HomeIndexControllerTest extends AppTestCase
 
     public function testRouting()
     {
+        $this->initAssertRouting();
+
         $baseUrl = config('app.url');
         $this->assertRouting(
             $baseUrl. '/home',

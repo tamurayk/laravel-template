@@ -26,23 +26,19 @@ class UserIndexControllerTest extends AppTestCase
         parent::tearDown();
     }
 
-    /**
-     * Override to \Tests\Traits\RoutingTestTrait::RoutingDispatchTestDataProvider
-     * @return array
-     */
-    public function RoutingDispatchTestDataProvider()
+    public function testRouting()
     {
-        $this->createApplication();
-        $baseUrl = config('app.url');
+        $this->initAssertRouting();
 
-        return [
+        $baseUrl = config('app.url');
+        $this->assertRouting(
+            $baseUrl. '/admin/users',
+            'GET',
             [
-                $baseUrl. '/admin/users',
-                'GET',
-                UserIndexController::class,
-                'admin.user.index',
-            ],
-        ];
+                'actionName' => UserIndexController::class,
+                'routeName' => 'admin.user.index',
+            ]
+        );
     }
 
     /**
