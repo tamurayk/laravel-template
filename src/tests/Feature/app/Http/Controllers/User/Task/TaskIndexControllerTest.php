@@ -9,6 +9,7 @@ use App\Models\Eloquents\Task;
 use App\Models\Eloquents\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 use Tests\AppTestCase;
 use Tests\Traits\RoutingTestTrait;
 
@@ -205,6 +206,95 @@ class TaskIndexControllerTest extends AppTestCase
 
         // Assert HTML
         $this->assertNotFalse(strpos($response->content(), '<td class="table-text"><div>user 2 task 1</div></td>'));
+    }
+
+    /**
+     * @test
+     */
+    public function index_paginator()
+    {
+        // Generate test data.
+        $user1 = factory(User::class)->create([
+            'id' => 1,
+        ]);
+        $user2 = factory(User::class)->create([
+            'id' => 2,
+        ]);
+        factory(Task::class, 21)->create([
+            'user_id' => $user1->id,
+        ]);
+        factory(Task::class, 1)->create([
+            'user_id' => $user2->id,
+        ]);
+        $this->assertEquals(21, DB::table('tasks')->where('user_id', $user1->id)->count());
+        $this->assertEquals(1, DB::table('tasks')->where('user_id', $user2->id)->count());
+
+        $authUser = $this->actingAs($user1, 'user');
+
+        /**
+         * 1ページ目
+         */
+        // Http request
+        $response = $authUser->get('/tasks?perPage=10');
+        $response->assertStatus(200);
+
+        // view変数 $paginator を取得
+        /** @var LengthAwarePaginator $paginator */
+        $paginator = $response->viewData('paginator');
+
+        // Assert
+        $this->assertEquals(10, $paginator->perPage());
+        $this->assertEquals(get_class($paginator),
+            LengthAwarePaginator::class,
+            'paginator が LengthAwarePaginator のインスタンスである事'
+        );
+        $this->assertEquals(21, $paginator->total());
+        $this->assertEquals(1, $paginator->currentPage());
+        $this->assertEquals(10, count($paginator->items()));
+        $this->assertEquals(true, $paginator->hasMorePages());
+        foreach ($paginator->items() as $task) {
+            $this->assertEquals($user1->id, $task->user_id);
+        }
+
+        /**
+         * 2ページ目
+         */
+        // Http request
+        $response = $authUser->get('/tasks?perPage=10&page=2');
+        $response->assertStatus(200);
+
+        // view変数 $paginator を取得
+        /** @var LengthAwarePaginator $paginator */
+        $paginator = $response->viewData('paginator');
+
+        // Assert
+        $this->assertEquals(21, $paginator->total());
+        $this->assertEquals(2, $paginator->currentPage());
+        $this->assertEquals(10, count($paginator->items()));
+        $this->assertEquals(true, $paginator->hasMorePages());
+        foreach ($paginator->items() as $task) {
+            $this->assertEquals($user1->id, $task->user_id);
+        }
+
+        /**
+         * 3ページ目
+         */
+        // Http request
+        $response = $authUser->get('/tasks?perPage=10&page=3');
+        $response->assertStatus(200);
+
+        // view変数 $paginator を取得
+        /** @var LengthAwarePaginator $paginator */
+        $paginator = $response->viewData('paginator');
+
+        // Assert
+        $this->assertEquals(21, $paginator->total());
+        $this->assertEquals(3, $paginator->currentPage());
+        $this->assertEquals(1, count($paginator->items()));
+        $this->assertEquals(false, $paginator->hasMorePages());
+        foreach ($paginator->items() as $task) {
+            $this->assertEquals($user1->id, $task->user_id);
+        }
     }
 
     /**
