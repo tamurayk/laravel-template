@@ -46,7 +46,9 @@ class IndexControllerTest extends AppTestCase
             $baseUrl. '/',
             'GET',
             [
-                'web',
+                'middleware' => [
+                    'web',
+                ],
             ]
         );
     }

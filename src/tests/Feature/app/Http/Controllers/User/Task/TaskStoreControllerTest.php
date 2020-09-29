@@ -47,8 +47,10 @@ class TaskStoreControllerTest extends AppTestCase
             $baseUrl. '/task',
             'POST',
             [
-                'web',
-                'auth:user',
+                'middleware' => [
+                    'web',
+                    'auth:user',
+                ],
             ]
         );
     }

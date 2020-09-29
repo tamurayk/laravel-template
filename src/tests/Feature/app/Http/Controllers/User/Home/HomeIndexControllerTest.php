@@ -45,8 +45,10 @@ class HomeIndexControllerTest extends AppTestCase
             $baseUrl. '/home',
             'GET',
             [
-                'web',
-                'auth:user',
+                'middleware' => [
+                    'web',
+                    'auth:user',
+                ],
             ]
         );
     }

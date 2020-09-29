@@ -79,37 +79,47 @@ class LoginControllerTest extends AppTestCase
             $baseUrl . '/login',
             'GET',
             [
-                'web',
+                'middleware' => [
+                    'web',
+                ],
             ]
         );
         $this->assertAppliedMiddleware(
             $baseUrl . '/login',
             'POST',
             [
-                'web',
+                'middleware' => [
+                    'web',
+                ],
             ]
         );
         $this->assertAppliedMiddleware(
             $baseUrl . '/logout',
             'POST',
             [
-                'web',
+                'middleware' => [
+                    'web',
+                ],
             ]
         );
         $this->assertAppliedMiddleware(
             $baseUrl . '/login/github',
             'GET',
             [
-                'web',
-                'guest:user',
+                'middleware' => [
+                    'web',
+                    'guest:user',
+                ],
             ]
         );
         $this->assertAppliedMiddleware(
             $baseUrl . '/login/github/callback',
             'GET',
             [
-                'web',
-                'guest:user',
+                'middleware' => [
+                    'web',
+                    'guest:user',
+                ],
             ]
         );
     }

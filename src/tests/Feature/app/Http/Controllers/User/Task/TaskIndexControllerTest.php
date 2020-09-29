@@ -52,8 +52,10 @@ class TaskIndexControllerTest extends AppTestCase
             $baseUrl. '/tasks',
             'GET',
             [
-                'web',
-                'auth:user',
+                'middleware' => [
+                    'web',
+                    'auth:user',
+                ],
             ]
         );
     }

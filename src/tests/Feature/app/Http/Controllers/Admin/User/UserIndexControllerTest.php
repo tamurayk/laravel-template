@@ -62,9 +62,11 @@ class UserIndexControllerTest extends AppTestCase
             $baseUrl . '/admin/users',
             'GET',
             [
-                'admin',
-                'auth:admin',
-            ],
+                'middleware' => [
+                    'admin',
+                    'auth:admin',
+                ],
+            ]
         );
     }
 

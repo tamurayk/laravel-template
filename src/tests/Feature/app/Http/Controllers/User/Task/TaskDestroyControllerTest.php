@@ -48,8 +48,10 @@ class TaskDestroyControllerTest extends AppTestCase
             $baseUrl. '/task/1',
             'DELETE',
             [
-                'web',
-                'auth:user',
+                'middleware' => [
+                    'web',
+                    'auth:user',
+                ],
             ]
         );
     }

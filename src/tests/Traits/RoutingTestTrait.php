@@ -92,8 +92,8 @@ trait RoutingTestTrait
         $appliedMiddleware = $route->action['middleware'];
 
         // assert
-        $this->assertCount(count($expected), $appliedMiddleware);
-        foreach ($expected as $middleware) {
+        $this->assertCount(count($expected['middleware']), $appliedMiddleware);
+        foreach ($expected['middleware'] as $middleware) {
             $this->assertTrue(in_array($middleware, $appliedMiddleware));
         }
     }

@@ -45,8 +45,10 @@ class IndexControllerTest extends AppTestCase
             $baseUrl. '/admin',
             'GET',
             [
-                'admin',
-                'guest:admin',
+                'middleware' => [
+                    'admin',
+                    'guest:admin',
+                ],
             ]
         );
     }

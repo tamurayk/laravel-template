@@ -62,24 +62,30 @@ class LoginControllerTest extends AppTestCase
             $baseUrl . '/admin',
             'GET',
             [
-                'admin',
-                'guest:admin',
+                'middleware' => [
+                    'admin',
+                    'guest:admin',
+                ],
             ]
         );
         $this->assertAppliedMiddleware(
             $baseUrl . '/admin/login',
             'POST',
             [
-                'admin',
-                'guest:admin',
+                'middleware' => [
+                    'admin',
+                    'guest:admin',
+                ],
             ]
         );
         $this->assertAppliedMiddleware(
             $baseUrl . '/admin/logout',
             'POST',
             [
-                'admin',
-                'auth:admin',
+                'middleware' => [
+                    'admin',
+                    'auth:admin',
+                ],
             ]
         );
     }
