@@ -5,6 +5,7 @@ namespace Tests\Feature\app\Http\Controllers\User\Task;
 
 use App\Http\Controllers\User\Task\TaskDestroyController;
 use App\Models\Eloquents\Task;
+use App\Models\Eloquents\User;
 use Illuminate\Support\Facades\DB;
 use Tests\AppTestCase;
 use Tests\Traits\RoutingTestTrait;
@@ -60,27 +61,31 @@ class TaskDestroyControllerTest extends AppTestCase
 
     /**
      * @test
+     * @group hoge
      */
     public function index_ログイン中の場合は指定したタスクを削除しタスク一覧にリダイレクト()
     {
         // Generate test data.
-        factory(Task::class, 1)->create([
+        $user = factory(User::class)->create([
+            'id' => 1,
+        ]);
+        factory(User::class)->create([
+            'id' => 2,
+        ]);
+        factory(Task::class)->create([
             'id' => 1,
             'user_id' => 1,
         ]);
-        factory(Task::class, 1)->create([
+        factory(Task::class)->create([
             'id' => 2,
             'user_id' => 1,
         ]);
-        factory(Task::class, 1)->create([
+        factory(Task::class)->create([
             'id' => 3,
             'user_id' => 2,
         ]);
 
         // 認証
-        $user = factory(\App\Models\Eloquents\User::class)->create([
-            'id' => 1,
-        ]);
         $authUser = $this->actingAs($user, 'user');
 
         $this->assertEquals(3, DB::table('tasks')->count(), 'HTTPリクエスト前の tasks テーブルのレコード数が 3 件である事を確認');
@@ -93,7 +98,6 @@ class TaskDestroyControllerTest extends AppTestCase
         $response->assertLocation('http://localhost/tasks');
         $response->assertRedirect('http://localhost/tasks');
 
-        // tasks テーブルにレコードが追加される事
         $this->assertEquals(2, DB::table('tasks')->count(), 'HTTPリクエスト後に 1 レコード削除されている事');
         $this->assertEquals(0, DB::table('tasks')->where('id', 1)->count(), '指定した id のタスクが削除されている事');
     }
@@ -104,6 +108,12 @@ class TaskDestroyControllerTest extends AppTestCase
     public function index_他人のタスクを削除しようとした場合は403エラーになる事()
     {
         // Generate test data.
+        $user = factory(User::class)->create([
+            'id' => 1,
+        ]);
+        factory(User::class)->create([
+            'id' => 2,
+        ]);
         factory(Task::class, 1)->create([
             'id' => 1,
             'user_id' => 2,
@@ -111,9 +121,6 @@ class TaskDestroyControllerTest extends AppTestCase
         $this->assertEquals(1, DB::table('tasks')->count(), 'HTTPリクエスト前の tasks テーブルのレコード数が 1 件である事を確認');
 
         // 認証
-        $user = factory(\App\Models\Eloquents\User::class)->create([
-            'id' => 1,
-        ]);
         $authUser = $this->actingAs($user, 'user');
 
         // HTTP リクエスト

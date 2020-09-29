@@ -6,6 +6,7 @@ namespace Tests\Feature\app\Http\Controllers\User\Task;
 use App\Http\Controllers\User\Task\TaskIndexController;
 use App\Models\Constants\TaskConstants;
 use App\Models\Eloquents\Task;
+use App\Models\Eloquents\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Tests\AppTestCase;
@@ -93,17 +94,23 @@ class TaskIndexControllerTest extends AppTestCase
     public function index_ログイン中ユーザーのタスク一覧を表示()
     {
         // Generate test data.
-        factory(Task::class, 1)->create([
+        $user1 = factory(User::class)->create([
+            'id' => 1,
+        ]);
+        $user2 = factory(User::class)->create([
+            'id' => 2,
+        ]);
+        factory(Task::class)->create([
             'id' => 1,
             'user_id' => 1,
             'name' => 'user 1 task 1'
         ]);
-        factory(Task::class, 1)->create([
+        factory(Task::class)->create([
             'id' => 2,
             'user_id' => 2,
             'name' => 'user 2 task 1'
         ]);
-        factory(Task::class, 1)->create([
+        factory(Task::class)->create([
             'id' => 3,
             'user_id' => 1,
             'name' => 'user 1 task 2'
@@ -116,10 +123,7 @@ class TaskIndexControllerTest extends AppTestCase
          * user_id = 1
          */
         // Add authentication.
-        $user = factory(\App\Models\Eloquents\User::class)->create([
-            'id' => 1,
-        ]);
-        $authUser = $this->actingAs($user, 'user');
+        $authUser = $this->actingAs($user1, 'user');
 
         // Check authenticated.
         $this->assertAuthenticated('user');
@@ -156,10 +160,7 @@ class TaskIndexControllerTest extends AppTestCase
          * user_id = 2
          */
         // Add authentication.
-        $user = factory(\App\Models\Eloquents\User::class)->create([
-            'id' => 2,
-        ]);
-        $authUser = $this->actingAs($user, 'user');
+        $authUser = $this->actingAs($user2, 'user');
 
         // Http request
         $response = $authUser->get('/tasks');

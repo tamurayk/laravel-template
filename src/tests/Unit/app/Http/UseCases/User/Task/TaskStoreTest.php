@@ -5,6 +5,7 @@ namespace Test\Unit\app\Http\UseCase\User\Task;
 
 use App\Http\UseCases\User\Task\TaskStore;
 use App\Models\Eloquents\Task;
+use App\Models\Eloquents\User;
 use Illuminate\Support\Facades\DB;
 use Tests\AppTestCase;
 
@@ -23,6 +24,13 @@ class TaskStoreTest extends AppTestCase
 
     public function testUseCase()
     {
+        factory(User::class)->create([
+            'id' => 1,
+        ]);
+        factory(User::class)->create([
+            'id' => 2,
+        ]);
+
         $this->assertEquals(0, DB::table('tasks')->count(), 'テスト開始時点で tasks テーブルが空である事を確認');
 
         $useCase = new TaskStore(new Task());
