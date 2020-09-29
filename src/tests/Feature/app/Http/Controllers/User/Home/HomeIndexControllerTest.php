@@ -14,31 +14,25 @@ class HomeIndexControllerTest extends AppTestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->initAssertRouting();
     }
-
 
     public function tearDown(): void
     {
         parent::tearDown();
     }
 
-    /**
-     * Override to \Tests\Traits\RoutingTestTrait::RoutingDispatchTestDataProvider
-     * @return array
-     */
-    public function RoutingDispatchTestDataProvider()
+    public function testRouting()
     {
-        $this->createApplication();
         $baseUrl = config('app.url');
-
-        return [
+        $this->assertRouting(
+            $baseUrl. '/home',
+            'GET',
             [
-                $baseUrl. '/home',
-                'GET',
-                HomeIndexController::class,
-                'home.index',
-            ],
-        ];
+                'actionName' => HomeIndexController::class,
+                'routeName' => 'home.index',
+            ]
+        );
     }
 
     /**
