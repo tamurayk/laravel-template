@@ -27,7 +27,7 @@ class LoginControllerTest extends AppTestCase
         $this->initAssertRouting();
 
         $baseUrl = config('app.url');
-        $this->assertRouting(
+        $this->assertDispatchedRoute(
             $baseUrl . '/admin/login',
             'GET',
             [
@@ -35,7 +35,7 @@ class LoginControllerTest extends AppTestCase
                 'routeName' => 'admin.login',
             ]
         );
-        $this->assertRouting(
+        $this->assertDispatchedRoute(
             $baseUrl. '/admin/login',
             'POST',
             [
@@ -43,7 +43,7 @@ class LoginControllerTest extends AppTestCase
                 'routeName' => '',
             ]
         );
-        $this->assertRouting(
+        $this->assertDispatchedRoute(
             $baseUrl . '/admin/logout',
             'POST',
             [

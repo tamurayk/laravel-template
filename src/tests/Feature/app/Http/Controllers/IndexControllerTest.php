@@ -27,7 +27,7 @@ class IndexControllerTest extends AppTestCase
         $this->initAssertRouting();
 
         $baseUrl = config('app.url');
-        $this->assertRouting(
+        $this->assertDispatchedRoute(
             $baseUrl. '/',
             'GET',
             [

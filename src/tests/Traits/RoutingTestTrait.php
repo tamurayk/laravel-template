@@ -30,89 +30,70 @@ trait RoutingTestTrait
     }
 
     /**
-     * 任意の Request を Router に渡し、期待値通りの Route が dispatch される事をテスト
+     * 指定した uri に dispatch される Route を取得
      *
-     * @param string $url
+     * @param string $uri
+     * @param string $method
+     * @return \Illuminate\Routing\Route
+     */
+    private function findRoute(string $uri, string $method): \Illuminate\Routing\Route
+    {
+        // Request 生成
+        $request = \Illuminate\Http\Request::create($uri, strtoupper($method));
+
+        // Request に dispatch される Route を取得
+        $route = $this->findRoute->invokeArgs($this->router, [$request]);
+
+        return $route;
+    }
+
+    /**
+     * 指定した uri に dispatch される actionName と routeName を assert
+     *
+     * @param string $uri
      * @param string $method
      * @param array $expected
      */
-    public function assertRouting(string  $url, string $method, array $expected)
+    public function assertDispatchedRoute(string $uri, string $method, array $expected)
     {
-        // リクエスト生成
-        $request = \Illuminate\Http\Request::create($url, strtoupper($method));
-
-        // Router に Request を渡し、dispatch された Route を取得
-        /** @var \Illuminate\Routing\Route $route */
-        $route = $this->findRoute->invokeArgs($this->router, [$request]);
+        // dispatch される Route を取得
+        $route = $this->findRoute($uri, $method);
 
         // assert
         $this->assertEquals(
             $expected['actionName'],
             $route->getActionName(),
-            'リクエストに対応するコントローラが期待値通りである事'
+            'リクエストに dispatch されるコントローラが期待値通りである事'
         );
         $this->assertEquals(
             $expected['routeName'],
             $route->getName(),
-            'リクエストに対応するルート名が期待値通りである事'
+            'リクエストに dispatch されるルート名が期待値通りである事'
         );
-
-    }
-
-    public function AppliedMiddlewareTestDataProvider()
-    {
-        return [
-            /**
-             * Example
-             *
-             * [
-             *     // テスト対象: URI (Route::get() 等の第一引数で設定した $uri)
-             *     'admin/users',
-             *
-             *     // テスト対象: メソッド
-             *     'GET',
-             *
-             *     // 期待値: Route に適用される Middleware
-             *     [
-             *         'admin',
-             *         'auth:admin'
-             *     ],
-             * ],
-             */
-            [
-                //
-            ],
-        ];
     }
 
     /**
+     * 指定した uri に適用される Middleware を assert
+     *
      * @dataProvider AppliedMiddlewareTestDataProvider
-     * @param string $uri
+     * @param string $uri Route::get()等の第一引数で設定した$uri
      * @param string $method
-     * @param array $expectedMiddleware
+     * @param array $expected
      */
-    public function testAppliedMiddleware(
+    public function assertAppliedMiddleware(
         string $uri,
         string $method,
-        array $expectedMiddleware
+        array $expected
     ) {
-        // RouteCollection 取得
-        $routeCollection = Route::getRoutes();
+        // dispatch される Route を取得
+        $route = $this->findRoute($uri, $method);
 
-        // RouteCollection から テスト対象 Route を取得
-        $route = collect($routeCollection)
-            ->where('uri', $uri)
-            ->filter(function ($route) use ($method)  {
-                return in_array(strtoupper($method), $route->methods);
-            })
-            ->first();
-
-        // テスト対象 Route に適用される Middleware を取得
+        // 適用される Middleware を取得
         $appliedMiddleware = $route->action['middleware'];
 
         // assert
-        $this->assertCount(count($expectedMiddleware), $appliedMiddleware);
-        foreach ($expectedMiddleware as $middleware) {
+        $this->assertCount(count($expected), $appliedMiddleware);
+        foreach ($expected as $middleware) {
             $this->assertTrue(in_array($middleware, $appliedMiddleware));
         }
     }

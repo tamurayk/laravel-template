@@ -26,7 +26,7 @@ class HomeIndexControllerTest extends AppTestCase
         $this->initAssertRouting();
 
         $baseUrl = config('app.url');
-        $this->assertRouting(
+        $this->assertDispatchedRoute(
             $baseUrl. '/home',
             'GET',
             [

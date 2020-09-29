@@ -26,32 +26,28 @@ class IndexControllerTest extends AppTestCase
         $this->initAssertRouting();
 
         $baseUrl = config('app.url');
-        $this->assertRouting(
+        $this->assertDispatchedRoute(
             $baseUrl. '/admin',
             'GET',
             [
                 'actionName' => \App\Http\Controllers\Admin\IndexController::class,
                 'routeName' => 'admin.index',
-
             ]
         );
     }
 
-    /**
-     * Override to \Tests\Traits\RoutingTestTrait::AppliedMiddlewareTestDataProvider
-     * @return array
-     */
-    public function AppliedMiddlewareTestDataProvider()
+    public function testMiddleware()
     {
-        return [
+        $this->initAssertRouting();
+
+        $baseUrl = config('app.url');
+        $this->assertAppliedMiddleware(
+            $baseUrl. '/admin',
+            'GET',
             [
                 'admin',
-                'GET',
-                [
-                    'admin',
-                    'guest:admin',
-                ],
-            ],
-        ];
+                'guest:admin',
+            ]
+        );
     }
 }

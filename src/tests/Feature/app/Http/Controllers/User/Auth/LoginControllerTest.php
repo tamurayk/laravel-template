@@ -27,7 +27,7 @@ class LoginControllerTest extends AppTestCase
         $this->initAssertRouting();
 
         $baseUrl = config('app.url');
-        $this->assertRouting(
+        $this->assertDispatchedRoute(
             $baseUrl. '/login',
             'GET',
             [
@@ -36,7 +36,7 @@ class LoginControllerTest extends AppTestCase
 
             ]
         );
-        $this->assertRouting(
+        $this->assertDispatchedRoute(
             $baseUrl. '/login',
             'POST',
             [
@@ -44,7 +44,7 @@ class LoginControllerTest extends AppTestCase
                 'routeName' => '',
             ]
         );
-        $this->assertRouting(
+        $this->assertDispatchedRoute(
             $baseUrl. '/logout',
             'POST',
             [
@@ -52,7 +52,7 @@ class LoginControllerTest extends AppTestCase
                 'routeName' => 'logout',
             ]
         );
-        $this->assertRouting(
+        $this->assertDispatchedRoute(
             $baseUrl. '/login/github',
             'GET',
             [
@@ -60,7 +60,7 @@ class LoginControllerTest extends AppTestCase
                 'routeName' => 'oauth.login',
             ]
         );
-        $this->assertRouting(
+        $this->assertDispatchedRoute(
             $baseUrl . '/login/github/callback',
             'GET',
             [
