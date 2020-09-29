@@ -36,21 +36,18 @@ class HomeIndexControllerTest extends AppTestCase
         );
     }
 
-    /**
-     * Override to \Tests\Traits\RoutingTestTrait::AppliedMiddlewareTestDataProvider
-     * @return array
-     */
-    public function AppliedMiddlewareTestDataProvider()
+    public function testMiddleware()
     {
-        return [
+        $this->initAssertRouting();
+
+        $baseUrl = config('app.url');
+        $this->assertAppliedMiddleware(
+            $baseUrl. '/home',
+            'GET',
             [
-                'home',
-                'GET',
-                [
-                    'web',
-                    'auth:user',
-                ],
-            ],
-        ];
+                'web',
+                'auth:user',
+            ]
+        );
     }
 }

@@ -53,37 +53,34 @@ class LoginControllerTest extends AppTestCase
         );
     }
 
-    /**
-     * Override to \Tests\Traits\RoutingTestTrait::AppliedMiddlewareTestDataProvider
-     * @return array
-     */
-    public function AppliedMiddlewareTestDataProvider()
+    public function testMiddleware()
     {
-        return [
+        $this->initAssertRouting();
+
+        $baseUrl = config('app.url');
+        $this->assertAppliedMiddleware(
+            $baseUrl . '/admin',
+            'GET',
             [
-                'admin/login',
-                'GET',
-                [
-                    'admin',
-                    'guest:admin',
-                ],
-            ],
+                'admin',
+                'guest:admin',
+            ]
+        );
+        $this->assertAppliedMiddleware(
+            $baseUrl . '/admin/login',
+            'POST',
             [
-                'admin/login',
-                'POST',
-                [
-                    'admin',
-                    'guest:admin',
-                ],
-            ],
+                'admin',
+                'guest:admin',
+            ]
+        );
+        $this->assertAppliedMiddleware(
+            $baseUrl . '/admin/logout',
+            'POST',
             [
-                'admin/logout',
-                'POST',
-                [
-                    'admin',
-                    'auth:admin',
-                ],
-            ],
-        ];
+                'admin',
+                'auth:admin',
+            ]
+        );
     }
 }

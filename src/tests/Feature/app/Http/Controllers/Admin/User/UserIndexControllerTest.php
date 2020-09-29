@@ -49,14 +49,23 @@ class UserIndexControllerTest extends AppTestCase
     {
         return [
             [
-                'admin/users',
-                'GET',
-                [
-                    'admin',
-                    'auth:admin',
-                ],
             ],
         ];
+    }
+
+    public function testMiddleware()
+    {
+        $this->initAssertRouting();
+
+        $baseUrl = config('app.url');
+        $this->assertAppliedMiddleware(
+            $baseUrl . '/admin/users',
+            'GET',
+            [
+                'admin',
+                'auth:admin',
+            ],
+        );
     }
 
     /**

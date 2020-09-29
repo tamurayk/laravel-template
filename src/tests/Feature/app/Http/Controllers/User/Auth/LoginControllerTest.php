@@ -28,7 +28,7 @@ class LoginControllerTest extends AppTestCase
 
         $baseUrl = config('app.url');
         $this->assertDispatchedRoute(
-            $baseUrl. '/login',
+            $baseUrl . '/login',
             'GET',
             [
                 'actionName' => LoginController::class . '@showLoginForm',
@@ -37,7 +37,7 @@ class LoginControllerTest extends AppTestCase
             ]
         );
         $this->assertDispatchedRoute(
-            $baseUrl. '/login',
+            $baseUrl . '/login',
             'POST',
             [
                 'actionName' => LoginController::class . '@login',
@@ -45,7 +45,7 @@ class LoginControllerTest extends AppTestCase
             ]
         );
         $this->assertDispatchedRoute(
-            $baseUrl. '/logout',
+            $baseUrl . '/logout',
             'POST',
             [
                 'actionName' => LoginController::class . '@logout',
@@ -53,7 +53,7 @@ class LoginControllerTest extends AppTestCase
             ]
         );
         $this->assertDispatchedRoute(
-            $baseUrl. '/login/github',
+            $baseUrl . '/login/github',
             'GET',
             [
                 'actionName' => LoginController::class . '@redirectToProvider',
@@ -70,50 +70,47 @@ class LoginControllerTest extends AppTestCase
         );
     }
 
-    /**
-     * Override to \Tests\Traits\RoutingTestTrait::AppliedMiddlewareTestDataProvider
-     * @return array
-     */
-    public function AppliedMiddlewareTestDataProvider()
+    public function testMiddleware()
     {
-        return [
+        $this->initAssertRouting();
+
+        $baseUrl = config('app.url');
+        $this->assertAppliedMiddleware(
+            $baseUrl . '/login',
+            'GET',
             [
-                'login',
-                'GET',
-                [
-                    'web',
-                ],
-            ],
+                'web',
+            ]
+        );
+        $this->assertAppliedMiddleware(
+            $baseUrl . '/login',
+            'POST',
             [
-                'login',
-                'POST',
-                [
-                    'web',
-                ],
-            ],
+                'web',
+            ]
+        );
+        $this->assertAppliedMiddleware(
+            $baseUrl . '/logout',
+            'POST',
             [
-                'logout',
-                'POST',
-                [
-                    'web',
-                ],
-            ],
+                'web',
+            ]
+        );
+        $this->assertAppliedMiddleware(
+            $baseUrl . '/login/github',
+            'GET',
             [
-                'login/{provider}',
-                'GET',
-                [
-                    'web',
-                    'guest:user',
-                ],
-            ],
+                'web',
+                'guest:user',
+            ]
+        );
+        $this->assertAppliedMiddleware(
+            $baseUrl . '/login/github/callback',
+            'GET',
             [
-                'login/{provider}/callback',
-                'GET',
-                [
-                    'web',
-                    'guest:user',
-                ],
-            ],
-        ];
+                'web',
+                'guest:user',
+            ]
+        );
     }
 }
