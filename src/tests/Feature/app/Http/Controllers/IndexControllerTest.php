@@ -47,7 +47,7 @@ class IndexControllerTest extends AppTestCase
             'GET',
             [
                 'middleware' => [
-                    'web',
+                    'user',
                 ],
             ]
         );

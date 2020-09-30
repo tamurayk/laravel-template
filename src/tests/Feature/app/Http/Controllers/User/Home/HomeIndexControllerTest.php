@@ -46,7 +46,7 @@ class HomeIndexControllerTest extends AppTestCase
             'GET',
             [
                 'middleware' => [
-                    'web',
+                    'user',
                     'auth:user',
                 ],
             ]
