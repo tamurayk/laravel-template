@@ -80,7 +80,7 @@ class LoginControllerTest extends AppTestCase
             'GET',
             [
                 'middleware' => [
-                    'web',
+                    'user',
                 ],
             ]
         );
@@ -89,7 +89,7 @@ class LoginControllerTest extends AppTestCase
             'POST',
             [
                 'middleware' => [
-                    'web',
+                    'user',
                 ],
             ]
         );
@@ -98,7 +98,7 @@ class LoginControllerTest extends AppTestCase
             'POST',
             [
                 'middleware' => [
-                    'web',
+                    'user',
                 ],
             ]
         );
@@ -107,7 +107,7 @@ class LoginControllerTest extends AppTestCase
             'GET',
             [
                 'middleware' => [
-                    'web',
+                    'user',
                     'guest:user',
                 ],
             ]
@@ -117,7 +117,7 @@ class LoginControllerTest extends AppTestCase
             'GET',
             [
                 'middleware' => [
-                    'web',
+                    'user',
                     'guest:user',
                 ],
             ]

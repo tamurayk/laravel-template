@@ -49,7 +49,7 @@ class TaskDestroyControllerTest extends AppTestCase
             'DELETE',
             [
                 'middleware' => [
-                    'web',
+                    'user',
                     'auth:user',
                 ],
             ]

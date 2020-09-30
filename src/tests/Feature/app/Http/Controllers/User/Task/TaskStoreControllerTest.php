@@ -48,7 +48,7 @@ class TaskStoreControllerTest extends AppTestCase
             'POST',
             [
                 'middleware' => [
-                    'web',
+                    'user',
                     'auth:user',
                 ],
             ]

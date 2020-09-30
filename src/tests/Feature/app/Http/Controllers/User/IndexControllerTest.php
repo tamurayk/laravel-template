@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Feature\app\Http\Controllers;
+namespace Tests\Feature\app\Http\Controllers\User;
 
-use App\Http\Controllers\IndexController;
+use App\Http\Controllers\User\IndexController;
 use Tests\AppTestCase;
 use Tests\Traits\RoutingTestTrait;
 
@@ -47,7 +47,7 @@ class IndexControllerTest extends AppTestCase
             'GET',
             [
                 'middleware' => [
-                    'web',
+                    'user',
                 ],
             ]
         );
