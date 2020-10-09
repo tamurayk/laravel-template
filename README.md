@@ -412,7 +412,7 @@ $ docker-compose build --no-cache
 ```
 // test 用DBの作成
 $ docker exec -it database /bin/bash
-# mysql -u webapp -D webapp -p
+# mysql -u root -p
 mysql> CREATE DATABASE `webapp_testing`;
 
 // 権限付与
