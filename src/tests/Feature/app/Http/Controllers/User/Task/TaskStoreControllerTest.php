@@ -29,12 +29,12 @@ class TaskStoreControllerTest extends AppTestCase
 
         $baseUrl = config('app.url');
         $this->assertDispatchedRoute(
-            $baseUrl. '/task',
-            'POST',
             [
                 'actionName' => TaskStoreController::class,
                 'routeName' => 'task.store',
-            ]
+            ],
+            'POST',
+            $baseUrl. '/task'
         );
     }
 
@@ -44,14 +44,14 @@ class TaskStoreControllerTest extends AppTestCase
 
         $baseUrl = config('app.url');
         $this->assertAppliedMiddleware(
-            $baseUrl. '/task',
-            'POST',
             [
                 'middleware' => [
                     'user',
                     'auth:user',
                 ],
-            ]
+            ],
+            'POST',
+            $baseUrl. '/task'
         );
     }
 

@@ -32,12 +32,12 @@ class UserIndexControllerTest extends AppTestCase
 
         $baseUrl = config('app.url');
         $this->assertDispatchedRoute(
-            $baseUrl. '/admin/users',
-            'GET',
             [
                 'actionName' => UserIndexController::class,
                 'routeName' => 'admin.user.index',
-            ]
+            ],
+            'GET',
+            $baseUrl. '/admin/users'
         );
     }
 
@@ -59,14 +59,14 @@ class UserIndexControllerTest extends AppTestCase
 
         $baseUrl = config('app.url');
         $this->assertAppliedMiddleware(
-            $baseUrl . '/admin/users',
-            'GET',
             [
                 'middleware' => [
                     'admin',
                     'auth:admin',
                 ],
-            ]
+            ],
+            'GET',
+            $baseUrl . '/admin/users'
         );
     }
 

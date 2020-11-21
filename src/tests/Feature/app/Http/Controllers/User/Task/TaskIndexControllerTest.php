@@ -34,12 +34,12 @@ class TaskIndexControllerTest extends AppTestCase
 
         $baseUrl = config('app.url');
         $this->assertDispatchedRoute(
-            $baseUrl. '/tasks',
-            'GET',
             [
                 'actionName' => TaskIndexController::class,
                 'routeName' => 'task.index',
-            ]
+            ],
+            'GET',
+            $baseUrl. '/tasks'
         );
     }
 
@@ -49,14 +49,14 @@ class TaskIndexControllerTest extends AppTestCase
 
         $baseUrl = config('app.url');
         $this->assertAppliedMiddleware(
-            $baseUrl. '/tasks',
-            'GET',
             [
                 'middleware' => [
                     'user',
                     'auth:user',
                 ],
-            ]
+            ],
+            'GET',
+            $baseUrl. '/tasks'
         );
     }
 

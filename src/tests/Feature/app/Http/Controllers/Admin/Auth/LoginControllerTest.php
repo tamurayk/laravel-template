@@ -28,28 +28,28 @@ class LoginControllerTest extends AppTestCase
 
         $baseUrl = config('app.url');
         $this->assertDispatchedRoute(
-            $baseUrl . '/admin/login',
-            'GET',
             [
                 'actionName' => LoginController::class . '@showLoginForm',
                 'routeName' => 'admin.login',
-            ]
+            ],
+            'GET',
+            $baseUrl . '/admin/login'
         );
         $this->assertDispatchedRoute(
-            $baseUrl. '/admin/login',
-            'POST',
             [
                 'actionName' => LoginController::class . '@login',
                 'routeName' => '',
-            ]
+            ],
+            'POST',
+            $baseUrl. '/admin/login'
         );
         $this->assertDispatchedRoute(
-            $baseUrl . '/admin/logout',
-            'POST',
             [
                 'actionName' => LoginController::class . '@logout',
                 'routeName' => 'admin.logout',
-            ]
+            ],
+            'POST',
+            $baseUrl . '/admin/logout'
         );
     }
 
@@ -59,34 +59,34 @@ class LoginControllerTest extends AppTestCase
 
         $baseUrl = config('app.url');
         $this->assertAppliedMiddleware(
-            $baseUrl . '/admin',
+            [
+                'middleware' => [
+                    'admin',
+                    'guest:admin',
+                ],
+            ],
             'GET',
+            $baseUrl . '/admin'
+        );
+        $this->assertAppliedMiddleware(
             [
                 'middleware' => [
                     'admin',
                     'guest:admin',
                 ],
-            ]
+            ],
+            'POST',
+            $baseUrl . '/admin/login'
         );
         $this->assertAppliedMiddleware(
-            $baseUrl . '/admin/login',
-            'POST',
-            [
-                'middleware' => [
-                    'admin',
-                    'guest:admin',
-                ],
-            ]
-        );
-        $this->assertAppliedMiddleware(
-            $baseUrl . '/admin/logout',
-            'POST',
             [
                 'middleware' => [
                     'admin',
                     'auth:admin',
                 ],
-            ]
+            ],
+            'POST',
+            $baseUrl . '/admin/logout'
         );
     }
 }
