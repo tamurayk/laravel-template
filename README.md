@@ -43,6 +43,9 @@
 
 ### ディレクトリ構成
 
+<details>
+<summary>ディレクトリ構成</summary>
+
 ```
 .
 ├── src => Laravelプロジェクトをインストールするディレクトリ
@@ -65,8 +68,12 @@
 ├── README.md
 └── __memo.md
 ```
+</details>
 
 ### ディレクトリ構成 (Laravelプロジェクト)
+
+<details>
+<summary>ディレクトリ構成 (Laravelプロジェクト)</summary>
 
 ```
 ./src/
@@ -203,8 +210,12 @@
 ├── webpack.mix.js
 └── yarn.lock
 ```
+</details>
 
 ### ディレクトリ構成 (app以下)
+
+<details>
+<summary>ディレクトリ構成 (app以下)</summary>
 
 ```
 ./src/app/
@@ -335,6 +346,7 @@
     ├── Commands => CQRS パターン採用時に使用
     └── Queries => CQRS パターン採用時に使用
 ```
+</details>
 
 ### DI と サービスコンテナ
 
@@ -613,6 +625,9 @@ $ docker exec php-fpm php artisan migrate
 
 ## リクエストライフサイクル
 
+<details>
+<summary>ディレクトリ構成</summary>
+
 https://readouble.com/laravel/6.x/ja/lifecycle.html
 
 ```
@@ -763,6 +778,7 @@ public/index.php:60
       ↓
       \Illuminate\Foundation\Application::terminate
 ```
+</details>
 
 ### routes/web.php
 
