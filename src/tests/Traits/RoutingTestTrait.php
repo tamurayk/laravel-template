@@ -54,8 +54,11 @@ trait RoutingTestTrait
      * @param string $method
      * @param array $expected
      */
-    public function assertDispatchedRoute(string $uri, string $method, array $expected)
-    {
+    public function assertDispatchedRoute(
+        array $expected,
+        string $method,
+        string $uri
+    ) {
         // dispatch される Route を取得
         $route = $this->findRoute($uri, $method);
 
@@ -76,14 +79,14 @@ trait RoutingTestTrait
      * 指定した uri に適用される Middleware を assert
      *
      * @dataProvider AppliedMiddlewareTestDataProvider
-     * @param string $uri Route::get()等の第一引数で設定した$uri
-     * @param string $method
      * @param array $expected
+     * @param string $method
+     * @param string $uri Route::get()等の第一引数で設定した$uri
      */
     public function assertAppliedMiddleware(
-        string $uri,
+        array $expected,
         string $method,
-        array $expected
+        string $uri
     ) {
         // dispatch される Route を取得
         $route = $this->findRoute($uri, $method);

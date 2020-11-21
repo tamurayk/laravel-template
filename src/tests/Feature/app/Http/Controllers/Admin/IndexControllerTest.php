@@ -27,12 +27,12 @@ class IndexControllerTest extends AppTestCase
 
         $baseUrl = config('app.url');
         $this->assertDispatchedRoute(
-            $baseUrl. '/admin',
-            'GET',
             [
                 'actionName' => \App\Http\Controllers\Admin\IndexController::class,
                 'routeName' => 'admin.index',
-            ]
+            ],
+            'GET',
+            $baseUrl. '/admin'
         );
     }
 
@@ -42,14 +42,14 @@ class IndexControllerTest extends AppTestCase
 
         $baseUrl = config('app.url');
         $this->assertAppliedMiddleware(
-            $baseUrl. '/admin',
-            'GET',
             [
                 'middleware' => [
                     'admin',
                     'guest:admin',
                 ],
-            ]
+            ],
+            'GET',
+            $baseUrl. '/admin'
         );
     }
 }

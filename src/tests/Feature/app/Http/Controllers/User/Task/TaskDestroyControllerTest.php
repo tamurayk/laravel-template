@@ -30,12 +30,12 @@ class TaskDestroyControllerTest extends AppTestCase
 
         $baseUrl = config('app.url');
         $this->assertDispatchedRoute(
-            $baseUrl. '/task/1',
-            'DELETE',
             [
                 'actionName' => TaskDestroyController::class,
                 'routeName' => 'task.destroy',
-            ]
+            ],
+            'DELETE',
+            $baseUrl. '/task/1'
         );
     }
 
@@ -45,14 +45,14 @@ class TaskDestroyControllerTest extends AppTestCase
 
         $baseUrl = config('app.url');
         $this->assertAppliedMiddleware(
-            $baseUrl. '/task/1',
-            'DELETE',
             [
                 'middleware' => [
                     'user',
                     'auth:user',
                 ],
-            ]
+            ],
+            'DELETE',
+            $baseUrl. '/task/1'
         );
     }
 

@@ -27,12 +27,12 @@ class HomeIndexControllerTest extends AppTestCase
 
         $baseUrl = config('app.url');
         $this->assertDispatchedRoute(
-            $baseUrl. '/home',
-            'GET',
             [
                 'actionName' => HomeIndexController::class,
                 'routeName' => 'home.index',
-            ]
+            ],
+            'GET',
+            $baseUrl. '/home'
         );
     }
 
@@ -42,14 +42,14 @@ class HomeIndexControllerTest extends AppTestCase
 
         $baseUrl = config('app.url');
         $this->assertAppliedMiddleware(
-            $baseUrl. '/home',
-            'GET',
             [
                 'middleware' => [
                     'user',
                     'auth:user',
                 ],
-            ]
+            ],
+            'GET',
+            $baseUrl. '/home'
         );
     }
 }
