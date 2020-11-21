@@ -43,6 +43,9 @@
 
 ### ディレクトリ構成
 
+<details>
+<summary>ディレクトリ構成</summary>
+
 ```
 .
 ├── src => Laravelプロジェクトをインストールするディレクトリ
@@ -65,6 +68,7 @@
 ├── README.md
 └── __memo.md
 ```
+</details>
 
 ### ディレクトリ構成 (Laravelプロジェクト)
 
