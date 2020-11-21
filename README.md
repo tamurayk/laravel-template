@@ -396,6 +396,22 @@ Controller
 
 ## 構築方法
 
+### コンテナの起動
+
+```
+// リポジトリのclone
+$ git clone git@github.com:tamurayk/laravel-template.git
+$ cd laravel-template
+
+//※初回起動時は後述の (初回のみ) の作業を行う
+
+// 開発環境の起動
+$ docker-compose -f docker-compose.yml up -d
+
+// ※下記のように開発環境を起動すると http://localhost:8080/ で phpMyAdmin にアクセスできます
+$ docker-compose -f docker-compose.yml -f docker-compose.local.yml up -d
+```
+
 ### 前準備 (初回のみ)
 
 ```
@@ -411,6 +427,7 @@ $ docker-compose build --no-cache
 
 ```
 // test 用DBの作成
+$ docker-compose up -d
 $ docker exec -it database /bin/bash
 # mysql -u root -p
 mysql> CREATE DATABASE `webapp_testing`;
@@ -431,21 +448,8 @@ mysql> show grants for 'webapp'@'%';
 
 ```
 // test用の Application Key の作成
+$ docker exec -it php-fpm /bin/ash
 # php artisan key:generate --env=testing
-```
-
-### コンテナの起動
-
-```
-// リポジトリのclone
-$ git clone git@github.com:tamurayk/laravel-template.git
-
-// 開発環境の起動
-$ cd laravel-template
-$ docker-compose -f docker-compose.yml up -d
-
-// ※下記のように開発環境を起動すると http://localhost:8080/ で phpMyAdmin にアクセスできます
-$ docker-compose -f docker-compose.yml -f docker-compose.local.yml up -d
 ```
 
 ### 依存パッケージのインストール (初回のみ)
@@ -453,9 +457,11 @@ $ docker-compose -f docker-compose.yml -f docker-compose.local.yml up -d
 ```
 $ docker exec -it php-fpm /bin/ash
 # composer install
+# exit
 ```
 
 ```
+$ cd src
 $ yarn install
 ```
 
@@ -465,7 +471,8 @@ $ yarn install
 
 ```
 // Laravel Mix(=Webpackのwrapper)で `resource/` 以下のファイルを `public/` 以下にバンドル
-$ yarn yun dev
+$ cd src
+$ yarn run dev
 ```
 
 - 参考
@@ -500,6 +507,28 @@ $ docker exec -it php-fpm /bin/ash
 
 ```
 # php artisan admin:create
+```
+
+### OAuth認証用の設定
+
+- GitHub に OAuth Apps を作成
+    - https://github.com/settings/developers より `New OAuth App` を押下
+    - 以下のように設定し、`Register application` を押下
+        - `Application name` : `laravel-template` ※適宜でok
+        - `Homepage URL` : `http://localhost:8000`
+        - `Application description` : 任意
+        - `Authorization callback URL` : `http://localhost:8000/login/github/callback`
+    - `Client secret` を生成
+        
+- `.env` の下記の項目に上記で作成した `OAuth App` の `Client ID` と `Client secret` を設定
+
+```
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+
+// See: laravel-template/src/app/SocialiteProviders/MyOAuthProvider.php
+MY_OAUTH_PROVIDER_CLIENT_ID=
+MY_OAUTH_PROVIDER_CLIENT_SECRET=
 ```
 
 ### アプリケーションへのアクセス
