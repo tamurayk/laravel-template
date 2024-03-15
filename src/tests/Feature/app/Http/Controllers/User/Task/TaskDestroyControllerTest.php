@@ -68,8 +68,8 @@ class TaskDestroyControllerTest extends AppTestCase
 
         // 未認証の場合は、login 画面にリダイレクトする事
         $response->assertStatus(302);
-        $response->assertLocation('http://localhost/login');
-        $response->assertRedirect('http://localhost/login');
+        $response->assertLocation(sprintf('%s/login', config('app.url')));
+        $response->assertRedirect(sprintf('%s/login', config('app.url')));
     }
 
     /**
