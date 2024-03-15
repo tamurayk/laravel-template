@@ -3,7 +3,7 @@
 ## Goal
 
 - Laravel の開発環境を docker で作る
-- `docker-compose up -d` したら、初期設計済みの Laravel でコードを書き始められる状態になる
+- `docker compose up -d` したら、初期設計済みの Laravel でコードを書き始められる状態になる
 
 ## コンテナ構成
 
@@ -418,10 +418,10 @@ $ cd laravel-template
 //※初回起動時は後述の (初回のみ) の作業を行う
 
 // 開発環境の起動
-$ docker-compose -f docker-compose.yml up -d
+$ docker compose -f docker-compose.yml up -d
 
 // ※下記のように開発環境を起動すると http://localhost:8080/ で phpMyAdmin にアクセスできます
-$ docker-compose -f docker-compose.yml -f docker-compose.local.yml up -d
+$ docker compose -f docker-compose.yml -f docker-compose.local.yml up -d
 ```
 
 ### 前準備 (初回のみ)
@@ -431,15 +431,15 @@ $ docker-compose -f docker-compose.yml -f docker-compose.local.yml up -d
 $ docker volume create --name laravel-template-database-data
 
 // イメージのビルド
-$ docker-compose build
+$ docker compose build
 
 // (Dockerfile を変更した場合は再ビルド)
-$ docker-compose build --no-cache
+$ docker compose build --no-cache
 ```
 
 ```
 // test 用DBの作成
-$ docker-compose up -d
+$ docker compose up -d
 $ docker exec -it database /bin/bash
 # mysql -u root -p
 mysql> CREATE DATABASE `webapp_testing`;
@@ -458,12 +458,6 @@ mysql> show grants for 'webapp'@'%';
 +------------------------------------------------------------+
 ```
 
-```
-// test用の Application Key の作成
-$ docker exec -it php-fpm /bin/ash
-# php artisan key:generate --env=testing
-```
-
 ### 依存パッケージのインストール (初回のみ)
 
 ```
@@ -473,6 +467,13 @@ $ docker exec -it php-fpm /bin/ash
 ```
 
 ```
+// test用の Application Key の作成
+$ cp src/.env.testing.example src/.env.testing
+# php artisan key:generate --env=testing
+```
+
+```
+// ホストOSで実行
 $ cd src
 $ yarn install
 ```
@@ -482,6 +483,7 @@ $ yarn install
 - 初回起動時、及び、`resource/` 以下のファイルを更新した際は、Laravel Mix の実行が必要です
 
 ```
+// ホストOSで実行
 // Laravel Mix(=Webpackのwrapper)で `resource/` 以下のファイルを `public/` 以下にバンドル
 $ cd src
 $ yarn run dev
