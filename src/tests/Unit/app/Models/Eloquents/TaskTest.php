@@ -85,7 +85,7 @@ class TaskTest extends AppTestCase
     {
         Carbon::setTestNow(Carbon::parse('2020-01-01 00:00:00'));
 
-        factory(User::class)->create([
+        User::factory()->create([
             'id' => 1,
             'name' => 'aaa'
         ]);
@@ -118,7 +118,7 @@ class TaskTest extends AppTestCase
     {
         Carbon::setTestNow(Carbon::parse('2020-01-01 00:00:00'));
 
-        factory(User::class)->create([
+        User::factory()->create([
             'id' => 1,
             'name' => 'aaa'
         ]);
@@ -154,11 +154,11 @@ class TaskTest extends AppTestCase
      */
     public function testRelation()
     {
-        factory(User::class)->create([
+        User::factory()->create([
             'id' => 1,
             'name' => 'aaa'
         ]);
-        factory(Task::class)->create([
+        Task::factory()->create([
             'id' => 1,
             'user_id' => 1,
             'name' => 'bbb'

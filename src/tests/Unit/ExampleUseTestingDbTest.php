@@ -28,7 +28,7 @@ class ExampleUseTestingDbTest extends TestCase
 
         // テスト用のデータを 1 件生成
         //  database/factories/UserFactory.php の Faker でランダムなダミー値のデータが生成される
-        factory(User::class)->create();
+        User::factory()->create();
 
         $this->assertEquals(1, DB::table('users')->count(), 'factory() 実行後に user テーブルにレコードが 1 件追加された事を確認');
     }

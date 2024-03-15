@@ -32,7 +32,7 @@ class UserIndexTest extends AppTestCase
         $useCaseOutput = $useCase();
         $this->assertEquals(0, $useCaseOutput->count(), 'users テーブルが空の場合は、空の Collection が返る事');
 
-        factory(User::class, 2)->create();
+        User::factory(2)->create();
         $this->assertEquals(2, DB::table('users')->count(), 'users テーブルにレコードが 2 件作成された事を確認');
 
         $useCaseOutput = $useCase();

@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+// FIXME: Laravel の標準的な慣習に従うように修正
 namespace App\Models\Interfaces;
 
 use App\Models\Eloquents\Task;
