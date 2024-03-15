@@ -461,7 +461,7 @@ mysql> show grants for 'webapp'@'%';
 ### 依存パッケージのインストール (初回のみ)
 
 ```
-$ docker exec -it php-fpm /bin/ash
+$ docker exec -it php-fpm /bin/bash
 # composer install
 # exit
 ```
@@ -508,7 +508,7 @@ $ docker exec php-fpm php artisan migrate
 ### seeder の実行
 
 ```
-$ docker exec -it php-fpm /bin/ash
+$ docker exec -it php-fpm /bin/bash
 
 // (Seederを追加した場合はオートローダを再生成)
 # composer dump-autoload
@@ -602,7 +602,7 @@ php artisan route:list
 
 ```
 // Laravel 再インストール
-$ docker exec -it php-fpm /bin/ash
+$ docker exec -it php-fpm /bin/bash
 # rm -rf /srv/* /srv/.*
 // 6.x の最新版をインストール
 # composer create-project laravel/laravel /srv --prefer-dist "^6.0"
