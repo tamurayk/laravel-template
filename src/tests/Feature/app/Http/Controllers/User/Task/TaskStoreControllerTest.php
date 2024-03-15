@@ -67,8 +67,8 @@ class TaskStoreControllerTest extends AppTestCase
 
         // 未認証の場合は、login 画面にリダイレクトする事
         $response->assertStatus(302);
-        $response->assertLocation('http://localhost/login');
-        $response->assertRedirect('http://localhost/login');
+        $response->assertLocation(sprintf('%s/login', config('app.url')));
+        $response->assertRedirect(sprintf('%s/login', config('app.url')));
     }
 
     /**
@@ -92,8 +92,8 @@ class TaskStoreControllerTest extends AppTestCase
 
         // タスク一覧にリダイレクトする事
         $response->assertStatus(302);
-        $response->assertLocation('http://localhost/tasks');
-        $response->assertRedirect('http://localhost/tasks');
+        $response->assertLocation(sprintf('%s/tasks', config('app.url')));
+        $response->assertRedirect(sprintf('%s/tasks', config('app.url')));
 
         // tasks テーブルにレコードが追加される事
         $this->assertEquals(1, DB::table('tasks')->count(), 'HTTPリクエスト後に tasks テーブルに 1 レコード追加されている事');

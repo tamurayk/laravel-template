@@ -4,6 +4,7 @@ services:
   database:
     container_name: database
     image: mysql:5.7 #https://laravel.com/docs/7.x/database
+    platform: linux/x86_64
     environment:
       MYSQL_DATABASE: webapp
       MYSQL_USER: webapp
