@@ -108,8 +108,9 @@ class TaskDestroyControllerTest extends AppTestCase
 
         // タスク一覧にリダイレクトする事
         $response->assertStatus(302);
-        $response->assertLocation('http://localhost/tasks');
-        $response->assertRedirect('http://localhost/tasks');
+        $response->assertLocation(sprintf('%s/tasks', config('app.url')));
+        $response->assertRedirect(sprintf('%s/tasks', config('app.url')));
+
 
         $this->assertEquals(2, DB::table('tasks')->count(), 'HTTPリクエスト後に 1 レコード削除されている事');
         $this->assertEquals(0, DB::table('tasks')->where('id', 1)->count(), '指定した id のタスクが削除されている事');
