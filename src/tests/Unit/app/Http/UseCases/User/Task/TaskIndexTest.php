@@ -27,16 +27,16 @@ class TaskIndexTest extends AppTestCase
     public function testUseCase()
     {
         // Generate test data.
-        factory(User::class)->create([
+        User::factory()->create([
             'id' => 1,
         ]);
-        factory(User::class)->create([
+        User::factory()->create([
             'id' => 2,
         ]);
-        factory(Task::class, 2)->create([
+        Task::factory(2)->create([
             'user_id' => 1,
         ]);
-        factory(Task::class, 1)->create([
+        Task::factory()->create([
             'user_id' => 2,
         ]);
         $this->assertEquals(3, DB::table('tasks')->count(), 'tasks テーブルにテストデータが 3 件生成されている事');
@@ -77,28 +77,28 @@ class TaskIndexTest extends AppTestCase
     public function search_検索結果が正しい事()
     {
         // Generate test data.
-        factory(User::class)->create([
+        User::factory()->create([
             'id' => 1,
         ]);
-        factory(User::class)->create([
+        User::factory()->create([
             'id' => 2,
         ]);
-        factory(Task::class)->create([
+        Task::factory()->create([
             'id' => 1,
             'user_id' => 1,
             'name' => 'keyword'
         ]);
-        factory(Task::class)->create([
+        Task::factory()->create([
             'id' => 2,
             'user_id' => 1,
             'name' => 'xxxxkeywordxxxx'
         ]);
-        factory(Task::class)->create([
+        Task::factory()->create([
             'id' => 3,
             'user_id' => 1,
             'name' => 'foobar'
         ]);
-        factory(Task::class)->create([
+        Task::factory()->create([
             'id' => 4,
             'user_id' => 2,
             'name' => 'keyword'

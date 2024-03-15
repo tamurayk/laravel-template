@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Tests\Feature\app\Http\Controllers\User\Task;
 
 use App\Http\Controllers\User\Task\TaskStoreController;
+use App\Models\Eloquents\User;
 use Illuminate\Support\Facades\DB;
 use Tests\AppTestCase;
 use Tests\Traits\RoutingTestTrait;
@@ -79,7 +80,7 @@ class TaskStoreControllerTest extends AppTestCase
         $this->assertEquals(0, DB::table('tasks')->count(), 'HTTPリクエスト前は tasks テーブルが空である事を確認');
 
         // 認証
-        $user = factory(\App\Models\Eloquents\User::class)->create([
+        $user = User::factory()->create([
             'id' => 1,
         ]);
         $authUser = $this->actingAs($user, 'user');

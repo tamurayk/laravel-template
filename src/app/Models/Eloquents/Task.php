@@ -4,10 +4,13 @@ declare(strict_types=1);
 namespace App\Models\Eloquents;
 
 use App\Models\Interfaces\TaskInterface;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Task extends Eloquent implements TaskInterface
 {
+    use HasFactory;
+
     /**
      * @var array
      */

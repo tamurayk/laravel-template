@@ -24,10 +24,10 @@ class TaskStoreTest extends AppTestCase
 
     public function testUseCase()
     {
-        factory(User::class)->create([
+        User::factory()->create([
             'id' => 1,
         ]);
-        factory(User::class)->create([
+        User::factory()->create([
             'id' => 2,
         ]);
 

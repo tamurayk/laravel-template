@@ -79,21 +79,21 @@ class TaskDestroyControllerTest extends AppTestCase
     public function index_ログイン中の場合は指定したタスクを削除しタスク一覧にリダイレクト()
     {
         // Generate test data.
-        $user = factory(User::class)->create([
+        $user = User::factory()->create([
             'id' => 1,
         ]);
-        factory(User::class)->create([
+        User::factory()->create([
             'id' => 2,
         ]);
-        factory(Task::class)->create([
+        Task::factory()->create([
             'id' => 1,
             'user_id' => 1,
         ]);
-        factory(Task::class)->create([
+        Task::factory()->create([
             'id' => 2,
             'user_id' => 1,
         ]);
-        factory(Task::class)->create([
+        Task::factory()->create([
             'id' => 3,
             'user_id' => 2,
         ]);
@@ -122,13 +122,13 @@ class TaskDestroyControllerTest extends AppTestCase
     public function index_他人のタスクを削除しようとした場合は403エラーになる事()
     {
         // Generate test data.
-        $user = factory(User::class)->create([
+        $user = User::factory()->create([
             'id' => 1,
         ]);
-        factory(User::class)->create([
+        User::factory()->create([
             'id' => 2,
         ]);
-        factory(Task::class, 1)->create([
+        Task::factory()->create([
             'id' => 1,
             'user_id' => 2,
         ]);
@@ -152,7 +152,7 @@ class TaskDestroyControllerTest extends AppTestCase
     public function index_存在しないtask_idを指定した場合は404エラーになる事()
     {
         // 認証
-        $user = factory(\App\Models\Eloquents\User::class)->create([
+        $user = User::factory()->create([
             'id' => 1,
         ]);
         $authUser = $this->actingAs($user, 'user');

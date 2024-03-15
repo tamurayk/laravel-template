@@ -5,6 +5,8 @@ namespace Tests\Feature\app\Http\Controllers\Admin\User;
 
 use App\Http\Controllers\Admin\User\UserIndexController;
 use App\Models\Constants\UserConstants;
+use App\Models\Eloquents\Administrator;
+use App\Models\Eloquents\Group;
 use App\Models\Eloquents\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -102,15 +104,15 @@ class UserIndexControllerTest extends AppTestCase
     {
         // Generate test data.
         for ($i = 1; $i <= 3; $i++) {
-            factory(User::class, 1)->create([
+            User::factory()->create([
                 'id' => $i,
                 'name' => sprintf('user-%s', $i),
             ]);
         }
         $this->assertEquals(3, DB::table('users')->count());
 
-        factory(\App\Models\Eloquents\Group::class)->create();
-        $user = factory(\App\Models\Eloquents\Administrator::class)->create();
+        Group::factory()->create();
+        $user = Administrator::factory()->create();
         $authUser = $this->actingAs($user, 'admin');
 
         $this->assertAuthenticated('admin');

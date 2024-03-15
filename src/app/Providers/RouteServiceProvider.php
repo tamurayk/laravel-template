@@ -12,9 +12,33 @@ class RouteServiceProvider extends ServiceProvider
      *
      * In addition, it is set as the URL generator's root namespace.
      *
-     * @var string
+     * @var string|null
+     *
+     * MEMO:
+     *  Laravel 7 以前では、$namespace プロパティを RouteServiceProvider に設定することで、
+     *  グルーバルに名前空間のプレフィックスをルート定義に自動的に適用することが可能だったが、
+     *  Laravel 8 以降では、デフォルトでは無効なり、Route定義でコントローラーを参照する際に、完全修飾名を使用することが推奨されるようになった。
+     *
+     * Laravel 7
+     *   in \App\Providers\RouteServiceProvider
+     *     $namespace = 'App\Http\Controllers';
+     *
+     *   in \routes\user.php
+     *     Route::get('/users', 'UserController@index');
+     *
+     *   のように、コントローラーを指定する際に、名前空間を省略して短縮形でしていしていた
+     *
+     * Laravel 8
+     *   in \routes\user.php
+     *     $namespace = null; //デフォルトではコメントアウト
+     *
+     *   in \routes\user.php
+     *     use App\Http\Controllers\UserController;
+     *     Route::get('/users', [UserController::class, 'index']);
+     *
+     *   のように、コントローラーを指定する際に、コントローラーの完全修飾名を指定する思想になった
      */
-    protected $namespace = 'App\Http\Controllers';
+    protected $namespace = null;
 
     /**
      * The path to the "home" route for your application.

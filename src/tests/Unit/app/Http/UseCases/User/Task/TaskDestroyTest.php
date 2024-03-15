@@ -25,23 +25,23 @@ class TaskDestroyTest extends AppTestCase
     public function testUseCase()
     {
         // Generate test data.
-        factory(User::class)->create([
+        User::factory()->create([
             'id' => 1,
         ]);
-        factory(User::class)->create([
+        User::factory()->create([
             'id' => 2,
         ]);
-        factory(Task::class, 1)->create([
+        Task::factory()->create([
             'id' => 1,
             'user_id' => 1,
             'name' => 'a',
         ]);
-        factory(Task::class, 1)->create([
+        Task::factory()->create([
             'id' => 2,
             'user_id' => 1,
             'name' => 'b',
         ]);
-        factory(Task::class, 1)->create([
+        Task::factory()->create([
             'id' => 3,
             'user_id' => 2,
             'name' => 'c',

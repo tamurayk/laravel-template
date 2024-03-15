@@ -85,7 +85,7 @@ class TaskIndexControllerTest extends AppTestCase
         $this->assertGuest(null);
 
         // 認証
-        $user = factory(\App\Models\Eloquents\User::class)->create();
+        $user = User::factory()->create();
         $authUser = $this->actingAs($user, 'user');
 
         // 認証済みである事を確認
@@ -106,23 +106,23 @@ class TaskIndexControllerTest extends AppTestCase
     public function index_ログイン中ユーザーのタスク一覧を表示()
     {
         // Generate test data.
-        $user1 = factory(User::class)->create([
+        $user1 = User::factory()->create([
             'id' => 1,
         ]);
-        $user2 = factory(User::class)->create([
+        $user2 = User::factory()->create([
             'id' => 2,
         ]);
-        factory(Task::class)->create([
+        Task::factory()->create([
             'id' => 1,
             'user_id' => 1,
             'name' => 'user 1 task 1'
         ]);
-        factory(Task::class)->create([
+        Task::factory()->create([
             'id' => 2,
             'user_id' => 2,
             'name' => 'user 2 task 1'
         ]);
-        factory(Task::class)->create([
+        Task::factory()->create([
             'id' => 3,
             'user_id' => 1,
             'name' => 'user 1 task 2'
@@ -207,16 +207,16 @@ class TaskIndexControllerTest extends AppTestCase
     public function index_paginator()
     {
         // Generate test data.
-        $user1 = factory(User::class)->create([
+        $user1 = User::factory()->create([
             'id' => 1,
         ]);
-        $user2 = factory(User::class)->create([
+        $user2 = User::factory()->create([
             'id' => 2,
         ]);
-        factory(Task::class, 21)->create([
+        Task::factory(21)->create([
             'user_id' => $user1->id,
         ]);
-        factory(Task::class, 1)->create([
+        Task::factory()->create([
             'user_id' => $user2->id,
         ]);
         $this->assertEquals(21, DB::table('tasks')->where('user_id', $user1->id)->count());

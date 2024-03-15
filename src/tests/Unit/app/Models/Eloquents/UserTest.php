@@ -43,16 +43,16 @@ class UserTest extends AppTestCase
      */
     public function testRelation()
     {
-        factory(User::class)->create([
+        User::factory()->create([
             'id' => 1,
             'name' => 'user-1'
         ]);
-        factory(Task::class)->create([
+        Task::factory()->create([
             'id' => 1,
             'user_id' => 1,
             'name' => 'task-1'
         ]);
-        factory(Task::class)->create([
+        Task::factory()->create([
             'id' => 2,
             'user_id' => 1,
             'name' => 'task-2'
@@ -76,7 +76,7 @@ class UserTest extends AppTestCase
      */
     public function testHidden()
     {
-        factory(User::class)->create([
+        User::factory()->create([
             'id' => 1,
             'name' => 'user-1'
         ]);
@@ -150,7 +150,7 @@ class UserTest extends AppTestCase
      */
     public function 登録済みのemailを指定してsaveした場合は例外がthrowされる事()
     {
-        factory(User::class)->create([
+        User::factory()->create([
             'email' => 'test',
         ]);
 
