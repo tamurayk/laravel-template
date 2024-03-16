@@ -592,6 +592,13 @@ MY_OAUTH_PROVIDER_CLIENT_SECRET=
 # ./vendor/bin/psalm
 ```
 
+- composer script
+
+```
+// 実行
+# composer psalm
+```
+
 ## PHPUnit
 
 ```
