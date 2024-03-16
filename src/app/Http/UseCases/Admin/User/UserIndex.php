@@ -7,6 +7,7 @@ use App\Http\UseCases\Admin\User\Interfaces\UserIndexInterface;
 use App\Models\Constants\UserConstants;
 use App\Models\Interfaces\UserInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 
 class UserIndex implements UserIndexInterface
@@ -20,8 +21,7 @@ class UserIndex implements UserIndexInterface
     }
 
     /**
-     * @param array $paginatorParam
-     * @return LengthAwarePaginator
+     * @return LengthAwarePaginator<Model>
      */
     public function __invoke(
         array $paginatorParam = []

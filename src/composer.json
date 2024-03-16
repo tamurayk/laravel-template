@@ -64,6 +64,9 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
-        ]
+        ],
+        "stan": "phpstan analyse --memory-limit=2G",
+        "stan-rebuild-baseline": "phpstan analyse --generate-baseline phpstan/baselines/phpstan-baseline.neon",
+        "stan-clear-cache": "phpstan clear-result-cache"
     }
 }

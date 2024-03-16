@@ -12,7 +12,7 @@ class Task extends Eloquent implements TaskInterface
     use HasFactory;
 
     /**
-     * @var array
+     * @inheritdoc
      */
     protected $fillable = [
         'user_id',
@@ -20,7 +20,7 @@ class Task extends Eloquent implements TaskInterface
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo<User, Task>
      */
     public function user(): BelongsTo
     {
