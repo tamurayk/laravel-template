@@ -25,8 +25,10 @@ if (!function_exists('sort_uri')) {
         $currentColumn = $request->query($columnKey);
         $currentDirection = $request->query($directionKey);
 
+        /** @psalm-suppress UndefinedFunction */
         $orderDirection = $orderDirection ?? sort_direction($orderColumn, $currentColumn, $currentDirection);;
 
+        /** @psalm-suppress UndefinedFunction */
         return  sort_uri_from_current_uri($currentUri, $orderColumn, $orderDirection, $columnKey, $directionKey);
     }
 }
