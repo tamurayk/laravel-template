@@ -1,0 +1,76 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method App\\\\Models\\\\Interfaces\\\\BaseInterface\\:\\:destroy\\(\\) has parameter \\$ids with generic class Illuminate\\\\Support\\\\Collection but does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: ../../app/Models/Interfaces/BaseInterface.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Interfaces\\\\BaseInterface\\:\\:newCollection\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Collection does not specify its types\\: TKey, TModel$#"
+			count: 1
+			path: ../../app/Models/Interfaces/BaseInterface.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Interfaces\\\\BaseInterface\\:\\:newEloquentBuilder\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Builder does not specify its types\\: TModelClass$#"
+			count: 1
+			path: ../../app/Models/Interfaces/BaseInterface.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Interfaces\\\\BaseInterface\\:\\:newModelQuery\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Builder does not specify its types\\: TModelClass$#"
+			count: 1
+			path: ../../app/Models/Interfaces/BaseInterface.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Interfaces\\\\BaseInterface\\:\\:newQuery\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Builder does not specify its types\\: TModelClass$#"
+			count: 1
+			path: ../../app/Models/Interfaces/BaseInterface.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Interfaces\\\\BaseInterface\\:\\:newQueryForRestoration\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Builder does not specify its types\\: TModelClass$#"
+			count: 1
+			path: ../../app/Models/Interfaces/BaseInterface.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Interfaces\\\\BaseInterface\\:\\:newQueryWithoutRelationships\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Builder does not specify its types\\: TModelClass$#"
+			count: 1
+			path: ../../app/Models/Interfaces/BaseInterface.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Interfaces\\\\BaseInterface\\:\\:newQueryWithoutScope\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Builder does not specify its types\\: TModelClass$#"
+			count: 1
+			path: ../../app/Models/Interfaces/BaseInterface.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Interfaces\\\\BaseInterface\\:\\:newQueryWithoutScopes\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Builder does not specify its types\\: TModelClass$#"
+			count: 1
+			path: ../../app/Models/Interfaces/BaseInterface.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Interfaces\\\\BaseInterface\\:\\:on\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Builder does not specify its types\\: TModelClass$#"
+			count: 1
+			path: ../../app/Models/Interfaces/BaseInterface.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Interfaces\\\\BaseInterface\\:\\:query\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Builder does not specify its types\\: TModelClass$#"
+			count: 1
+			path: ../../app/Models/Interfaces/BaseInterface.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Interfaces\\\\BaseInterface\\:\\:registerGlobalScopes\\(\\) has parameter \\$builder with generic class Illuminate\\\\Database\\\\Eloquent\\\\Builder but does not specify its types\\: TModelClass$#"
+			count: 1
+			path: ../../app/Models/Interfaces/BaseInterface.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Interfaces\\\\BaseInterface\\:\\:registerGlobalScopes\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Builder does not specify its types\\: TModelClass$#"
+			count: 1
+			path: ../../app/Models/Interfaces/BaseInterface.php
+
+		-
+			message: "#^Method App\\\\Models\\\\Interfaces\\\\BaseInterface\\:\\:with\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Builder does not specify its types\\: TModelClass$#"
+			count: 1
+			path: ../../app/Models/Interfaces/BaseInterface.php
+
+		-
+			message: "#^Type static\\(App\\\\Models\\\\Interfaces\\\\BaseInterface\\) in generic type Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int, static\\(App\\\\Models\\\\Interfaces\\\\BaseInterface\\)\\> in PHPDoc tag @return is not subtype of template type TModel of Illuminate\\\\Database\\\\Eloquent\\\\Model of class Illuminate\\\\Database\\\\Eloquent\\\\Collection\\.$#"
+			count: 1
+			path: ../../app/Models/Interfaces/BaseInterface.php

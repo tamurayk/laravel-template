@@ -24,10 +24,7 @@ class TaskIndex implements TaskIndexInterface
     }
 
     /**
-     * @param int $userId
-     * @param array $searchParam
-     * @param array $paginatorParam
-     * @return LengthAwarePaginator
+     * @inheritDoc
      */
     public function __invoke(
         int $userId,

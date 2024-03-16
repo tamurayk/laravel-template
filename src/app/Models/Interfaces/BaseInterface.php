@@ -5,12 +5,14 @@ namespace App\Models\Interfaces;
 
 use Carbon\Carbon;
 use Illuminate\Database\ConnectionResolverInterface as Resolver;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Interface BaseInterface
  * @package App\Model\Entities
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @see \Illuminate\Database\Eloquent\Model
  */
 interface BaseInterface
 {

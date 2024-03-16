@@ -22,5 +22,8 @@ use Illuminate\Support\Collection;
  */
 interface AdministratorInterface extends BaseInterface
 {
+    /**
+     * @return HasOne<Group>
+     */
     public function group(): HasOne;
 }

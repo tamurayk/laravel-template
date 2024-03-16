@@ -13,9 +13,7 @@ class Administrator extends Authenticatable implements AdministratorInterface
     protected $table = 'administrators';
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
+     * @inheritdoc
      */
     protected $fillable = [
         'group_id',
@@ -25,9 +23,7 @@ class Administrator extends Authenticatable implements AdministratorInterface
     ];
 
     /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
+     * @inheritdoc
      */
     protected $hidden = [
         'password',
@@ -35,16 +31,14 @@ class Administrator extends Authenticatable implements AdministratorInterface
     ];
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
+     * @inheritdoc
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
     /**
-     * @return HasOne
+     * @return HasOne<Group>
      */
     public function group(): HasOne
     {

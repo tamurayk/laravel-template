@@ -3,14 +3,11 @@
 namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
     /**
-     * The policy mappings for the application.
-     *
-     * @var array
+     * @inheritdoc
      */
     protected $policies = [
         'App\Models\Eloquents\Task' => 'App\Policies\TaskPolicy',

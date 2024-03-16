@@ -566,6 +566,19 @@ MY_OAUTH_PROVIDER_CLIENT_SECRET=
 # ./vendor/bin/phpstan analyse -l 6 --memory-limit=2G app/
 ```
 
+- composer script
+
+```
+// 実行
+# composer stan
+
+// baselineに追加
+# composer stan-rebuild-baseline
+
+// cacheの削除
+# stan-clear-cache
+```
+
 - note
   - 現時点では、Level 6 まで対応した (推奨レベルは要検討)
   - https://phpstan.org/user-guide/rule-levels
@@ -577,6 +590,13 @@ MY_OAUTH_PROVIDER_CLIENT_SECRET=
 ```
 // run
 # ./vendor/bin/psalm
+```
+
+- composer script
+
+```
+// 実行
+# composer psalm
 ```
 
 ## PHPUnit

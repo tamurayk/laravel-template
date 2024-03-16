@@ -5,16 +5,14 @@ namespace App\Http\UseCases\User\Task\Interfaces;
 
 use App\Models\Interfaces\TaskInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Model;
 
 interface TaskIndexInterface
 {
     public function __construct(TaskInterface $task);
 
     /**
-     * @param int $userId
-     * @param array $searchParam
-     * @param array $paginatorParam
-     * @return LengthAwarePaginator
+     * @return LengthAwarePaginator<Model>
      */
     public function __invoke(
         int $userId,

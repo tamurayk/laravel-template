@@ -23,7 +23,7 @@ use Illuminate\Support\Collection;
 interface UserInterface extends BaseInterface
 {
     /**
-     * @return HasMany
+     * @return HasMany<Task>
      */
     public function tasks(): HasMany;
 }

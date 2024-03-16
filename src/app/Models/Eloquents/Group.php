@@ -11,14 +11,14 @@ class Group extends Eloquent implements GroupInterface
     use HasFactory;
 
     /**
-     * @var array
+     * @inheritdoc
      */
     protected $fillable = [
         'name',
     ];
 
     /**
-     * @return BelongsTo
+     * @return BelongsTo<Administrator, Group>
      */
     public function administrator(): BelongsTo
     {
