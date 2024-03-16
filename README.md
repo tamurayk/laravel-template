@@ -14,9 +14,7 @@
 
 ## Laravel のバージョン
 
-- 2020/9 時点の LTS である 6.x を選定
-- 参考
-  - https://laravel.com/docs/master/releases#support-policy
+- 10.x
 
 ## 設計
 
